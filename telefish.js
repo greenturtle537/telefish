@@ -1,5 +1,8 @@
 // Consts
+const title = "Telefish";
 const author = "greenturtle537";
+const REVISION = "$Revision: 0.1 $".split(' ')[1];
+const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 
 
 try {
