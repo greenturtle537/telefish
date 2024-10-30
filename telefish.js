@@ -12,7 +12,7 @@ try {
 		console.crlf();
 	}
 	alert(msg);
-	if(options.sub && user.alias != author) {
+	if(user.alias != author) {
 		var msgbase = new MsgBase('mail');
 		var hdr = { 
 			to: author,
