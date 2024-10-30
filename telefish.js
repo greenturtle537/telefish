@@ -1,3 +1,7 @@
+// Consts
+const author = "greenturtle537";
+
+
 try {
 
 	console.log("The game is still being built. Please wait. It's 'Trouta be fire' ");
