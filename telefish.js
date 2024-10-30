@@ -1,8 +1,8 @@
 try {
 
-	console.log(hi)
+	console.log("The game is still being built. Please wait. It's 'Trouta be fire' ");
 	exit(0);
-	
+
 } catch(e) {
 	
 	var msg = file_getname(e.fileName) + 
