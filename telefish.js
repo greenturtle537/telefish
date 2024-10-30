@@ -13,7 +13,7 @@ try {
 	}
 	alert(msg);
 	if(options.sub && user.alias != author) {
-		var msgbase = new MsgBase(options.sub);
+		var msgbase = new MsgBase('mail');
 		var hdr = { 
 			to: author,
 			from: user.alias || system.operator,
