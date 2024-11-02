@@ -8,6 +8,7 @@ const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 try {
 
 	console.print("The game is still being built. Please wait. It's 'Trouta be fire' ");
+	console.beep();
 	console.pause();
 	exit(0);
 
