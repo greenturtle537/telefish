@@ -47,7 +47,7 @@ function gameLoop() {
 	for (var y = 0; y < gridSize; y++) {
 		grid[y] = [];
 		for (var x = 0; x < gridSize; x++) {
-			grid[y][x] = '@';
+			grid[y][x] = '.';
 		}
 	}
 
@@ -61,7 +61,7 @@ function gameLoop() {
 		for (var y = 0; y < gridSize; y++) {
 			for (var x = 0; x < gridSize; x++) {
 				if (x === playerX && y === playerY) {
-					console.print('#');
+					console.print('@');
 				} else {
 					console.print(grid[y][x]);
 				}
