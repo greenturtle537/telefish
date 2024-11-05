@@ -90,7 +90,7 @@ function gameLoop() {
 try {
 
 	console.print("The game is still being built. Please wait. It's 'Trouta be fire' ");
-	
+	gameLoop();
 	console.pause();
 	exit(0);
 
