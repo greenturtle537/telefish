@@ -69,11 +69,13 @@ function gameLoop() {
 		}
 
 		// Get input
-		var key = mouse_getkey(K_NOECHO | K_NOSPIN);
-		if (key) {
-			if (typeof key === 'object' && key.mouse) {
+		var mk = mouse_getkey(K_NONE, 1000, true);
+		var key = mk.key;
+
+		if (mk) {
+			if (typeof mk === 'object' && mk.mouse) {
 				// Handle mouse input
-				if (key.mouse.action === 1) { // Left click
+				if (mk.mouse.action === 1) { // Left click
 					var mx = key.mouse.column - 1;
 					var my = key.mouse.row - 1;
 					if (mx >= 0 && mx < gridSize && my >= 0 && my < gridSize) {
