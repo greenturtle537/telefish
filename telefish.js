@@ -88,16 +88,24 @@ function gameLoop() {
 			} else {
 				switch (key) {
 					case KEY_UP:
+					case 'w':
 						if (playerY > 0) playerY--;
+						sleep(100); // 100ms pause after move
 						break;
 					case KEY_DOWN:
+					case 's':
 						if (playerY < gridHeight - 1) playerY++;
+						sleep(100); // 100ms pause after move
 						break;
 					case KEY_LEFT:
+					case 'a':
 						if (playerX > 0) playerX--;
+						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
+					case 'd':
 						if (playerX < gridWidth - 1) playerX++;
+						sleep(100); // 100ms pause after move
 						break;
 					case '\x1b': // Escape key
 						running = false;
