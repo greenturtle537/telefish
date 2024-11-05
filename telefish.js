@@ -109,9 +109,9 @@ function gameLoop() {
 }
 
 try {
-	console.print("The game is still being built. Please wait. It's 'Trouta be fire' ");
-	gameLoop();
+	console.print("Press any key to play the demo. It's 'Trouta be fire' ");
 	console.pause();
+	gameLoop();
 	exit(0);
 } catch (e) {
 	var msg = file_getname(e.fileName) +
