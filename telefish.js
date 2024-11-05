@@ -4,7 +4,11 @@ const author = "greenturtle537";
 const REVISION = "$Revision: 0.1 $".split(' ')[1];
 const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 
+var options = load({}, "modopts.js", ini_section);
+
 const test = js.exec_dir + "test.bin";
+
+require("mouse_getkey.js", "mouse_getkey");
 
 function show_image(filename, fx, delay)
 {
@@ -13,18 +17,18 @@ function show_image(filename, fx, delay)
 	var Graphic = load({}, "graphic.js");
 	var sauce_lib = load({}, "sauce_lib.js");
 	var sauce = sauce_lib.read(filename);
-	if(delay === undefined)
+	if (delay === undefined)
 		delay = options.image_delay;
-	if(sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
+	if (sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
-			if(fx && graphic.revision >= 1.82)
+			if (fx && graphic.revision >= 1.82)
 				graphic.drawfx('center', 'center');
 			else
 				graphic.draw('center', 'center');
 			sleep(delay);
-		} catch(e) { 
+		} catch (e) {
 			log(LOG_DEBUG, e);
 		}
 	}
@@ -63,24 +67,36 @@ function gameLoop() {
 		}
 
 		// Get input
-		var key = console.getkey(K_NOECHO);
+		var key = mouse_getkey(K_NOECHO | K_NOSPIN);
 		if (key) {
-			switch (key) {
-				case KEY_UP:
-					if (playerY > 0) playerY--;
-					break;
-				case KEY_DOWN:
-					if (playerY < gridSize - 1) playerY++;
-					break;
-				case KEY_LEFT:
-					if (playerX > 0) playerX--;
-					break;
-				case KEY_RIGHT:
-					if (playerX < gridSize - 1) playerX++;
-					break;
-				case '\x1b': // Escape key
-					running = false;
-					break;
+			if (typeof key === 'object' && key.mouse) {
+				// Handle mouse input
+				if (key.mouse.action === 1) { // Left click
+					var mx = key.mouse.column - 1;
+					var my = key.mouse.row - 1;
+					if (mx >= 0 && mx < gridSize && my >= 0 && my < gridSize) {
+						playerX = mx;
+						playerY = my;
+					}
+				}
+			} else {
+				switch (key) {
+					case KEY_UP:
+						if (playerY > 0) playerY--;
+						break;
+					case KEY_DOWN:
+						if (playerY < gridSize - 1) playerY++;
+						break;
+					case KEY_LEFT:
+						if (playerX > 0) playerX--;
+						break;
+					case KEY_RIGHT:
+						if (playerX < gridSize - 1) playerX++;
+						break;
+					case '\x1b': // Escape key
+						running = false;
+						break;
+				}
 			}
 		}
 	}
@@ -88,33 +104,29 @@ function gameLoop() {
 }
 
 try {
-
 	console.print("The game is still being built. Please wait. It's 'Trouta be fire' ");
 	gameLoop();
 	console.pause();
 	exit(0);
-
-} catch(e) {
-	
-	var msg = file_getname(e.fileName) + 
-		" line " + e.lineNumber + 
+} catch (e) {
+	var msg = file_getname(e.fileName) +
+		" line " + e.lineNumber +
 		": " + e.message;
-	if(js.global.console) {
+	if (js.global.console) {
 		console.crlf();
 	}
 	alert(msg);
-	if(user.alias != author) {
+	if (user.alias != author) {
 		var msgbase = new MsgBase('mail');
-		var hdr = { 
+		var hdr = {
 			to: author,
 			from: user.alias || system.operator,
 			subject: title
 		};
 		msg += tear_line;
-		if(!msgbase.save_msg(hdr, msg)) {
+		if (!msgbase.save_msg(hdr, msg)) {
 			alert("Error saving exception-message to: " + options.sub);
 		}
 		msgbase.close();
 	}
 }
-
