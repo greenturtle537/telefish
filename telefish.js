@@ -38,15 +38,16 @@ function show_image(filename, fx, delay)
 }
 
 function gameLoop() {
-	var gridSize = 16;
+	var gridWidth = 48;
+	var gridHeight = 24;
 	var grid = [];
-	var playerX = Math.floor(gridSize / 2);
-	var playerY = Math.floor(gridSize / 2);
+	var playerX = Math.floor(gridWidth / 2);
+	var playerY = Math.floor(gridHeight / 2);
 
 	// Initialize grid
-	for (var y = 0; y < gridSize; y++) {
+	for (var y = 0; y < gridHeight; y++) {
 		grid[y] = [];
-		for (var x = 0; x < gridSize; x++) {
+		for (var x = 0; x < gridWidth; x++) {
 			grid[y][x] = '.';
 		}
 	}
@@ -58,8 +59,8 @@ function gameLoop() {
 	while (running) {
 		// Draw grid
 		console.gotoxy(1, 1);
-		for (var y = 0; y < gridSize; y++) {
-			for (var x = 0; x < gridSize; x++) {
+		for (var y = 0; y < gridHeight; y++) {
+			for (var x = 0; x < gridWidth; x++) {
 				if (x === playerX && y === playerY) {
 					console.print('@');
 				} else {
@@ -79,7 +80,7 @@ function gameLoop() {
 				if (mk.mouse.action === 1) { // Left click
 					var mx = key.mouse.column - 1;
 					var my = key.mouse.row - 1;
-					if (mx >= 0 && mx < gridSize && my >= 0 && my < gridSize) {
+					if (mx >= 0 && mx < gridWidth && my >= 0 && my < gridHeight) {
 						playerX = mx;
 						playerY = my;
 					}
@@ -90,13 +91,13 @@ function gameLoop() {
 						if (playerY > 0) playerY--;
 						break;
 					case KEY_DOWN:
-						if (playerY < gridSize - 1) playerY++;
+						if (playerY < gridHeight - 1) playerY++;
 						break;
 					case KEY_LEFT:
 						if (playerX > 0) playerX--;
 						break;
 					case KEY_RIGHT:
-						if (playerX < gridSize - 1) playerX++;
+						if (playerX < gridWidth - 1) playerX++;
 						break;
 					case '\x1b': // Escape key
 						running = false;
