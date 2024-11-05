@@ -10,6 +10,7 @@ var options = load({}, "modopts.js", ini_section);
 
 const test = js.exec_dir + "test.bin";
 
+require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
 
 function show_image(filename, fx, delay)
