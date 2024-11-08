@@ -85,6 +85,7 @@ function gameLoop() {
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
+		
 
 		if (mk) {
 			if (typeof mk === 'object' && mk.mouse) {
@@ -123,6 +124,7 @@ function gameLoop() {
 						running = false;
 						break;
 				}
+				console.clearkeybuffer();
 			}
 		}
 	}
