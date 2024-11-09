@@ -147,19 +147,19 @@ function gameLoop() {
 						}
 						sleep(150); // 100ms pause after move
 						break;
-					case KEY_LEFT:
+					case KEY_LEFT: 
 					case 'a':
-						if (playerX > 0) {
+						if (playerX > 1) {
 							prevX = playerX;
-							playerX--;
+							playerX -= 2;
 						}
 						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridWidth - 1) {
+						if (playerX < gridWidth - 2) {
 							prevX = playerX;
-							playerX++;
+							playerX += 2;
 						}
 						sleep(100); // 100ms pause after move
 						break;
