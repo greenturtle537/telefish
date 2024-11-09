@@ -86,38 +86,45 @@ function gameLoop() {
 	}
 
 	// Fill grid from text file
-	grid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
+	var staticGrid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
+	if (staticGrid) {
+		grid = staticGrid;
+	}
 
 	console.clear();
 	console.autowrap = false;
 
 	var running = true;
+	var prevX = playerX;
+	var prevY = playerY;
+
 	while (running) {
-		// Draw grid
+		// Draw initial grid
 		console.gotoxy(1, 1);
 		for (var y = 0; y < gridHeight; y++) {
 			for (var x = 0; x < gridWidth; x++) {
-				if (x === playerX && y === playerY) {
-					console.print('@');
-				} else {
-					console.print(grid[y][x]);
-				}
+				console.print(grid[y][x]);
 			}
 			console.crlf();
 		}
 
+		// Draw player
+		console.gotoxy(playerX + 1, playerY + 1);
+		console.print('@');
+
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
-		
 
 		if (mk) {
 			if (typeof mk === 'object' && mk.mouse) {
 				// Handle mouse input
 				if (mk.mouse.action === 1) { // Left click
-					var mx = key.mouse.column - 1;
-					var my = key.mouse.row - 1;
+					var mx = mk.mouse.column - 1;
+					var my = mk.mouse.row - 1;
 					if (mx >= 0 && mx < gridWidth && my >= 0 && my < gridHeight) {
+						prevX = playerX;
+						prevY = playerY;
 						playerX = mx;
 						playerY = my;
 					}
@@ -126,22 +133,34 @@ function gameLoop() {
 				switch (key) {
 					case KEY_UP:
 					case 'w':
-						if (playerY > 0) playerY--;
+						if (playerY > 0) {
+							prevY = playerY;
+							playerY--;
+						}
 						sleep(150); // 100ms pause after move
 						break;
 					case KEY_DOWN:
 					case 's':
-						if (playerY < gridHeight - 1) playerY++;
+						if (playerY < gridHeight - 1) {
+							prevY = playerY;
+							playerY++;
+						}
 						sleep(150); // 100ms pause after move
 						break;
 					case KEY_LEFT:
 					case 'a':
-						if (playerX > 0) playerX--;
+						if (playerX > 0) {
+							prevX = playerX;
+							playerX--;
+						}
 						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridWidth - 1) playerX++;
+						if (playerX < gridWidth - 1) {
+							prevX = playerX;
+							playerX++;
+						}
 						sleep(100); // 100ms pause after move
 						break;
 					case '\x1b': // Escape key
@@ -150,6 +169,16 @@ function gameLoop() {
 				}
 				console.clearkeybuffer(); // Used to prevent key buffering!!
 			}
+		}
+
+		// Redraw the tile that the player has just left
+		if (prevX !== playerX || prevY !== playerY) {
+			console.gotoxy(prevX + 1, prevY + 1);
+			console.print(grid[prevY][prevX]);
+
+			// Draw player at new position
+			console.gotoxy(playerX + 1, playerY + 1);
+			console.print('@');
 		}
 	}
 	console.clear();
