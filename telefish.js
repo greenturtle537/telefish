@@ -177,7 +177,7 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX > gridWidth - 1) {
+						if (playerX < gridWidth - 1) {
 							prevX = playerX;
 							playerX += 2;
 						}
@@ -197,8 +197,8 @@ function gameLoop() {
 		if (prevX !== playerX || prevY !== playerY) {
 			console.gotoxy(prevX + 1, prevY + 1);
 			console.print(grid[prevY][prevX]);
-			console.gotoxy(prevX + 2, prevY + 1);
-			console.print(grid[prevY][prevX + 1]);
+			console.gotoxy(prevX, prevY + 1);
+			console.print(grid[prevY][prevX - 1]);
 			console.print("?");
 
 
