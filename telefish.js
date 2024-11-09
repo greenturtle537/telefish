@@ -111,17 +111,17 @@ function gameLoop() {
 
 	while (running) {
 		// Draw initial grid
-		console.gotoxy(1, 1);
-		for (var y = 0; y < gridHeight; y++) {
-			for (var x = 0; x < gridWidth; x++) {
-				console.print(grid[y][x]);
-			}
-			console.crlf();
-		}
+		// console.gotoxy(1, 1);
+		// for (var y = 0; y < gridHeight; y++) {
+		// 	for (var x = 0; x < gridWidth; x++) {
+		// 		console.print(grid[y][x]);
+		// 	}
+		// 	console.crlf();
+		// }
 
 		// Draw player
-		console.gotoxy(playerX + 1, playerY + 1);
-		console.print('@');
+		// console.gotoxy(playerX + 1, playerY + 1);
+		// console.print('@');
 
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
@@ -168,7 +168,7 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'j':
-						bbs.multinode_chat();
+						dispChat();
 					case '\x1b': // Escape key
 						running = false;
 						break;
