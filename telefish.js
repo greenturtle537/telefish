@@ -109,16 +109,24 @@ function gameLoop() {
 	var prevX = playerX;
 	var prevY = playerY;
 
+	console.gotoxy(1, 1);
+	for (var y = 0; y < gridHeight; y++) {
+		for (var x = 0; x < gridWidth; x++) {
+			console.print(grid[y][x]);
+		}
+		console.crlf();
+	}
+
 	while (running) {
 
 		// Draw initial grid
-		console.gotoxy(1, 1);
-		for (var y = 0; y < gridHeight; y++) {
-			for (var x = 0; x < gridWidth; x++) {
-				console.print(grid[y][x]);
-			}
-			console.crlf();
-		}
+		// console.gotoxy(1, 1);
+		// for (var y = 0; y < gridHeight; y++) {
+		// 	for (var x = 0; x < gridWidth; x++) {
+		// 		console.print(grid[y][x]);
+		// 	}
+		// 	console.crlf();
+		// }
 
 		// Draw player
 		console.gotoxy(playerX + 1, playerY + 1);
@@ -168,7 +176,7 @@ function gameLoop() {
 						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
-					case 'a':
+					case 'd':
 						if (playerX > gridWidth - 1) {
 							prevX = playerX;
 							playerX += 2;
