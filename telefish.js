@@ -69,8 +69,6 @@ function loadMapToGrid(filename, grid) {
 	return grid;
 }
 
-// Load the map into the grid
-loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
 
 function gameLoop() {
 	var gridWidth = 80;
@@ -80,12 +78,13 @@ function gameLoop() {
 	var playerY = Math.floor(gridHeight / 2);
 
 	// Initialize grid
-	for (var y = 0; y < gridHeight; y++) {
-		grid[y] = [];
-		for (var x = 0; x < gridWidth; x++) {
-			grid[y][x] = '.';
-		}
-	}
+	grid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
+	// for (var y = 0; y < gridHeight; y++) {
+	// 	grid[y] = [];
+	// 	for (var x = 0; x < gridWidth; x++) {
+	// 		grid[y][x] = '.';
+	// 	}
+	// }
 
 	console.clear();
 	console.autowrap = false;
