@@ -156,13 +156,8 @@ function gameLoop() {
 						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
-					case 'd':
-						if (playerX < gridWidth - 2) {
-							prevX = playerX;
-							playerX += 2;
-						}
-						sleep(100); // 100ms pause after move
-						break;
+					case 'j':
+						bbs.multinode_chat();
 					case '\x1b': // Escape key
 						running = false;
 						break;
@@ -181,7 +176,7 @@ function gameLoop() {
 			console.print('@');
 
 			// Return the console cursor to the player's position
-			console.gotoxy(playerX, playerY);
+			console.gotoxy(playerX - 1, playerY - 1);
 		}
 	}
 	console.clear();
