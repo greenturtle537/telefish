@@ -181,6 +181,7 @@ function gameLoop() {
 		if (prevX !== playerX || prevY !== playerY) {
 			console.gotoxy(prevX + 1, prevY + 1);
 			console.print(grid[prevY][prevX]);
+			console.print(grid[prevY+1][prevX+1]);
 
 			// Draw player at new position
 			console.gotoxy(playerX + 1, playerY + 1);
