@@ -156,6 +156,9 @@ function gameLoop() {
 						if (playerY > 0) {
 							prevY = playerY;
 							playerY--;
+							console.gotoxy(prevX + 1, prevY - 1);
+							console.print(staticGrid[prevY - 1][prevX]);
+							console.print(staticGrid[prevY - 1][prevX]);
 						}
 						sleep(150); // 100ms pause after move
 						break;
@@ -164,6 +167,9 @@ function gameLoop() {
 						if (playerY < gridHeight - 1) {
 							prevY = playerY;
 							playerY++;
+							console.gotoxy(prevX + 1, prevY + 1);
+							console.print(staticGrid[prevY + 1][prevX]);
+							console.print(staticGrid[prevY + 1][prevX]);
 						}
 						sleep(150); // 100ms pause after move
 						break;
@@ -172,6 +178,9 @@ function gameLoop() {
 						if (playerX > 1) {
 							prevX = playerX;
 							playerX -= 2;
+							console.gotoxy(prevX - 1, prevY);
+							console.print(staticGrid[prevY][prevX - 1]);
+							console.print(staticGrid[prevY][prevX]);
 						}
 						sleep(100); // 100ms pause after move
 						break;
@@ -180,6 +189,9 @@ function gameLoop() {
 						if (playerX < gridWidth - 1) {
 							prevX = playerX;
 							playerX += 2;
+							console.gotoxy(prevX - 1, prevY);
+							console.print(staticGrid[prevY][prevX - 1]);
+							console.print(staticGrid[prevY][prevX]);
 						}
 						sleep(100); // 100ms pause after move
 						break;
@@ -195,13 +207,13 @@ function gameLoop() {
 
 		// Redraw the tile that the player has just left
 		if (prevX !== playerX || prevY !== playerY) {
-			console.gotoxy(prevX + 1, prevY);
-			console.print(staticGrid[prevY][prevX]);
-			console.print(staticGrid[prevY][prevX - 1]);
-			console.gotoxy(prevX + 1, prevY + 1);
-			console.print(staticGrid[prevY + 1][prevX]);
-			console.print(staticGrid[prevY + 1][prevX - 1]);
-			
+			// console.gotoxy(prevX + 1, prevY + 1);
+			// console.print(staticGrid[prevY][prevX]);
+			// console.print("?");
+			// console.gotoxy(prevX, prevY + 1);
+			// console.print(staticGrid[prevY][prevX - 1]);
+			// console.print("?");
+
 
 			// Draw player at new position
 			console.gotoxy(playerX + 1, playerY + 1);
