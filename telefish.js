@@ -108,9 +108,11 @@ function gameLoop() {
 	var running = true;
 	var prevX = playerX;
 	var prevY = playerY;
-	
-	// Draw the grid
-	console.gotoxy(1, 1);
+
+	while (running) {
+
+		// Draw initial grid
+		console.gotoxy(1, 1);
 		for (var y = 0; y < gridHeight; y++) {
 			for (var x = 0; x < gridWidth; x++) {
 				console.print(grid[y][x]);
@@ -118,7 +120,6 @@ function gameLoop() {
 			console.crlf();
 		}
 
-	while (running) {
 		// Draw player
 		console.gotoxy(playerX + 1, playerY + 1);
 		console.print('@');
@@ -167,6 +168,13 @@ function gameLoop() {
 						sleep(100); // 100ms pause after move
 						break;
 					case KEY_RIGHT:
+					case 'a':
+						if (playerX > gridWidth - 1) {
+							prevX = playerX;
+							playerX += 2;
+						}
+						sleep(100); // 100ms pause after move
+						break;
 					case 'j':
 						dispChat();
 					case '\x1b': // Escape key
@@ -180,8 +188,9 @@ function gameLoop() {
 		// Redraw the tile that the player has just left
 		if (prevX !== playerX || prevY !== playerY) {
 			console.gotoxy(prevX + 1, prevY + 1);
-			console.print(grid[prevY][prevX]);
-			console.print(grid[prevY+1][prevX+1]);
+			//console.print(grid[prevY][prevX]);
+			console.print("?");
+
 
 			// Draw player at new position
 			console.gotoxy(playerX + 1, playerY + 1);
