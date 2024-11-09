@@ -49,6 +49,29 @@ function getCharAtPos(x, y) {
 	return charAtPosition;
 }
 
+function loadMapToGrid(filename, grid) {
+	var file = new File(filename);
+	if (!file.open("r")) {
+		alert("Failed to open " + filename);
+		return;
+	}
+
+	var y = 0;
+	while (!file.eof && y < grid.length) {
+		var line = file.readln();
+		for (var x = 0; x < line.length && x < grid[y].length; x++) {
+			grid[y][x] = line.charAt(x);
+		}
+		y++;
+	}
+
+	file.close();
+	return grid;
+}
+
+// Load the map into the grid
+loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
+
 function gameLoop() {
 	var gridWidth = 80;
 	var gridHeight = 24;
@@ -124,7 +147,7 @@ function gameLoop() {
 						running = false;
 						break;
 				}
-				console.clearkeybuffer();
+				console.clearkeybuffer(); // Used to prevent key buffering!!
 			}
 		}
 	}
