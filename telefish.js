@@ -195,10 +195,10 @@ function gameLoop() {
 
 		// Redraw the tile that the player has just left
 		if (prevX !== playerX || prevY !== playerY) {
-			console.gotoxy(prevX + 1, prevY + 1);
+			console.gotoxy(prevX + 1, prevY);
 			console.print(staticGrid[prevY][prevX]);
 			console.print("?");
-			console.gotoxy(prevX, prevY + 1);
+			console.gotoxy(prevX, prevY);
 			console.print(staticGrid[prevY][prevX - 1]);
 			console.print("?");
 
