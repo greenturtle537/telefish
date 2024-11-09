@@ -108,23 +108,21 @@ function gameLoop() {
 	var running = true;
 	var prevX = playerX;
 	var prevY = playerY;
-
-	// Draw initial grid
+	
+	// Draw the grid
 	console.gotoxy(1, 1);
-	for (var y = 0; y < gridHeight; y++) {
-		for (var x = 0; x < gridWidth; x++) {
-			console.print(grid[y][x]);
+		for (var y = 0; y < gridHeight; y++) {
+			for (var x = 0; x < gridWidth; x++) {
+				console.print(grid[y][x]);
+			}
+			console.crlf();
 		}
-		console.crlf();
-	}
-
-	// Draw player
-	console.gotoxy(playerX + 1, playerY + 1);
-	console.print('@');
-	console.gotoxy(playerX, playerY);
 
 	while (running) {
-		
+		// Draw player
+		console.gotoxy(playerX + 1, playerY + 1);
+		console.print('@');
+
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
@@ -189,7 +187,7 @@ function gameLoop() {
 			console.print('@');
 
 			// Return the console cursor to the player's position
-			console.gotoxy(playerX, playerY);
+			console.gotoxy(playerX - 1, playerY - 1);
 		}
 	}
 	console.clear();
