@@ -179,6 +179,9 @@ function gameLoop() {
 			// Draw player at new position
 			console.gotoxy(playerX + 1, playerY + 1);
 			console.print('@');
+
+			// Return the console cursor to the player's position
+			console.gotoxy(playerX, playerY);
 		}
 	}
 	console.clear();
