@@ -49,6 +49,15 @@ function getCharAtPos(x, y) {
 	return charAtPosition;
 }
 
+function dispChat() {
+	var chat = bbs.multinode_chat();
+	if (chat) {
+		console.clear();
+		console.print(chat);
+		console.pause();
+	}
+}
+
 function loadMapToGrid(filename, grid) {
 	var file = new File(filename);
 	if (!file.open("r")) {
@@ -68,6 +77,8 @@ function loadMapToGrid(filename, grid) {
 	file.close();
 	return grid;
 }
+
+
 
 
 function gameLoop() {
