@@ -77,14 +77,16 @@ function gameLoop() {
 	var playerX = Math.floor(gridWidth / 2);
 	var playerY = Math.floor(gridHeight / 2);
 
-	// Initialize grid
+	// Initialize grid with empty values
+	for (var y = 0; y < gridHeight; y++) {
+		grid[y] = [];
+		for (var x = 0; x < gridWidth; x++) {
+			grid[y][x] = '.';
+		}
+	}
+
+	// Fill grid from text file
 	grid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
-	// for (var y = 0; y < gridHeight; y++) {
-	// 	grid[y] = [];
-	// 	for (var x = 0; x < gridWidth; x++) {
-	// 		grid[y][x] = '.';
-	// 	}
-	// }
 
 	console.clear();
 	console.autowrap = false;
