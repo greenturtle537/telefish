@@ -229,9 +229,9 @@ function gameLoop() {
 							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
-								redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
-								sleep(100); // 100ms pause after move
 							}
+							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_DOWN:
@@ -245,9 +245,9 @@ function gameLoop() {
 
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
-								redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
-								sleep(100); // 100ms pause after move
 							}
+							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_LEFT: 
@@ -260,9 +260,9 @@ function gameLoop() {
 							if (!chatConflict(prevX, prevY - 1, chatToggle)) {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
-								redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
-								sleep(100); // 100ms pause after move
 							}
+							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							sleep(100); // 100ms pause after move
 							
 						}
 						break;
@@ -276,9 +276,9 @@ function gameLoop() {
 							if (!chatConflict(prevX, prevY - 1, chatToggle)) {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
-								redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
-								sleep(100); // 100ms pause after move
 							}
+							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							sleep(100); // 100ms pause after move
 						}
 						break;
 					case 'j':
