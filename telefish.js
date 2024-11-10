@@ -133,7 +133,6 @@ function redrawRegion(staticGrid) {
 function redrawPlayer(playerX, playerY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
-	console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player
 }
 
 function gameLoop() {
@@ -179,6 +178,8 @@ function gameLoop() {
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
+		
+		console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 
 		if (mk) {
 			if (typeof mk === 'object' && mk.mouse) {
