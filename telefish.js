@@ -118,9 +118,9 @@ function drawChatRegion() {
 }
 
 function redrawRegion(staticGrid) {
-	for (var y = 0; y < chatHeight - 2; y++) {
+	for (var y = 0; y < chatHeight - 1; y++) {
 		console.gotoxy(startX + 1, startY + 1 + y);
-		for (var x = 0; x < chatWidth - 2; x++) {
+		for (var x = 0; x < chatWidth - 1; x++) {
 			if (staticGrid[y] && staticGrid[y][x]) {
 				console.print(staticGrid[y][x]);
 			} else {
