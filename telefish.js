@@ -288,6 +288,7 @@ function gameLoop() {
 					case 'j':
 						chatToggle = dispChat(chatToggle, staticGrid);
 						offScreenCursor();
+						redrawPlayer(playerX, playerY, chatToggle);
 						break;
 					case '\x1b': // Escape key
 						running = false;
