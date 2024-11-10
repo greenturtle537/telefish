@@ -156,7 +156,9 @@ function drawTypedMessage(user, message) {
 	var startLine = startY + chatHeight - 1 - lines.length;
 	for (var i = 0; i < lines.length; i++) {
 		console.gotoxy(startX + 1, startLine + i);
-		console.print(' '.repeat(maxWidth));
+		for (var x = 1; x < chatWidth - 1; x++) {
+			console.print(' ');
+		}
 		console.gotoxy(startX + 1, startLine + i);
 		console.print(lines[i]);
 	}
