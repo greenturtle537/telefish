@@ -81,6 +81,7 @@ function loadMapToGrid(filename, grid) {
 function redrawPlayer(playerX, playerY, prevX, prevY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
+	console.gotoxy(playerX, playerY + 1); //Move cursor to highlight player
 }
 
 function gameLoop() {
