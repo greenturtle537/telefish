@@ -97,16 +97,6 @@ function drawChatRegion() {
 		console.print('-');
 	}
 	console.print('+');
-	
-	// Draw title
-	console.gotoxy(startX + 2, startY + 1);
-	console.print('Telefish Node Chat');
-
-	console.gotoxy(startX, startY + 2);
-
-	for (var x = 1; x < chatWidth - 1; x++) {
-		console.print('=');
-	}
 
 	// Draw sides and fill inside with spaces
 	for (var y = 3; y < chatHeight - 1; y++) {
@@ -125,6 +115,10 @@ function drawChatRegion() {
 		console.print('-');
 	}
 	console.print('+');
+
+	// Draw title
+	console.gotoxy(startX + 2, startY + 1);
+	console.print('==Telefish=Node=Chat==');
 }
 
 
