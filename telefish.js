@@ -130,10 +130,20 @@ function redrawRegion(staticGrid) {
 	}
 }
 
-function redrawPlayer(playerX, playerY) {
+function redrawPlayer(playerX, playerY, chatToggle) {
+	if (chatToggle) {
+		if (
+			playerX + 1 >= startX &&
+			playerX + 1 < startX + chatWidth &&
+			playerY + 1 >= startY &&
+			playerY + 1 < startY + chatHeight
+		) {
+			return;
+		}
+	}
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
-	console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player before pause!!
+	console.gotoxy(playerX + 1, playerY + 1);
 }
 
 function gameLoop() {
@@ -180,7 +190,16 @@ function gameLoop() {
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
 		
-		console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
+		if (chatToggle) {
+			if (!(
+				playerX + 1 >= startX &&
+				playerX + 1 < startX + chatWidth &&
+				playerY + 1 >= startY &&
+				playerY + 1 < startY + chatHeight
+			)) {
+				console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
+			}
+		}
 
 		if (mk) {
 			if (typeof mk === 'object' && mk.mouse) {
@@ -206,7 +225,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -219,7 +238,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -232,7 +251,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -245,7 +264,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
