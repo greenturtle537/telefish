@@ -78,8 +78,12 @@ function loadMapToGrid(filename, grid) {
 	return grid;
 }
 
-
-
+function redrawPlayer(playerX, playerY, prevX, prevY) {
+	console.gotoxy(playerX + 1, playerY + 1);
+	console.print('@');
+	console.gotoxy(prevX + 1, prevY + 1);
+	console.print(' ');
+}
 
 function gameLoop() {
 	var gridWidth = 80;
@@ -160,6 +164,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							redrawPlayer(playerX, playerY, prevX, prevY);
 							sleep(150); // 100ms pause after move
 						}
 						break;
@@ -172,6 +177,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							redrawPlayer(playerX, playerY, prevX, prevY);
 							sleep(150); // 100ms pause after move
 						}
 						break;
@@ -184,6 +190,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							redrawPlayer(playerX, playerY, prevX, prevY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -196,6 +203,7 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							redrawPlayer(playerX, playerY, prevX, prevY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -209,27 +217,11 @@ function gameLoop() {
 				console.clearkeybuffer(); // Used to prevent key buffering!!
 			}
 		}
-
-		// Redraw the tile that the player has just left
-		if (prevX !== playerX || prevY !== playerY) {
-			// console.gotoxy(prevX + 1, prevY + 1);
-			// console.print(staticGrid[prevY][prevX]);
-			// console.print("?");
-			// console.gotoxy(prevX, prevY + 1);
-			// console.print(staticGrid[prevY][prevX - 1]);
-			// console.print("?");
-
-
-			// Draw player at new position
-			console.gotoxy(playerX + 1, playerY + 1);
-			console.print('@');
-
-			// Return the console cursor to the player's position
-			console.gotoxy(playerX - 1, playerY - 1);
-		}
 	}
 	console.clear();
 }
+
+
 
 try {
 	console.print("Press any key to play the demo. It's 'Trouta be fire' ");
