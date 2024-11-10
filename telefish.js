@@ -240,7 +240,7 @@ function gameLoop() {
 						break;
 					case KEY_DOWN:
 					case 's':
-						if (playerY < gridchatHeight - 1) {
+						if ((playerY < gridchatHeight - 1) && !chatConflict(playerX, playerY - 1, chatToggle)) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY++;
@@ -253,7 +253,7 @@ function gameLoop() {
 						break;
 					case KEY_LEFT: 
 					case 'a':
-						if (playerX > 1) {
+						if ((playerX > 1) && !chatConflict(playerX, playerY - 1, chatToggle)) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX -= 2;
@@ -266,7 +266,7 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridchatWidth - 2) {
+						if ((playerX < gridchatWidth - 2) && !chatConflict(playerX, playerY - 1, chatToggle)) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX += 2;
