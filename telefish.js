@@ -132,7 +132,7 @@ function redrawRegion(staticGrid) {
 
 function redrawPlayer(playerX, playerY, prevX, prevY, chatToggle) {
 	if (chatConflict(playerX, playerY, chatToggle)) {
-		return;
+		console.gotoxy(200, 200); // Move cursor off screen before pause
 	} else {
 		console.gotoxy(playerX + 1, playerY + 1);
 		console.print('@');
