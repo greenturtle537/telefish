@@ -81,7 +81,7 @@ function loadMapToGrid(filename, grid) {
 function redrawPlayer(playerX, playerY, prevX, prevY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
-	console.gotoxy(playerX, playerY + 1); //Move cursor to highlight player
+	console.gotoxy(playerX, playerY + 1); // Move cursor to highlight player
 }
 
 function gameLoop() {
@@ -121,20 +121,7 @@ function gameLoop() {
 	}
 
 	while (running) {
-
-		// Draw initial grid
-		// console.gotoxy(1, 1);
-		// for (var y = 0; y < gridHeight; y++) {
-		// 	for (var x = 0; x < gridWidth; x++) {
-		// 		console.print(grid[y][x]);
-		// 	}
-		// 	console.crlf();
-		// }
-
-		// Draw player
-		console.gotoxy(playerX + 1, playerY + 1);
-		console.print('@');
-
+		
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
