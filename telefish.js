@@ -155,43 +155,47 @@ function gameLoop() {
 					case 'w':
 						if (playerY > 0) {
 							prevY = playerY;
+							prevX = playerX;
 							playerY--;
-							console.gotoxy(prevX + 1, prevY - 1);
-							console.print(staticGrid[prevY - 1][prevX]);
-							console.print(staticGrid[prevY - 1][prevX]);
+							// Redraw previous position
+							console.gotoxy(prevX + 1, prevY + 1);
+							console.print(grid[prevY][prevX]);
 						}
 						sleep(150); // 100ms pause after move
-						break;
 					case KEY_DOWN:
 					case 's':
 						if (playerY < gridHeight - 1) {
 							prevY = playerY;
+							prevX = playerX;
 							playerY++;
+							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
-							console.print(staticGrid[prevY + 1][prevX]);
-							console.print(staticGrid[prevY + 1][prevX]);
+							console.print(grid[prevY][prevX]);
 						}
 						sleep(150); // 100ms pause after move
-						break;
 					case KEY_LEFT: 
 					case 'a':
-						if (playerX > 1) {
+						if (playerX > 0) {
 							prevX = playerX;
-							playerX -= 2;
-							console.gotoxy(prevX - 1, prevY);
-							console.print(staticGrid[prevY][prevX - 1]);
-							console.print(staticGrid[prevY][prevX]);
+							prevY = playerY;
+							playerX--;
+							// Redraw previous position
+							console.gotoxy(prevX + 1, prevY + 1);
+							console.print(grid[prevY][prevX]);
 						}
 						sleep(100); // 100ms pause after move
-						break;
 					case KEY_RIGHT:
 					case 'd':
 						if (playerX < gridWidth - 1) {
 							prevX = playerX;
-							playerX += 2;
-							console.gotoxy(prevX - 1, prevY);
-							console.print(staticGrid[prevY][prevX - 1]);
-							console.print(staticGrid[prevY][prevX]);
+							prevY = playerY;
+							playerX++;
+							// Redraw previous position
+							console.gotoxy(prevX + 1, prevY + 1);
+							console.print(grid[prevY][prevX]);
+						}
+						sleep(100); // 100ms pause after move
+						break;
 						}
 						sleep(100); // 100ms pause after move
 						break;
