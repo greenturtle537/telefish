@@ -130,9 +130,9 @@ function redrawRegion(staticGrid) {
 	}
 }
 
-function redrawPlayer(playerX, playerY, prevX, prevY, chatToggle) {
+function redrawPlayer(playerX, playerY, chatToggle) {
 	if (chatConflict(playerX, playerY, chatToggle)) {
-		console.gotoxy(200, 200); // Move cursor off screen before pause
+		offScreenCursor();
 	} else {
 		console.gotoxy(playerX + 1, playerY + 1);
 		console.print('@');
@@ -152,6 +152,10 @@ function chatConflict(prevX, prevY, chatToggle) {
 		}
 	}
 	return false;
+}
+
+function offScreenCursor() {
+	console.gotoxy(200, 200); // Move cursor off screen
 }
 
 function gameLoop() {
@@ -201,7 +205,7 @@ function gameLoop() {
 		if (!chatConflict(playerX, playerY, chatToggle)) {
 			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
-			console.gotoxy(200, 200); // Move cursor off screen
+			offScreenCursor();
 		}
 
 		if (mk) {
@@ -230,7 +234,7 @@ function gameLoop() {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
 							}
-							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -246,7 +250,7 @@ function gameLoop() {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
 							}
-							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -261,7 +265,7 @@ function gameLoop() {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
 							}
-							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 							
 						}
@@ -277,7 +281,7 @@ function gameLoop() {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
 							}
-							redrawPlayer(playerX, playerY, prevX, prevY, chatToggle);
+							redrawPlayer(playerX, playerY, chatToggle);
 							sleep(100); // 100ms pause after move
 						}
 						break;
