@@ -360,7 +360,9 @@ function gameLoop() {
 							if (typedMessage.length > 0) {
 							typedMessage = typedMessage.slice(0, -1);
 							console.gotoxy(startX + 1, startY + chatHeight - 1);
-							console.print(' '.repeat(chatWidth - 2)); // Clear the line
+							for (var x = 1; x < chatWidth - 1; x++) {
+								console.print(' ');
+							}
 							console.gotoxy(startX + 1, startY + chatHeight - 1);
 							console.print(typedMessage);
 							}
@@ -371,7 +373,9 @@ function gameLoop() {
 								// Remove character at the cursor position
 								typedMessage = typedMessage.slice(0, typedMessage.length - 1);
 								console.gotoxy(startX + 1, startY + chatHeight - 1);
-								console.print(' '.repeat(chatWidth - 2)); // Clear the line
+								for (var x = 1; x < chatWidth - 1; x++) {
+									console.print(' ');
+								}
 								console.gotoxy(startX + 1, startY + chatHeight - 1);
 								console.print(typedMessage);
 							}
