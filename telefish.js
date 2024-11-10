@@ -140,7 +140,7 @@ function drawChatRegion() {
 function drawMessages(messages) {
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
-	var maxMessages = 2; // Adjust for message entry section.
+	var maxMessages = maxMessages - 2; // Adjust for message entry section.
 
 	// Clear the chat area
 	for (var y = 2; y < chatHeight - 2; y++) {
