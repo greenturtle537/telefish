@@ -258,7 +258,7 @@ function gameLoop() {
 						break;
 					case KEY_LEFT: 
 					case 'a':
-						if ((playerX > 1) && )) {
+						if (playerX > 1) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX -= 2;
@@ -274,7 +274,7 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if ((playerX < gridchatWidth - 2)) {
+						if (playerX < gridchatWidth - 2) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX += 2;
