@@ -57,14 +57,14 @@ function getCharAtPos(x, y) {
 	return charAtPosition;
 }
 
-function dispChat(chatToggle) {
+function dispChat(chatToggle, staticGrid) {
 	if (!chatToggle) {
 		// Draw chat region
 		drawChatRegion();
 		return true;
 	} else {
 		// Redraw region
-		redrawRegion();
+		redrawRegion(staticGrid);
 		return false;
 	}
 }
@@ -115,7 +115,7 @@ function drawChatRegion() {
 	console.print('+');
 }
 
-function redrawRegion() {
+function redrawRegion(staticGrid) {
 	for (var y = 0; y < chatHeight - 2; y++) {
 		console.gotoxy(startX + 1, startY + 1 + y);
 		for (var x = 0; x < chatWidth - 2; x++) {
@@ -246,7 +246,7 @@ function gameLoop() {
 						}
 						break;
 					case 'j':
-						chatToggle = dispChat(chatToggle);
+						chatToggle = dispChat(chatToggle, staticGrid);
 						break;
 					case '\x1b': // Escape key
 						running = false;
