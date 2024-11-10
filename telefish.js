@@ -279,7 +279,7 @@ function gameLoop() {
 							prevY = playerY;
 							playerX += 2;
 							// Redraw previous position
-							if (!chatConflict(prevX, prexY - 1, chatToggle)) {
+							if (!chatConflict(prevX, prevY - 1, chatToggle)) {
 								console.gotoxy(prevX + 1, prevY + 1);
 								console.print(grid[prevY][prevX]);
 								redrawPlayer(playerX, playerY, chatToggle);
