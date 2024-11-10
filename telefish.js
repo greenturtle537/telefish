@@ -81,7 +81,7 @@ function loadMapToGrid(filename, grid) {
 function redrawPlayer(playerX, playerY, prevX, prevY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
-	console.gotoxy(playerX, playerY + 1); // Move cursor to highlight player
+	console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player
 }
 
 function gameLoop() {
@@ -151,7 +151,7 @@ function gameLoop() {
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
 							redrawPlayer(playerX, playerY, prevX, prevY);
-							sleep(150); // 100ms pause after move
+							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_DOWN:
@@ -164,7 +164,7 @@ function gameLoop() {
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
 							redrawPlayer(playerX, playerY, prevX, prevY);
-							sleep(150); // 100ms pause after move
+							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_LEFT: 
