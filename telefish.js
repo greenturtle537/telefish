@@ -198,7 +198,7 @@ function gameLoop() {
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
 		
-		if (!chatConflict(prevX, prevY, chatToggle)) {
+		if (!chatConflict(playerX, playerY, chatToggle)) {
 			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
 			console.gotoxy(200, 200); // Move cursor off screen
