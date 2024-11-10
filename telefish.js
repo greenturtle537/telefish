@@ -265,6 +265,10 @@ function gameLoop() {
 	var chatToggle = false;
 	var typeToggled = false;
 
+	var messageLength = 0;
+
+	var typedMessage = '';
+
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
 		for (var x = 0; x < gridchatWidth; x++) {
@@ -283,6 +287,12 @@ function gameLoop() {
 			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
 			offScreenCursor();
+		}
+
+		if (messageLength != sampleMessages.length) {
+			drawMessages(sampleMessages);
+			messageLength = sampleMessages.length;
+			// Only redraw if new message is detected
 		}
 
 		if (mk) {
@@ -306,11 +316,40 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = false;
+							//TODO: Send message
 							break;
 						case '\x1b': // Escape key
-							running = false;
+						// Just exit typing mode without doing sending message
+							typeToggled = false;
+							break;
+						case '\b':
+						case '\x7f':
+							if (typedMessage.length > 0) {
+							typedMessage = typedMessage.slice(0, -1);
+							console.gotoxy(startX + 1, startY + chatHeight - 1);
+							console.print(' '.repeat(chatWidth - 2)); // Clear the line
+							console.gotoxy(startX + 1, startY + chatHeight - 1);
+							console.print(typedMessage);
+							}
+							break;
+						case KEY_DEL:
+						case '\x1b[3~': // Delete key variants
+							if (typedMessage.length > 0) {
+								// Remove character at the cursor position
+								typedMessage = typedMessage.slice(0, typedMessage.length - 1);
+								console.gotoxy(startX + 1, startY + chatHeight - 1);
+								console.print(' '.repeat(chatWidth - 2)); // Clear the line
+								console.gotoxy(startX + 1, startY + chatHeight - 1);
+								console.print(typedMessage);
+							}
 							break;
 					}
+					if (checkSingleCharacter(key)) {
+						typedMessage += key;
+						console.gotoxy(startX + 1, startY + chatHeight - 1);
+						console.print(typedMessage);
+					}
+					// Do not use console.clearkeybuffer(); here to preserve fast typing.
 				} else {
 					switch (key) {
 						case KEY_UP:
