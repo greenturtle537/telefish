@@ -118,7 +118,7 @@ function drawChatRegion() {
 
 	// Draw title
 	console.gotoxy(startX + 2, startY + 1);
-	console.print('=====Telefish  Node  Chat=====');
+	console.print('====Telefish  Node  Chat====');
 }
 
 
