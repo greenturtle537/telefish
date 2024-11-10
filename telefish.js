@@ -131,12 +131,14 @@ function redrawRegion(staticGrid) {
 }
 
 function redrawPlayer(playerX, playerY, prevX, prevY, chatToggle) {
-	if (chatConflict(prevX, prevY, chatToggle)) {
+	if (chatConflict(playerX, playerY, chatToggle)) {
 		return;
 	} else {
 		console.gotoxy(playerX + 1, playerY + 1);
 		console.print('@');
-		console.gotoxy(playerX + 1, playerY + 1);
+		if (chatConflict(prevX, prevY, chatToggle)) {
+			console.gotoxy(playerX + 1, playerY + 1);
+		}
 	}
 }
 
