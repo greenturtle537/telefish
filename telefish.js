@@ -146,6 +146,20 @@ function redrawPlayer(playerX, playerY, chatToggle) {
 	console.gotoxy(playerX + 1, playerY + 1);
 }
 
+function chatConflict(playerX, playerY, chatToggle) {
+	if (chatToggle) {
+		if ((
+			playerX + 1 >= startX &&
+			playerX + 1 < startX + chatWidth &&
+			playerY + 1 >= startY &&
+			playerY + 1 < startY + chatHeight
+		)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function gameLoop() {
 	var gridchatWidth = 80;
 	var gridchatHeight = 24;
@@ -190,15 +204,10 @@ function gameLoop() {
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
 		
-		if (chatToggle) {
-			if (!(
-				playerX + 1 >= startX &&
-				playerX + 1 < startX + chatWidth &&
-				playerY + 1 >= startY &&
-				playerY + 1 < startY + chatHeight
-			)) {
-				console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
-			}
+		if (!chatConflict(playerX, playerY, chatToggle)) {
+			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
+		} else {
+			console.gotoxy(200, 200); // Move cursor off screen
 		}
 
 		if (mk) {
@@ -218,7 +227,7 @@ function gameLoop() {
 				switch (key) {
 					case KEY_UP:
 					case 'w':
-						if (playerY > 0 && !chatToggle) {
+						if (playerY > 0) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY--;
@@ -231,7 +240,7 @@ function gameLoop() {
 						break;
 					case KEY_DOWN:
 					case 's':
-						if (playerY < gridchatHeight - 1 && !chatToggle) {
+						if (playerY < gridchatHeight - 1) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY++;
@@ -244,7 +253,7 @@ function gameLoop() {
 						break;
 					case KEY_LEFT: 
 					case 'a':
-						if (playerX > 1 && !chatToggle) {
+						if (playerX > 1) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX -= 2;
@@ -257,7 +266,7 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridchatWidth - 2 && !chatToggle) {
+						if (playerX < gridchatWidth - 2) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX += 2;
