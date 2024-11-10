@@ -162,10 +162,11 @@ function drawTypedMessage(user, message) {
 	}
 
 	if (message) {
-		var dashLine = '-'.repeat(chatWidth - 2);
 		var yPosition = startY + chatHeight - lines.length - 2;
 		console.gotoxy(startX + 1, yPosition);
-		console.print(dashLine);
+		for (var x = 1; x < chatWidth - 1; x++) {
+			console.print('-');
+		}
 	}
 }
 
