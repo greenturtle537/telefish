@@ -121,7 +121,7 @@ function gameLoop() {
 	}
 
 	while (running) {
-		
+
 		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
@@ -169,10 +169,10 @@ function gameLoop() {
 						break;
 					case KEY_LEFT: 
 					case 'a':
-						if (playerX > 0) {
+						if (playerX > 1) {
 							prevX = playerX;
 							prevY = playerY;
-							playerX--;
+							playerX -= 2;
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
@@ -182,10 +182,10 @@ function gameLoop() {
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridWidth - 1) {
+						if (playerX < gridWidth - 2) {
 							prevX = playerX;
 							prevY = playerY;
-							playerX++;
+							playerX += 2;
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
