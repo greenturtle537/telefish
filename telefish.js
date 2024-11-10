@@ -61,11 +61,11 @@ function dispChat(chatToggle) {
 	if (!chatToggle) {
 		// Draw chat region
 		drawChatRegion();
-		return True
+		return true;
 	} else {
 		// Redraw region
 		redrawRegion();
-		return False
+		return false;
 	}
 }
 
