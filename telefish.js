@@ -195,10 +195,6 @@ function gameLoop() {
 							console.print(grid[prevY][prevX]);
 						}
 						sleep(100); // 100ms pause after move
-						break;
-						}
-						sleep(100); // 100ms pause after move
-						break;
 					case 'j':
 						dispChat();
 					case '\x1b': // Escape key
