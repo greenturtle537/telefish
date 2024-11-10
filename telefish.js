@@ -287,6 +287,7 @@ function gameLoop() {
 						break;
 					case 'j':
 						chatToggle = dispChat(chatToggle, staticGrid);
+						offScreenCursor();
 						break;
 					case '\x1b': // Escape key
 						running = false;
