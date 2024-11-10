@@ -133,6 +133,7 @@ function redrawRegion(staticGrid) {
 function redrawPlayer(playerX, playerY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
+	console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player before pause!!
 }
 
 function gameLoop() {
