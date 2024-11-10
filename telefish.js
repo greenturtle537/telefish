@@ -17,16 +17,17 @@ var startY = 1;
 // Telefish global variables
 
 var sampleMessages = [
-	{ text: "Hello everyone!" },
-	{ text: "How's it going?" },
-	{ text: "Anyone up for a game?" },
-	{ text: "Nice to meet you all!" },
-	{ text: "What's the plan for today?" },
-	{ text: "I'm new here." },
-	{ text: "Can someone help me?" },
-	{ text: "Great job on the project!" },
-	{ text: "Let's catch up later." },
-	{ text: "Goodbye for now!" }
+	{ text: "Hello everyone!", author: "User1", date: "12000001012023" },
+	{ text: "How's it going?", author: "User2", date: "12150002012023" },
+	{ text: "Anyone up for a game?", author: "User3", date: "12300003012023" },
+	{ text: "Nice to meet you all!", author: "User4", date: "12450004012023" },
+	{ text: "What's the plan for today?", author: "User5", date: "13000005012023" },
+	{ text: "I'm new here.", author: "User6", date: "13150006012023" },
+	{ text: "Can someone help me?", author: "User7", date: "13300007012023" },
+	{ text: "Great job on the project!", author: "User8", date: "13450008012023" },
+	{ text: "Let's catch up later.", author: "User9", date: "14000009012023" },
+	{ text: "Goodbye for now!", author: "User10", date: "14150010012023" },
+	{ text: "This is an extra long message to test how the chat system handles messages that exceed the typical length.", author: "User11", date: "14300011012023" }
 ];
 
 const test = js.exec_dir + "test.bin";
@@ -150,10 +151,13 @@ function drawMessages(messages) {
 
 	var messageLines = [];
 
+	// TODO: Sort messages by date in descending order
+	
 	// Process messages into lines
-	for (var i = messages.length - 1; i >= 0; i--) {
+	for (var i = 0; i < messages.length; i++) {
 		var message = messages[i];
-		var words = message.text.split(' ');
+		var formattedMessage = message.author + ": " + message.text;
+		var words = formattedMessage.split(' ');
 		var line = '';
 
 		for (var j = 0; j < words.length; j++) {
