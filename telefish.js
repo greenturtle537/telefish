@@ -301,7 +301,10 @@ function gameLoop() {
 			} else {
 				if (typeToggled) { // If typing is toggled, do not move player
 					switch (key) {
-						case KEY_ENTER:
+						case '\r':
+						case '\n':
+						case '\x0D':
+						case '\x0A': // Enter key variants, TODO: update to sys standard
 							chatToggle = dispChat(chatToggle, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
