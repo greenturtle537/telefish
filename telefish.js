@@ -383,7 +383,10 @@ function gameLoop() {
 							offScreenCursor();
 							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
 							break;
-						case KEY_ENTER:
+						case '\r':
+						case '\n':
+						case '\x0D':
+						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = true;
 						case '\x1b': // Escape key
 							running = false;
