@@ -227,54 +227,64 @@ function gameLoop() {
 				switch (key) {
 					case KEY_UP:
 					case 'w':
-						if ((playerY > 0) && !chatConflict(playerX, playerY - 1, chatToggle)) {
+						if (playerY > 0) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY--;
 							// Redraw previous position
-							console.gotoxy(prevX + 1, prevY + 1);
-							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
+							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+								console.gotoxy(prevX + 1, prevY + 1);
+								console.print(grid[prevY][prevX]);
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
+							}
 						}
 						break;
 					case KEY_DOWN:
 					case 's':
-						if ((playerY < gridchatHeight - 1) && !chatConflict(playerX, playerY - 1, chatToggle)) {
+						if (playerY < gridchatHeight - 1) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY++;
 							// Redraw previous position
-							console.gotoxy(prevX + 1, prevY + 1);
-							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
+							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+
+								console.gotoxy(prevX + 1, prevY + 1);
+								console.print(grid[prevY][prevX]);
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
+							}
 						}
 						break;
 					case KEY_LEFT: 
 					case 'a':
-						if ((playerX > 1) && !chatConflict(playerX, playerY - 1, chatToggle)) {
+						if ((playerX > 1) && )) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX -= 2;
 							// Redraw previous position
-							console.gotoxy(prevX + 1, prevY + 1);
-							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
+							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+								console.gotoxy(prevX + 1, prevY + 1);
+								console.print(grid[prevY][prevX]);
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
+							}
+							
 						}
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if ((playerX < gridchatWidth - 2) && !chatConflict(playerX, playerY - 1, chatToggle)) {
+						if ((playerX < gridchatWidth - 2)) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX += 2;
 							// Redraw previous position
-							console.gotoxy(prevX + 1, prevY + 1);
-							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
+							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+								console.gotoxy(prevX + 1, prevY + 1);
+								console.print(grid[prevY][prevX]);
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
+							}
 						}
 						break;
 					case 'j':
