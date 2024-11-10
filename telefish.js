@@ -146,13 +146,13 @@ function redrawPlayer(playerX, playerY, chatToggle) {
 	console.gotoxy(playerX + 1, playerY + 1);
 }
 
-function chatConflict(playerX, playerY, chatToggle) {
+function chatConflict(prevX, prevY, chatToggle) {
 	if (chatToggle) {
 		if ((
-			playerX + 1 >= startX &&
-			playerX + 1 < startX + chatWidth &&
-			playerY + 1 >= startY &&
-			playerY + 1 < startY + chatHeight
+			prevX + 1 >= startX &&
+			prevX + 1 < startX + chatWidth &&
+			prevY + 1 >= startY &&
+			prevY + 1 < startY + chatHeight
 		)) {
 			return true;
 		}
@@ -204,7 +204,7 @@ function gameLoop() {
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
 		
-		if (!chatConflict(playerX, playerY, chatToggle)) {
+		if (!chatConflict(prevX, prevY, chatToggle)) {
 			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
 			console.gotoxy(200, 200); // Move cursor off screen
