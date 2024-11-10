@@ -16,6 +16,19 @@ var startY = 1;
 
 // Telefish global variables
 
+var sampleMessages = [
+	{ text: "Hello everyone!" },
+	{ text: "How's it going?" },
+	{ text: "Anyone up for a game?" },
+	{ text: "Nice to meet you all!" },
+	{ text: "What's the plan for today?" },
+	{ text: "I'm new here." },
+	{ text: "Can someone help me?" },
+	{ text: "Great job on the project!" },
+	{ text: "Let's catch up later." },
+	{ text: "Goodbye for now!" }
+];
+
 const test = js.exec_dir + "test.bin";
 
 require("sbbsdefs.js", "K_NONE");
@@ -117,8 +130,55 @@ function drawChatRegion() {
 	console.print('+');
 
 	// Draw title
-	console.gotoxy(startX + 2, startY + 1);
+	console.gotoxy(startX + 1, startY + 1);
 	console.print('====Telefish  Node  Chat====');
+
+	drawMessages(sampleMessages);
+}
+
+function drawMessages(messages) {
+	const maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
+	const maxMessages = chatHeight - 4; // Adjust for borders and title
+
+	// Clear the chat area
+	for (let y = 2; y < chatHeight - 2; y++) {
+		console.gotoxy(startX + 1, startY + y);
+		for (let x = 1; x < chatWidth - 1; x++) {
+			console.print(' ');
+		}
+	}
+
+	let messageLines = [];
+
+	// Process messages into lines
+	for (let i = messages.length - 1; i >= 0; i--) {
+		let message = messages[i];
+		let words = message.text.split(' ');
+		let line = '';
+
+		for (let j = 0; j < words.length; j++) {
+			if (line.length + words[j].length + 1 > maxMessageWidth) {
+				messageLines.push(line);
+				line = words[j];
+			} else {
+				if (line.length > 0) {
+					line += ' ';
+				}
+				line += words[j];
+			}
+		}
+		if (line.length > 0) {
+			messageLines.push(line);
+		}
+	}
+
+	// Display the most recent messages
+	let startLine = Math.max(0, messageLines.length - maxMessages);
+	for (let y = 2; y < chatHeight - 2 && startLine < messageLines.length; y++) {
+		console.gotoxy(startX + 1, startY + y);
+		console.print(messageLines[startLine]);
+		startLine++;
+	}
 }
 
 
