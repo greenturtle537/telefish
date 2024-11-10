@@ -137,6 +137,38 @@ function drawChatRegion() {
 	drawMessages(sampleMessages);
 }
 
+function drawTypedMessage(user, message) {
+	var maxWidth = chatWidth - 2;
+	var formattedMessage = user + ": " + message;
+	var words = formattedMessage.split(' ');
+	var lines = [];
+	var line = '';
+	for (var i = 0; i < words.length; i++) {
+		if (line.length + words[i].length + (line.length > 0 ? 1 : 0) > maxWidth) {
+			lines.push(line);
+			line = words[i];
+		} else {
+			if (line.length > 0) line += ' ';
+			line += words[i];
+		}
+	}
+	if (line.length > 0) lines.push(line);
+	var startLine = startY + chatHeight - 1 - lines.length;
+	for (var i = 0; i < lines.length; i++) {
+		console.gotoxy(startX + 1, startLine + i);
+		console.print(' '.repeat(maxWidth));
+		console.gotoxy(startX + 1, startLine + i);
+		console.print(lines[i]);
+	}
+	
+	if (message) {
+		var dashLine = '-'.repeat(chatWidth - 2);
+		var yPosition = startY + chatHeight - lines.length - 2;
+		console.gotoxy(startX + 1, yPosition);
+		console.print(dashLine);
+	}
+}
+
 function drawMessages(messages) {
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
