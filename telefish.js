@@ -305,9 +305,6 @@ function gameLoop() {
 						case '\n':
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
-							chatToggle = dispChat(chatToggle, staticGrid);
-							offScreenCursor();
-							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
 							typeToggled = false;
 							break;
 						case '\x1b': // Escape key
@@ -388,6 +385,7 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = true;
+							break;
 						case '\x1b': // Escape key
 							running = false;
 							break;
