@@ -140,6 +140,7 @@ function drawChatRegion() {
 function drawMessages(messages) {
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
+	var maxMessages = 2; // Adjust for message entry section.
 
 	// Clear the chat area
 	for (var y = 2; y < chatHeight - 2; y++) {
@@ -152,7 +153,7 @@ function drawMessages(messages) {
 	var messageLines = [];
 
 	// TODO: Sort messages by date in descending order
-	
+
 	// Process messages into lines
 	for (var i = 0; i < messages.length; i++) {
 		var message = messages[i];
@@ -185,7 +186,12 @@ function drawMessages(messages) {
 	}
 }
 
-
+function checkSingleCharacter(key) {
+	if (typeof key === 'string' && key.length === 1) {
+		return key;
+	}
+	return false;
+}
 
 function redrawRegion(staticGrid) {
 	for (var y = 0; y < chatHeight; y++) {
@@ -257,6 +263,7 @@ function gameLoop() {
 	var prevY = playerY;
 
 	var chatToggle = false;
+	var typeToggled = false;
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -292,79 +299,94 @@ function gameLoop() {
 					}
 				}
 			} else {
-				switch (key) {
-					case KEY_UP:
-					case 'w':
-						if (playerY > 0) {
-							prevY = playerY;
-							prevX = playerX;
-							playerY--;
-							// Redraw previous position
-							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
-								console.gotoxy(prevX + 1, prevY + 1);
-								console.print(grid[prevY][prevX]);
+				if (typeToggled) { // If typing is toggled, do not move player
+					switch (key) {
+						case KEY_RETURN:
+						case KEY_ENTER: // I don't remember which is correct
+							chatToggle = dispChat(chatToggle, staticGrid);
+							offScreenCursor();
+							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
+							break;
+						case '\x1b': // Escape key
+							running = false;
+							break;
+					}
+				} else {
+					switch (key) {
+						case KEY_UP:
+						case 'w':
+							if (playerY > 0) {
+								prevY = playerY;
+								prevX = playerX;
+								playerY--;
+								// Redraw previous position
+								if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+									console.gotoxy(prevX + 1, prevY + 1);
+									console.print(grid[prevY][prevX]);
+								}
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
 							}
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
-						}
-						break;
-					case KEY_DOWN:
-					case 's':
-						if (playerY < gridchatHeight - 1) {
-							prevY = playerY;
-							prevX = playerX;
-							playerY++;
-							// Redraw previous position
-							if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+							break;
+						case KEY_DOWN:
+						case 's':
+							if (playerY < gridchatHeight - 1) {
+								prevY = playerY;
+								prevX = playerX;
+								playerY++;
+								// Redraw previous position
+								if (!chatConflict(playerX, playerY - 1, chatToggle)) {
 
-								console.gotoxy(prevX + 1, prevY + 1);
-								console.print(grid[prevY][prevX]);
+									console.gotoxy(prevX + 1, prevY + 1);
+									console.print(grid[prevY][prevX]);
+								}
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
 							}
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
-						}
-						break;
-					case KEY_LEFT: 
-					case 'a':
-						if (playerX > 1) {
-							prevX = playerX;
-							prevY = playerY;
-							playerX -= 2;
-							// Redraw previous position
-							if (!chatConflict(prevX, prevY - 1, chatToggle)) {
-								console.gotoxy(prevX + 1, prevY + 1);
-								console.print(grid[prevY][prevX]);
+							break;
+						case KEY_LEFT: 
+						case 'a':
+							if (playerX > 1) {
+								prevX = playerX;
+								prevY = playerY;
+								playerX -= 2;
+								// Redraw previous position
+								if (!chatConflict(prevX, prevY - 1, chatToggle)) {
+									console.gotoxy(prevX + 1, prevY + 1);
+									console.print(grid[prevY][prevX]);
+								}
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
+								
 							}
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
-							
-						}
-						break;
-					case KEY_RIGHT:
-					case 'd':
-						if (playerX < gridchatWidth - 2) {
-							prevX = playerX;
-							prevY = playerY;
-							playerX += 2;
-							// Redraw previous position
-							if (!chatConflict(prevX, prevY - 1, chatToggle)) {
-								console.gotoxy(prevX + 1, prevY + 1);
-								console.print(grid[prevY][prevX]);
+							break;
+						case KEY_RIGHT:
+						case 'd':
+							if (playerX < gridchatWidth - 2) {
+								prevX = playerX;
+								prevY = playerY;
+								playerX += 2;
+								// Redraw previous position
+								if (!chatConflict(prevX, prevY - 1, chatToggle)) {
+									console.gotoxy(prevX + 1, prevY + 1);
+									console.print(grid[prevY][prevX]);
+								}
+								redrawPlayer(playerX, playerY, chatToggle);
+								sleep(100); // 100ms pause after move
 							}
-							redrawPlayer(playerX, playerY, chatToggle);
-							sleep(100); // 100ms pause after move
-						}
-						break;
-					case 'j':
-						chatToggle = dispChat(chatToggle, staticGrid);
-						offScreenCursor();
-						redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
-						break;
-					case '\x1b': // Escape key
-						running = false;
-						break;
+							break;
+						case 'j':
+							chatToggle = dispChat(chatToggle, staticGrid);
+							offScreenCursor();
+							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
+							typeToggled = true;
+							break;
+						case '\x1b': // Escape key
+							running = false;
+							break;
+					}
+					console.clearkeybuffer(); // Used to prevent key buffering!!
 				}
-				console.clearkeybuffer(); // Used to prevent key buffering!!
 			}
 		}
 	}
