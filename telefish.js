@@ -227,7 +227,7 @@ function gameLoop() {
 				switch (key) {
 					case KEY_UP:
 					case 'w':
-						if (playerY > 0) {
+						if ((playerY > 0) && !chatConflict(playerX, playerY - 1, chatToggle)) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY--;
