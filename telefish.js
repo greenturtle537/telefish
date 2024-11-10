@@ -136,9 +136,7 @@ function redrawPlayer(playerX, playerY, prevX, prevY, chatToggle) {
 	} else {
 		console.gotoxy(playerX + 1, playerY + 1);
 		console.print('@');
-		if (chatConflict(prevX, prevY, chatToggle)) {
-			console.gotoxy(playerX + 1, playerY + 1);
-		}
+		console.gotoxy(playerX + 1, playerY + 1);
 	}
 }
 
