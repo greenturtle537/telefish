@@ -8,6 +8,14 @@ const ini_section = "telefish"; // ini file section
 
 var options = load({}, "modopts.js", ini_section);
 
+// Telefish options
+var chatWidth = 30;
+var chatHeight = 24;
+var startX = 1;
+var startY = 1;
+
+// Telefish global variables
+
 const test = js.exec_dir + "test.bin";
 
 require("sbbsdefs.js", "K_NONE");
@@ -49,12 +57,15 @@ function getCharAtPos(x, y) {
 	return charAtPosition;
 }
 
-function dispChat() {
-	var chat = bbs.multinode_chat();
-	if (chat) {
-		console.clear();
-		console.print(chat);
-		console.pause();
+function dispChat(chatToggle) {
+	if (!chatToggle) {
+		// Draw chat region
+		drawChatRegion();
+		return True
+	} else {
+		// Redraw region
+		redrawRegion();
+		return False
 	}
 }
 
@@ -78,23 +89,62 @@ function loadMapToGrid(filename, grid) {
 	return grid;
 }
 
-function redrawPlayer(playerX, playerY, prevX, prevY) {
+function drawChatRegion() {
+	// Draw top border
+	console.gotoxy(startX, startY);
+	console.print('+');
+	for (var x = 1; x < chatWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+
+	// Draw sides
+	for (var y = 1; y < chatHeight - 1; y++) {
+		console.gotoxy(startX, startY + y);
+		console.print('|');
+		console.gotoxy(startX + chatWidth - 1, startY + y);
+		console.print('|');
+	}
+
+	// Draw bottom border
+	console.gotoxy(startX, startY + chatHeight - 1);
+	console.print('+');
+	for (var x = 1; x < chatWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+}
+
+function redrawRegion() {
+	for (var y = 0; y < chatHeight - 2; y++) {
+		console.gotoxy(startX + 1, startY + 1 + y);
+		for (var x = 0; x < chatWidth - 2; x++) {
+			if (staticGrid[y] && staticGrid[y][x]) {
+				console.print(staticGrid[y][x]);
+			} else {
+				console.print(' ');
+			}
+		}
+	}
+}
+
+function redrawPlayer(playerX, playerY) {
 	console.gotoxy(playerX + 1, playerY + 1);
 	console.print('@');
 	console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player
 }
 
 function gameLoop() {
-	var gridWidth = 80;
-	var gridHeight = 24;
+	var gridchatWidth = 80;
+	var gridchatHeight = 24;
 	var grid = [];
-	var playerX = Math.floor(gridWidth / 2);
-	var playerY = Math.floor(gridHeight / 2);
+	var playerX = Math.floor(gridchatWidth / 2);
+	var playerY = Math.floor(gridchatHeight / 2);
 
 	// Initialize grid with empty values
-	for (var y = 0; y < gridHeight; y++) {
+	for (var y = 0; y < gridchatHeight; y++) {
 		grid[y] = [];
-		for (var x = 0; x < gridWidth; x++) {
+		for (var x = 0; x < gridchatWidth; x++) {
 			grid[y][x] = '.';
 		}
 	}
@@ -112,9 +162,11 @@ function gameLoop() {
 	var prevX = playerX;
 	var prevY = playerY;
 
+	var chatToggle = false;
+
 	console.gotoxy(1, 1);
-	for (var y = 0; y < gridHeight; y++) {
-		for (var x = 0; x < gridWidth; x++) {
+	for (var y = 0; y < gridchatHeight; y++) {
+		for (var x = 0; x < gridchatWidth; x++) {
 			console.print(grid[y][x]);
 		}
 		console.crlf();
@@ -132,7 +184,7 @@ function gameLoop() {
 				if (mk.mouse.action === 1) { // Left click
 					var mx = mk.mouse.column - 1;
 					var my = mk.mouse.row - 1;
-					if (mx >= 0 && mx < gridWidth && my >= 0 && my < gridHeight) {
+					if (mx >= 0 && mx < gridchatWidth && my >= 0 && my < gridchatHeight) {
 						prevX = playerX;
 						prevY = playerY;
 						playerX = mx;
@@ -150,20 +202,20 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, prevX, prevY);
+							redrawPlayer(playerX, playerY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_DOWN:
 					case 's':
-						if (playerY < gridHeight - 1) {
+						if (playerY < gridchatHeight - 1) {
 							prevY = playerY;
 							prevX = playerX;
 							playerY++;
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, prevX, prevY);
+							redrawPlayer(playerX, playerY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
@@ -176,25 +228,25 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, prevX, prevY);
+							redrawPlayer(playerX, playerY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
 					case KEY_RIGHT:
 					case 'd':
-						if (playerX < gridWidth - 2) {
+						if (playerX < gridchatWidth - 2) {
 							prevX = playerX;
 							prevY = playerY;
 							playerX += 2;
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
-							redrawPlayer(playerX, playerY, prevX, prevY);
+							redrawPlayer(playerX, playerY);
 							sleep(100); // 100ms pause after move
 						}
 						break;
 					case 'j':
-						dispChat();
+						chatToggle = dispChat(chatToggle);
 						break;
 					case '\x1b': // Escape key
 						running = false;
