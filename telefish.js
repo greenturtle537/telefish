@@ -98,11 +98,13 @@ function drawChatRegion() {
 	}
 	console.print('+');
 
-	// Draw sides
+	// Draw sides and fill inside with spaces
 	for (var y = 1; y < chatHeight - 1; y++) {
 		console.gotoxy(startX, startY + y);
 		console.print('|');
-		console.gotoxy(startX + chatWidth - 1, startY + y);
+		for (var x = 1; x < chatWidth - 1; x++) {
+			console.print(' ');
+		}
 		console.print('|');
 	}
 
