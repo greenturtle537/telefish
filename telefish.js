@@ -301,11 +301,11 @@ function gameLoop() {
 			} else {
 				if (typeToggled) { // If typing is toggled, do not move player
 					switch (key) {
-						case KEY_RETURN:
-						case KEY_ENTER: // I don't remember which is correct
+						case KEY_ENTER:
 							chatToggle = dispChat(chatToggle, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
+							typeToggled = false;
 							break;
 						case '\x1b': // Escape key
 							running = false;
@@ -379,8 +379,9 @@ function gameLoop() {
 							chatToggle = dispChat(chatToggle, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
-							typeToggled = true;
 							break;
+						case KEY_ENTER:
+							typeToggled = true;
 						case '\x1b': // Escape key
 							running = false;
 							break;
