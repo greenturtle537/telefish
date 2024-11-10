@@ -97,7 +97,8 @@ function drawChatRegion() {
 		console.print('-');
 	}
 	console.print('+');
-
+	
+	// Draw title
 	console.gotoxy(startX + 2, startY + 1);
 	console.print('Telefish Node Chat');
 
