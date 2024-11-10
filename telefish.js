@@ -160,8 +160,9 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							sleep(150); // 100ms pause after move
 						}
-						sleep(150); // 100ms pause after move
+						break;
 					case KEY_DOWN:
 					case 's':
 						if (playerY < gridHeight - 1) {
@@ -171,8 +172,9 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							sleep(150); // 100ms pause after move
 						}
-						sleep(150); // 100ms pause after move
+						break;
 					case KEY_LEFT: 
 					case 'a':
 						if (playerX > 0) {
@@ -182,8 +184,9 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							sleep(100); // 100ms pause after move
 						}
-						sleep(100); // 100ms pause after move
+						break;
 					case KEY_RIGHT:
 					case 'd':
 						if (playerX < gridWidth - 1) {
@@ -193,10 +196,12 @@ function gameLoop() {
 							// Redraw previous position
 							console.gotoxy(prevX + 1, prevY + 1);
 							console.print(grid[prevY][prevX]);
+							sleep(100); // 100ms pause after move
 						}
-						sleep(100); // 100ms pause after move
+						break;
 					case 'j':
-						//dispChat();
+						dispChat();
+						break;
 					case '\x1b': // Escape key
 						running = false;
 						break;
