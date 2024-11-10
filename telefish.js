@@ -325,7 +325,11 @@ try {
 		};
 		msg += tear_line;
 		if (!msgbase.save_msg(hdr, msg)) {
-			alert("Error saving exception-message to: " + options.sub);
+			if (options.sub === null) {
+				alert("Error saving exception-message to: mail");
+			} else {
+				alert("Error saving exception-message to: " + options.sub);
+			}
 		}
 		msgbase.close();
 	}
