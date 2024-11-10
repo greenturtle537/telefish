@@ -137,26 +137,26 @@ function drawChatRegion() {
 }
 
 function drawMessages(messages) {
-	const maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
-	const maxMessages = chatHeight - 4; // Adjust for borders and title
+	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
+	var maxMessages = chatHeight - 4; // Adjust for borders and title
 
 	// Clear the chat area
-	for (let y = 2; y < chatHeight - 2; y++) {
+	for (var y = 2; y < chatHeight - 2; y++) {
 		console.gotoxy(startX + 1, startY + y);
-		for (let x = 1; x < chatWidth - 1; x++) {
+		for (var x = 1; x < chatWidth - 1; x++) {
 			console.print(' ');
 		}
 	}
 
-	let messageLines = [];
+	var messageLines = [];
 
 	// Process messages into lines
-	for (let i = messages.length - 1; i >= 0; i--) {
-		let message = messages[i];
-		let words = message.text.split(' ');
-		let line = '';
+	for (var i = messages.length - 1; i >= 0; i--) {
+		var message = messages[i];
+		var words = message.text.split(' ');
+		var line = '';
 
-		for (let j = 0; j < words.length; j++) {
+		for (var j = 0; j < words.length; j++) {
 			if (line.length + words[j].length + 1 > maxMessageWidth) {
 				messageLines.push(line);
 				line = words[j];
@@ -173,8 +173,8 @@ function drawMessages(messages) {
 	}
 
 	// Display the most recent messages
-	let startLine = Math.max(0, messageLines.length - maxMessages);
-	for (let y = 2; y < chatHeight - 2 && startLine < messageLines.length; y++) {
+	var startLine = Math.max(0, messageLines.length - maxMessages);
+	for (var y = 2; y < chatHeight - 2 && startLine < messageLines.length; y++) {
 		console.gotoxy(startX + 1, startY + y);
 		console.print(messageLines[startLine]);
 		startLine++;
