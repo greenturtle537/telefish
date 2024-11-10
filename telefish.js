@@ -196,7 +196,7 @@ function gameLoop() {
 						}
 						sleep(100); // 100ms pause after move
 					case 'j':
-						dispChat();
+						//dispChat();
 					case '\x1b': // Escape key
 						running = false;
 						break;
