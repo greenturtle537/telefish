@@ -160,7 +160,7 @@ function drawTypedMessage(user, message) {
 		console.gotoxy(startX + 1, startLine + i);
 		console.print(lines[i]);
 	}
-	
+
 	if (message) {
 		var dashLine = '-'.repeat(chatWidth - 2);
 		var yPosition = startY + chatHeight - lines.length - 2;
@@ -381,6 +381,7 @@ function gameLoop() {
 						console.gotoxy(startX + 1, startY + chatHeight - 1);
 						console.print(typedMessage);
 					}
+					drawTypedMessage("You", typedMessage);
 					// Do not use console.clearkeybuffer(); here to preserve fast typing.
 				} else {
 					switch (key) {
