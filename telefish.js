@@ -405,7 +405,11 @@ function gameLoop() {
 						case '\x0A':
 							typeToggled = false;
 							if (typedMessage.length > 0) {
-								system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.alias+"\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
+								if (currentUser.handle === '') {
+									system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.alias+"\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
+								} else {
+									system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.handle+"\x1b"+typedMessage);
+								}
 							}
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
@@ -415,8 +419,8 @@ function gameLoop() {
 							typeToggled = false;
 							break;
 						case '\b':
-						case '\x7f':
-							if (typedMessage.length > 0) {
+						case '\x7f':							
+						if (typedMessage.length > 0) {
 								typedMessage = typedMessage.slice(0, -1);
 							}
 							break;
