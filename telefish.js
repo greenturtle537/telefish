@@ -359,7 +359,12 @@ function gameLoop() {
 			// Only redraw if new message is detected
 		}
 
-		if (mk) {
+		messages = system.get_node_message(1).split("[TF]");
+		for(var i = 0; i < messages.length; i++) {
+			sampleMessages.push({ text: messages[i], author: "You", date: "00000000000000"});
+		}
+
+		if (mk) {	
 			if (typeof mk === 'object' && mk.mouse) {
 				// Handle mouse input
 				if (mk.mouse.action === 1) { // Left click
