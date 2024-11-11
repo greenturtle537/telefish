@@ -389,19 +389,7 @@ function gameLoop() {
 						typedMessage += key;
 					}
 					drawTypedMessage("You", typedMessage);
-					// Move cursor to where next character will be added
-					var maxWidth = chatWidth - 2;
-					var formattedMessage = "You: " + typedMessage;
-					var totalLength = formattedMessage.length;
-					var linesNeeded = Math.ceil(totalLength / maxWidth);
-					var lastLineLength = totalLength % maxWidth;
-					if (lastLineLength === 0 && totalLength > 0) {
-						lastLineLength = maxWidth;
-					}
-					var cursorX = startX + 1 + lastLineLength;
-					var cursorY = startY + chatHeight - 1 - (linesNeeded - 1);
-					console.gotoxy(cursorX, cursorY);
-					// Do not use console.clearkeybuffer(); here to preserve fast typing.
+					// TODO: Move cursor to where next character will be added
 				} else {
 					switch (key) {
 						case KEY_UP:
