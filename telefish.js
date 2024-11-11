@@ -359,10 +359,13 @@ function gameLoop() {
 			// Only redraw if new message is detected
 		}
 
+		var messages = [];
 		try {
-			messages = system.get_node_message(1);
-			if (messages === null) {
+			message = system.get_node_message(1);
+			if (message === null) {
 				messages = [];
+			} else {
+				messages = message.split('[TF]');
 			}
 		} catch (e) {
 			messages = [];
