@@ -172,7 +172,10 @@ function drawTypedMessage(user, message) {
 	}
 }
 
-function drawMessages(messages, messageAdjust=2) {
+function drawMessages(messages, messageAdjust) {
+	if (messageAdjust === undefined) {
+		messageAdjust = 2;
+	}
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
 	var maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
