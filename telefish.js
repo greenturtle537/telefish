@@ -366,6 +366,7 @@ function gameLoop() {
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = false;
 							//TODO: Send message
+							typedMessage = ''; // Clear message after sending
 							break;
 						case '\x1b': // Escape key
 						// Just exit typing mode without doing sending message
@@ -374,26 +375,13 @@ function gameLoop() {
 						case '\b':
 						case '\x7f':
 							if (typedMessage.length > 0) {
-							typedMessage = typedMessage.slice(0, -1);
-							console.gotoxy(startX + 1, startY + chatHeight - 1);
-							for (var x = 1; x < chatWidth - 1; x++) {
-								console.print(' ');
-							}
-							console.gotoxy(startX + 1, startY + chatHeight - 1);
-							console.print(typedMessage);
+								typedMessage = typedMessage.slice(0, -1);
 							}
 							break;
 						case KEY_DEL:
 						case '\x1b[3~': // Delete key variants
 							if (typedMessage.length > 0) {
-								// Remove character at the cursor position
 								typedMessage = typedMessage.slice(0, typedMessage.length - 1);
-								console.gotoxy(startX + 1, startY + chatHeight - 1);
-								for (var x = 1; x < chatWidth - 1; x++) {
-									console.print(' ');
-								}
-								console.gotoxy(startX + 1, startY + chatHeight - 1);
-								console.print(typedMessage);
 							}
 							break;
 					}
@@ -401,6 +389,18 @@ function gameLoop() {
 						typedMessage += key;
 					}
 					drawTypedMessage("You", typedMessage);
+					// Move cursor to where next character will be added
+					var maxWidth = chatWidth - 2;
+					var formattedMessage = "You: " + typedMessage;
+					var totalLength = formattedMessage.length;
+					var linesNeeded = Math.ceil(totalLength / maxWidth);
+					var lastLineLength = totalLength % maxWidth;
+					if (lastLineLength === 0 && totalLength > 0) {
+						lastLineLength = maxWidth;
+					}
+					var cursorX = startX + 1 + lastLineLength;
+					var cursorY = startY + chatHeight - 1 - (linesNeeded - 1);
+					console.gotoxy(cursorX, cursorY);
 					// Do not use console.clearkeybuffer(); here to preserve fast typing.
 				} else {
 					switch (key) {
