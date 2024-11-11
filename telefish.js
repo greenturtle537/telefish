@@ -370,16 +370,16 @@ function gameLoop() {
 			if (message === null) {
 				messages = [];
 			} else {
-				messagesMetadata = message.split("\x1b");
+				messages = message.split("\x1b");
 			}
 		} catch (e) {
 			messages = [];
 		}
 
 		for(var i = 0; i < messages.length; i=i+3) {
-			if (!(messagesMetadata[i] === '' || messagesMetadata[i] === null)) {
+			if (!(messages[i] === '' || messages[i] === null)) {
 				unixTime = global.time();
-				sampleMessages.push({ text: messagesMetadata[i], author: `${messagesMetadata[i-1]}`, date: `${unixTime}`});
+				sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
 			}
 		}
 
