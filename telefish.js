@@ -15,6 +15,8 @@ var startX = 1;
 var startY = 1;
 
 var userNode = bbs.node_num;
+var currentUser = new User(bbs.node_useron);
+var telefish = currentUser.curxtrn
 
 // Telefish global variables
 

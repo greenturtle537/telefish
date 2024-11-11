@@ -1,0 +1,3 @@
+Is it better practice for new telefish members to broadcast their presence for 
+message comms when they start the game or for existing members to probe for new 
+nodes connecting to telefish? I think the first option.
