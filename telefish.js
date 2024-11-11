@@ -145,12 +145,32 @@ function drawTypedMessage(user, message) {
 	var line = '';
 
 	for (var i = 0; i < words.length; i++) {
-		if (line.length + words[i].length + (line.length > 0 ? 1 : 0) > maxWidth) {
-			lines.push(line);
-			line = words[i];
-		} else {
-			if (line.length > 0) line += ' ';
-			line += words[i];
+		var currentWord = words[i];
+
+		while (currentWord.length > 0) {
+			var spaceNeeded = (line.length > 0 ? 1 : 0);
+			var availableSpace = maxWidth - line.length - spaceNeeded;
+
+			if (availableSpace <= 0) {
+				if (line.length > 0) {
+					lines.push(line);
+					line = '';
+					availableSpace = maxWidth;
+				}
+			}
+
+			if (currentWord.length <= availableSpace) {
+				if (line.length > 0) line += ' ';
+				line += currentWord;
+				currentWord = '';
+			} else {
+				var segment = currentWord.substring(0, availableSpace);
+				if (line.length > 0) line += ' ';
+				line += segment;
+				currentWord = currentWord.substring(availableSpace);
+				lines.push(line);
+				line = '';
+			}
 		}
 	}
 	if (line.length > 0) lines.push(line);
@@ -164,7 +184,6 @@ function drawTypedMessage(user, message) {
 		console.print(lines[i]);
 	}
 
-	//Seperate from existing chat
 	var yPosition = startY + chatHeight - lines.length - 2;
 	console.gotoxy(startX + 1, yPosition);
 	for (var x = 1; x < chatWidth - 1; x++) {
