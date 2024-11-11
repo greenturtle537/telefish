@@ -145,35 +145,29 @@ function drawTypedMessage(user, message) {
 	var line = '';
 
 	for (var i = 0; i < words.length; i++) {
-		var currentWord = words[i];
+		var word = words[i];
 
-		while (currentWord.length > 0) {
-			var spaceNeeded = (line.length > 0 ? 1 : 0);
-			var availableSpace = maxWidth - line.length - spaceNeeded;
-
-			if (availableSpace <= 0) {
-				if (line.length > 0) {
-					lines.push(line);
-					line = '';
-					availableSpace = maxWidth;
-				}
-			}
-
-			if (currentWord.length <= availableSpace) {
-				if (line.length > 0) line += ' ';
-				line += currentWord;
-				currentWord = '';
-			} else {
-				var segment = currentWord.substring(0, availableSpace);
-				if (line.length > 0) line += ' ';
-				line += segment;
-				currentWord = currentWord.substring(availableSpace);
+		while (word.length > maxWidth) {
+			// Split the word if it's too long
+			var part = word.substring(0, maxWidth);
+			word = word.substring(maxWidth);
+			if (line.length > 0) {
 				lines.push(line);
 				line = '';
 			}
+			lines.push(part);
+		}
+
+		if (line.length + word.length + (line.length > 0 ? 1 : 0) > maxWidth) {
+			lines.push(line);
+			line = word;
+		} else {
+			if (line.length > 0) line += ' ';
+			line += word;
 		}
 	}
 	if (line.length > 0) lines.push(line);
+
 	var startLine = startY + chatHeight - 1 - lines.length;
 	for (var i = 0; i < lines.length; i++) {
 		console.gotoxy(startX + 1, startLine + i);
@@ -184,6 +178,7 @@ function drawTypedMessage(user, message) {
 		console.print(lines[i]);
 	}
 
+	// Separate from existing chat
 	var yPosition = startY + chatHeight - lines.length - 2;
 	console.gotoxy(startX + 1, yPosition);
 	for (var x = 1; x < chatWidth - 1; x++) {
