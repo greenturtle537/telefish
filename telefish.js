@@ -422,14 +422,16 @@ function gameLoop() {
 							}
 							break;
 					}
-					if (lastTypedMessage != typedMessage) {
-						drawMessages(sampleMessages, 2);
-					} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
-					if (checkSingleCharacter(key)) {
-						typedMessage += key;
+					if (typeToggled === true) {
+						if (lastTypedMessage != typedMessage) {
+							drawMessages(sampleMessages, 2);
+						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
+						if (checkSingleCharacter(key)) {
+							typedMessage += key;
+						}
+						lastTypedMessage = typedMessage;
+						drawTypedMessage("You", typedMessage);
 					}
-					lastTypedMessage = typedMessage;
-					drawTypedMessage("You", typedMessage);
 					
 					// TODO: Move cursor to where next character will be added
 					// For now:
