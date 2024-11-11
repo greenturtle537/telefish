@@ -378,7 +378,7 @@ function gameLoop() {
 
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
-				unixTime = global.time();
+				unixTime = bbs.time();
 				sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
 			}
 		}
