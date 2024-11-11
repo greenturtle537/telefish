@@ -188,7 +188,7 @@ function drawTypedMessage(user, message) {
 
 function drawMessages(messages, messageAdjust) {
 	if (messageAdjust === undefined) {
-		messageAdjust = 2;
+		messageAdjust = 0;
 	}
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
@@ -402,7 +402,7 @@ function gameLoop() {
 							break;
 					}
 					if (lastTypedMessage != typedMessage) {
-						drawMessages(sampleMessages);
+						drawMessages(sampleMessages, 2);
 					} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 					if (checkSingleCharacter(key)) {
 						typedMessage += key;
@@ -485,6 +485,7 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = true;
+							drawMessages(sampleMessages, 2);
 							break;
 						case '\x1b': // Escape key
 							running = false;
