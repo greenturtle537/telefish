@@ -143,6 +143,7 @@ function drawTypedMessage(user, message) {
 	var words = formattedMessage.split(' ');
 	var lines = [];
 	var line = '';
+
 	for (var i = 0; i < words.length; i++) {
 		if (line.length + words[i].length + (line.length > 0 ? 1 : 0) > maxWidth) {
 			lines.push(line);
@@ -163,19 +164,18 @@ function drawTypedMessage(user, message) {
 		console.print(lines[i]);
 	}
 
-	if (message) {
-		var yPosition = startY + chatHeight - lines.length - 2;
-		console.gotoxy(startX + 1, yPosition);
-		for (var x = 1; x < chatWidth - 1; x++) {
-			console.print('-');
-		}
+	//Seperate from existing chat
+	var yPosition = startY + chatHeight - lines.length - 2;
+	console.gotoxy(startX + 1, yPosition);
+	for (var x = 1; x < chatWidth - 1; x++) {
+		console.print('-');
 	}
 }
 
-function drawMessages(messages) {
+function drawMessages(messages, messageAdjust=2) {
 	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
 	var maxMessages = chatHeight - 4; // Adjust for borders and title
-	var maxMessages = maxMessages - 2; // Adjust for message entry section.
+	var maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
 
 	// Clear the chat area
 	for (var y = 2; y < chatHeight - 2; y++) {
@@ -222,7 +222,8 @@ function drawMessages(messages) {
 }
 
 function checkSingleCharacter(key) {
-	if (typeof key === 'string' && key.length === 1) {
+	var commonKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 `~!@#$%^&*()-_=+[]{}|;:\'",.<>/?\\'.split('');
+	if (typeof key === 'string' && commonKeys.includes(key)) {
 		return key;
 	}
 	return false;
@@ -385,8 +386,6 @@ function gameLoop() {
 					}
 					if (checkSingleCharacter(key)) {
 						typedMessage += key;
-						console.gotoxy(startX + 1, startY + chatHeight - 1);
-						console.print(typedMessage);
 					}
 					drawTypedMessage("You", typedMessage);
 					// Do not use console.clearkeybuffer(); here to preserve fast typing.
