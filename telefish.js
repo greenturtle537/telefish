@@ -317,6 +317,7 @@ function gameLoop() {
 	var messageLength = 0;
 
 	var typedMessage = '';
+	var lastTypedMessage = '';
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -367,6 +368,7 @@ function gameLoop() {
 							typeToggled = false;
 							//TODO: Send message
 							typedMessage = ''; // Clear message after sending
+							drawMessages(sampleMessages);
 							break;
 						case '\x1b': // Escape key
 						// Just exit typing mode without doing sending message
@@ -385,10 +387,15 @@ function gameLoop() {
 							}
 							break;
 					}
+					if (lastTypedMessage != typedMessage) {
+						drawMessages(sampleMessages);
+					} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 					if (checkSingleCharacter(key)) {
 						typedMessage += key;
 					}
+					lastTypedMessage = typedMessage;
 					drawTypedMessage("You", typedMessage);
+					
 					// TODO: Move cursor to where next character will be added
 				} else {
 					switch (key) {
