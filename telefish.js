@@ -380,7 +380,7 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = false;
-							//TODO: Send message
+							sampleMessages.push({ text: typedMessage, author: "You", date: "00000000000000" });
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
 							break;
