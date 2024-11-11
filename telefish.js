@@ -358,7 +358,8 @@ function gameLoop() {
 			messageLength = sampleMessages.length;
 			// Only redraw if new message is detected
 		}
-
+		
+		var message = '';
 		var messages = [];
 		try {
 			message = system.get_node_message(1);
