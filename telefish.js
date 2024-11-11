@@ -358,7 +358,7 @@ function gameLoop() {
 			messageLength = sampleMessages.length;
 			// Only redraw if new message is detected
 		}
-		
+
 		var message = '';
 		var messages = [];
 		try {
@@ -399,7 +399,9 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A':
 							typeToggled = false;
-							system.put_node_message(1, "\x1bTF\x1b"+typedMessage);	
+							if (typedMessage.length > 0) {
+								system.put_node_message(1, "\x1bTF\x1b"+typedMessage);	
+							}
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
 							break;
