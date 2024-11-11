@@ -231,7 +231,7 @@ function drawMessages(messages, messageAdjust) {
 
 	// Display the most recent messages
 	var startLine = Math.max(0, messageLines.length - maxMessages);
-	for (var y = 2; y < chatHeight - 2 && startLine < messageLines.length; y++) {
+	for (var y = 2; y < chatHeight - 1 && startLine < messageLines.length; y++) {
 		console.gotoxy(startX + 1, startY + y);
 		console.print(messageLines[startLine]);
 		startLine++;
