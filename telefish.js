@@ -405,7 +405,7 @@ function gameLoop() {
 						case '\x0A':
 							typeToggled = false;
 							if (typedMessage.length > 0) {
-								system.put_node_message(userNode, "\x1bTF\x1b${userNode}\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
+								system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.alias+"\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
 							}
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
