@@ -14,6 +14,8 @@ var chatHeight = 24;
 var startX = 1;
 var startY = 1;
 
+var userNode = bbs.node_num;
+
 // Telefish global variables
 
 var sampleMessages = [
@@ -362,7 +364,7 @@ function gameLoop() {
 		var message = '';
 		var messages = [];
 		try {
-			message = system.get_node_message(1);
+			message = system.get_node_message(userNode);
 			if (message === null) {
 				messages = [];
 			} else {
@@ -400,7 +402,7 @@ function gameLoop() {
 						case '\x0A':
 							typeToggled = false;
 							if (typedMessage.length > 0) {
-								system.put_node_message(1, "\x1bTF\x1b"+typedMessage);	
+								system.put_node_message(userNode, "\x1bTF\x1b"+typedMessage);	
 							}
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
