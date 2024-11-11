@@ -365,14 +365,16 @@ function gameLoop() {
 			if (message === null) {
 				messages = [];
 			} else {
-				messages = message.split('[TF]');
+				messages = message.split("\x1bTF\x1b");
 			}
 		} catch (e) {
 			messages = [];
 		}
 
 		for(var i = 0; i < messages.length; i++) {
-			sampleMessages.push({ text: messages[i], author: "You", date: "00000000000000"});
+			if (!(messages[i] === '' || messages[i] === null)) {
+				sampleMessages.push({ text: messages[i], author: "User", date: "00000000000000"});
+			}
 		}
 
 		if (mk) {	
@@ -394,10 +396,9 @@ function gameLoop() {
 						case '\r':
 						case '\n':
 						case '\x0D':
-						case '\x0A': // Enter key variants, TODO: update to sys standard
+						case '\x0A':
 							typeToggled = false;
-							sampleMessages.push({ text: typedMessage, author: "You", date: "00000000000000" });
-							system.put_node_message(1, typedMessage);	
+							system.put_node_message(1, "\x1bTF\x1b"+typedMessage);	
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
 							break;
