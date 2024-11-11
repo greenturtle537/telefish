@@ -195,7 +195,7 @@ function drawMessages(messages, messageAdjust) {
 	var maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
 
 	// Clear the chat area
-	for (var y = 2; y < chatHeight - 2; y++) {
+	for (var y = 2; y < chatHeight - 1; y++) {
 		console.gotoxy(startX + 1, startY + y);
 		for (var x = 1; x < chatWidth - 1; x++) {
 			console.print(' ');
