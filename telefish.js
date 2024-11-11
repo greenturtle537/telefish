@@ -411,6 +411,9 @@ function gameLoop() {
 					drawTypedMessage("You", typedMessage);
 					
 					// TODO: Move cursor to where next character will be added
+					// For now:
+					offScreenCursor();
+					
 				} else {
 					switch (key) {
 						case KEY_UP:
