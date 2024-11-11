@@ -359,7 +359,15 @@ function gameLoop() {
 			// Only redraw if new message is detected
 		}
 
-		messages = system.get_node_message(1).split("[TF]");
+		try {
+			messages = system.get_node_message(1);
+			if (messages === null) {
+				messages = [];
+			}
+		} catch (e) {
+			messages = [];
+		}
+
 		for(var i = 0; i < messages.length; i++) {
 			sampleMessages.push({ text: messages[i], author: "You", date: "00000000000000"});
 		}
