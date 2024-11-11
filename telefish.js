@@ -226,7 +226,17 @@ function drawMessages(messages, messageAdjust) {
 
 function checkSingleCharacter(key) {
 	var commonKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 `~!@#$%^&*()-_=+[]{}|;:\'",.<>/?\\'.split('');
-	if (typeof key === 'string' && commonKeys.includes(key)) {
+	if (typeof key === 'string' && key.length === 1) {
+		var isCommonKey = false;
+		for (var i = 0; i < commonKeys.length; i++) {
+			if (commonKeys[i] === key) {
+				isCommonKey = true;
+				break;
+			}
+		}
+		if (!isCommonKey) {
+			return false;
+		}
 		return key;
 	}
 	return false;
