@@ -381,6 +381,7 @@ function gameLoop() {
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							typeToggled = false;
 							sampleMessages.push({ text: typedMessage, author: "You", date: "00000000000000" });
+							system.put_node_message(1, typedMessage);	
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
 							break;
@@ -413,7 +414,7 @@ function gameLoop() {
 					// TODO: Move cursor to where next character will be added
 					// For now:
 					offScreenCursor();
-					
+
 				} else {
 					switch (key) {
 						case KEY_UP:
