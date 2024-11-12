@@ -320,11 +320,21 @@ function probeNode(node) {
 	}
 }
 
+// Ask all nodes to discover themselves, including self
 function broadcastDiscover() {
 	for(var i = 0; i < system.nodes; i++) {
 		system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 	}
 }
+
+// Acknowledge the node that sent the discover message, not including self
+function broadcastAcknowledge(node) {
+	if (node === userNode) {
+		return;
+	}
+	system.put_node_message(node, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+}
+
 
 function sendMessage(message, name) {
 	for(var i = 0; i < nodesOnline.length; i++) {
@@ -413,6 +423,7 @@ function gameLoop() {
 			if (!(messages[i] === '' || messages[i] === null)) {
 				if (messages[i] === "\x7fDISCOVER\x7f") {
 					nodesOnline.push(messages[i-1]);
+					broadcastAcknowledge(messages[i-1]);
 				} else {
 					unixTime = time();
 					sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
