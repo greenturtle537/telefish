@@ -601,8 +601,10 @@ function gameLoop() {
 						case '\n':
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
-							typeToggled = true;
-							drawMessages(sampleMessages, 2);
+							if (chatToggle) {
+								typeToggled = true;
+								drawMessages(sampleMessages, 2);
+							}
 							break;
 						case '\x1b': // Escape key
 							running = false;
