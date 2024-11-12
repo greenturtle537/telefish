@@ -18,6 +18,8 @@ var userNode = bbs.node_num;
 var currentUser = new User(bbs.node_useron);
 var telefish = currentUser.curxtrn
 
+var nodesOnline = [];
+
 // Telefish global variables
 
 var sampleMessages = [
@@ -301,6 +303,33 @@ function offScreenCursor() {
 	console.gotoxy(200, 200); // Move cursor off screen
 }
 
+function runCommand(command) {
+	switch (command) {
+		case "/online":
+
+	}
+}
+
+function probeNode(node) {
+	var targetNode = new User(node);
+	if (targetNode.curxtrn === "TELEFISH") {
+		return true;
+	} else {
+		nodesOnline.splice(nodesOnline.indexOf(node), 1);
+		return false;
+	}
+}
+
+function broadcastDiscover() {
+	system.put_node_message(userNode, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+}
+
+function sendMessage(message, name) {
+	for(var i = 0; i < nodesOnline.length; i++) {
+		system.put_node_message(nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
+	}
+}
+
 function gameLoop() {
 	var gridchatWidth = 80;
 	var gridchatHeight = 24;
@@ -345,6 +374,9 @@ function gameLoop() {
 		console.crlf();
 	}
 
+	broadcastDiscover();
+	nodesOnline.push(userNode); // Add self to online nodes for message echo
+
 	while (running) {
 
 		// Get input
@@ -378,9 +410,20 @@ function gameLoop() {
 
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
-				unixTime = time();
-				sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
+				if (messages[i] === "\x7fDISCOVER\x7f") {
+					nodesOnline.push(messages[i-1]);
+				} else {
+					unixTime = time();
+					sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
+				}
 			}
+		}
+
+
+		// Debug TODO: Remove
+		console.gotoxy(26, 1);
+		for (var i=0; i < nodesOnline.length; i++) {
+			console.print(nodesOnline[i] + " ");
 		}
 
 		if (mk) {	
@@ -404,7 +447,13 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A':
 							typeToggled = false;
+
 							if (typedMessage.length > 0) {
+								if (typedMessage.charAt(0) === '/') {
+									runCommand(typedMessage);
+								} else {
+									sampleMessages.push({ text: typedMessage, author: currentUser.handle, date: time() });
+								}
 								if (currentUser.handle === '') {
 									system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.alias+"\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
 								} else {
@@ -439,7 +488,7 @@ function gameLoop() {
 							typedMessage += key;
 						}
 						lastTypedMessage = typedMessage;
-						drawTypedMessage("You", typedMessage);
+						drawTypedMessage(currentUser.handle, typedMessage);
 					}
 					
 					// TODO: Move cursor to where next character will be added
