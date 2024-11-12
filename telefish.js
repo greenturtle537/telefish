@@ -315,7 +315,7 @@ function probeNode(node) {
 	if (targetNode.curxtrn === "TELEFISH") {
 		return true;
 	} else {
-		nodesOnline.splice(nodesOnline.indexOf(node), 1);
+		//nodesOnline.splice(nodesOnline.indexOf(node), 1);
 		return false;
 	}
 }
@@ -323,7 +323,9 @@ function probeNode(node) {
 // Ask all nodes to discover themselves, including self
 function broadcastDiscover() {
 	for(var i = 0; i < system.nodes; i++) {
-		system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+		if (probeNode(i)) {
+			system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+		}
 	}
 }
 
