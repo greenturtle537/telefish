@@ -483,13 +483,12 @@ function gameLoop() {
 								if (typedMessage.charAt(0) === '/') {
 									runCommand(typedMessage);
 								} else {
-									sampleMessages.push({ text: typedMessage, author: currentUser.handle, date: time() });
-								}
-								if (currentUser.handle === '') {
-									system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.alias+"\x1b"+typedMessage); //Use non-typeable esc characters to separate messages
-								} else {
-									system.put_node_message(userNode, "\x1bTF\x1b"+currentUser.handle+"\x1b"+typedMessage);
-								}
+									if (currentUser.handle === '') {
+										sendMessage(typedMessage, currentUser.alias);
+									} else {
+										sendMessage(typedMessage, currentUser.handle);
+									}
+								}	
 							}
 							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
