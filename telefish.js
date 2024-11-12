@@ -434,9 +434,12 @@ function gameLoop() {
 
 		// Debug TODO: Remove
 		console.gotoxy(1, 27);
-		for (var i=0; i < messages.length; i++) {
+		for(var i=0; i < messages.length; i++) {
 			console.print(messages[i] + " ");
 		}
+		console.gotoxy(1, 28);
+		console.print(currentUser.xtrn);
+
 
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
