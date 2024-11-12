@@ -329,7 +329,7 @@ function broadcastDiscover() {
 
 // Acknowledge the node that sent the discover message, not including self
 function broadcastAcknowledge(node) {
-	if (int(node) === userNode) {
+	if (parseInt(node) === parseInt(userNode)) {
 		return;
 	}
 	system.put_node_message(node, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
