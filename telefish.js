@@ -431,7 +431,7 @@ function gameLoop() {
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
 				if (messages[i] === "\x7fDISCOVER\x7f") {
-					if (!(checkDuplicateNode(node))) {
+					if (!(checkDuplicateNode(messages[i-1]))) {
 						broadcastAcknowledge(messages[i-1]);
 						nodesOnline.push(messages[i-1]);
 					}
