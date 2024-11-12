@@ -327,10 +327,12 @@ function broadcastDiscover() {
 	}
 }
 
-// Acknowledge the node that sent the discover message, not including self
+// Acknowledge the node that sent the discover message, not including self or already acknowledged nodes
 function broadcastAcknowledge(node) {
-	if (parseInt(node) === parseInt(userNode)) {
-		return;
+	for(var i = 0; i < nodesOnline.length; i++) {
+		if (parseInt(node) === parseInt(nodesOnline[i])) {
+			return;
+		}
 	}
 	system.put_node_message(node, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 }
