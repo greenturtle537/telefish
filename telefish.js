@@ -23,19 +23,8 @@ var nodesOnline = [];
 
 // Telefish global variables
 
-var sampleMessages = [
-	{ text: "Hello everyone!", author: "User1", date: "1672531200" },
-	{ text: "How's it going?", author: "User2", date: "1672536900" },
-	{ text: "Anyone up for a game?", author: "User3", date: "1672542600" },
-	{ text: "Nice to meet you all!", author: "User4", date: "1672548300" },
-	{ text: "What's the plan for today?", author: "User5", date: "1672554000" },
-	{ text: "I'm new here.", author: "User6", date: "1672559700" },
-	{ text: "Can someone help me?", author: "User7", date: "1672565400" },
-	{ text: "Great job on the project!", author: "User8", date: "1672571100" },
-	{ text: "Let's catch up later.", author: "User9", date: "1672576800" },
-	{ text: "Goodbye for now!", author: "User10", date: "1672582500" },
-	{ text: "This is an extra long message to test how the chat system handles messages that exceed the typical length.", author: "User11", date: "1672588200" }
-];
+// TODO: Rename to messages
+var sampleMessages = [];
 
 const test = js.exec_dir + "test.bin";
 
@@ -324,7 +313,7 @@ function probeNode(node) {
 // Ask all nodes to discover themselves, including self
 function broadcastDiscover() {
 	for(var i = 0; i < system.nodes; i++) {
-		if (probeNode(i)) {
+		if (probeNode(i) && !checkDuplicateNode(i)) {
 			system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 		}
 	}
@@ -400,6 +389,8 @@ function gameLoop() {
 		console.crlf();
 	}
 
+
+	nodesOnline.push(userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	broadcastDiscover(); //Will also discover self for echo now
 
 	while (running) {
