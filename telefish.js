@@ -383,6 +383,8 @@ function gameLoop() {
 	var typeToggled = false;
 
 	var messageLength = 0;
+	var message = '';
+	var messages = [];
 
 	var typedMessage = '';
 	var lastTypedMessage = '';
@@ -414,9 +416,6 @@ function gameLoop() {
 			messageLength = sampleMessages.length;
 			// Only redraw if new message is detected
 		}
-
-		var message = '';
-		var messages = [];
 
 		try {
 			message = system.get_node_message(userNode);
