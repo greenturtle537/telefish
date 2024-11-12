@@ -421,7 +421,7 @@ function gameLoop() {
 
 
 		// Debug TODO: Remove
-		console.gotoxy(26, 1);
+		console.gotoxy(1, 26);
 		for (var i=0; i < nodesOnline.length; i++) {
 			console.print(nodesOnline[i] + " ");
 		}
