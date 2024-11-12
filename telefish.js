@@ -417,6 +417,7 @@ function gameLoop() {
 
 		var message = '';
 		var messages = [];
+
 		try {
 			message = system.get_node_message(userNode);
 			if (message === null) {
@@ -426,6 +427,12 @@ function gameLoop() {
 			}
 		} catch (e) {
 			messages = [];
+		}
+
+		// Debug TODO: Remove
+		console.gotoxy(1, 27);
+		for (var i=0; i < messages.length; i++) {
+			console.print(messages[i] + " ");
 		}
 
 		for(var i = 0; i < messages.length; i=i+3) {
