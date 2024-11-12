@@ -321,7 +321,9 @@ function probeNode(node) {
 }
 
 function broadcastDiscover() {
-	system.put_node_message(userNode, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+	for(var i = 0; i < system.nodes; i++) {
+		system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+	}
 }
 
 function sendMessage(message, name) {
