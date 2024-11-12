@@ -5,6 +5,7 @@ const REVISION = "$Revision: 0.1 $".split(' ')[1];
 const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 const ini_section = "telefish"; // ini file section
 
+var debug = false; //Debug flag
 
 var options = load({}, "modopts.js", ini_section);
 
@@ -432,12 +433,7 @@ function gameLoop() {
 			messages = [];
 		}
 
-		// Debug TODO: Remove
-		console.gotoxy(1, 27);
-		for(var i=0; i < messages.length; i++) {
-			console.print(messages[i] + " ");
-		}
-		console.gotoxy(1, 28);
+
 
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
@@ -453,11 +449,17 @@ function gameLoop() {
 			}
 		}
 
-
 		// Debug TODO: Remove
-		console.gotoxy(1, 26);
-		for (var i=0; i < nodesOnline.length; i++) {
-			console.print(nodesOnline[i] + " ");
+		if (debug) {
+			console.gotoxy(1, 27);
+			for(var i=0; i < messages.length; i++) {
+				console.print(messages[i] + " ");
+			}
+			console.gotoxy(1, 28);
+			console.gotoxy(1, 26);
+			for (var i=0; i < nodesOnline.length; i++) {
+				console.print(nodesOnline[i] + " ");
+			}
 		}
 
 		if (mk) {	
