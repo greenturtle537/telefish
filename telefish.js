@@ -414,9 +414,11 @@ function gameLoop() {
 		}
 
 		if (messageLength != sampleMessages.length) {
-			drawMessages(sampleMessages);
-			messageLength = sampleMessages.length;
-			// Only redraw if new message is detected
+			if (chatToggle) {
+				drawMessages(sampleMessages);
+				messageLength = sampleMessages.length;
+				// Only redraw if new message is detected
+			}
 		}
 
 		try {
