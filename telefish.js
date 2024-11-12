@@ -376,8 +376,7 @@ function gameLoop() {
 		console.crlf();
 	}
 
-	broadcastDiscover();
-	nodesOnline.push(userNode); // Add self to online nodes for message echo
+	broadcastDiscover(); //Will also discover self for echo now
 
 	while (running) {
 
