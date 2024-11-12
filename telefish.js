@@ -16,7 +16,7 @@ var startY = 1;
 
 var userNode = bbs.node_num;
 var currentUser = new User(bbs.node_useron);
-var telefish = currentUser.curxtrn
+var telefish = currentUser.curxtrn // For ref, this is currently telefish but may change
 
 var nodesOnline = [];
 
@@ -312,7 +312,7 @@ function runCommand(command) {
 
 function probeNode(node) {
 	var targetNode = new User(node);
-	if (targetNode.curxtrn === "TELEFISH") {
+	if (targetNode.curxtrn === telefish) {
 		return true;
 	} else {
 		//nodesOnline.splice(nodesOnline.indexOf(node), 1);
@@ -438,8 +438,6 @@ function gameLoop() {
 			console.print(messages[i] + " ");
 		}
 		console.gotoxy(1, 28);
-		console.print(currentUser.curxtrn);
-
 
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
