@@ -438,7 +438,7 @@ function gameLoop() {
 			console.print(messages[i] + " ");
 		}
 		console.gotoxy(1, 28);
-		console.print(currentUser.xtrn);
+		console.print(currentUser.curxtrn);
 
 
 		for(var i = 0; i < messages.length; i=i+3) {
