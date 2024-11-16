@@ -30,8 +30,6 @@ var nodesOnline = [];
 // TODO: Rename to messages
 var sampleMessages = [];
 
-const test = js.exec_dir + "test.bin";
-
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
 
@@ -217,7 +215,7 @@ function calculateMessageLines(user, message) {
 
 function fish() {
 	//console.clear();
-	show_image(telefish_title, false, 0, 80, 24);
+	show_image(telefish_title, false, 0, 80, 25);
 	console.pause();
 	//console.clear();
 }
