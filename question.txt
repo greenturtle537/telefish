@@ -1,3 +1,21 @@
-Is it better practice for new telefish members to broadcast their presence for 
-message comms when they start the game or for existing members to probe for new 
-nodes connecting to telefish? I think the first option.
+Mev: What are the key game mechanics of Webfishing? List below
+there's a mix of ones i actually use and ones i do not but are still there
+catch fish (big variety) -> fish vary is type, size, and then shiny level (ex. a normal 1cm shrimp or a "radiant" whale of 3000 cm)
+sell fish (different type and size and shiny level sell for different amounts)
+buy upgrades to catch better and stronger fish (your strength, how fast you reel, how quickly you get a bite, luck chance of getting extra stuff)
+customize appearance (not very applicable, maybe change color idk)
+there's a hut with a guy who sells lottery tickets
+metal detecting (usually a coin or soda tab or smth, sometimes better stuff like a sword shard which combines into a full sword at the hut person)
+talk to other people/socialize
+there is chalk to draw and music instruments
+a few neat places like a lighthouse and an aquarium where you can store one fish and only one fish
+if you fall in the water you drown and respawn outside of the water (basically) (i exaggerate)
+a few secret hidden goodies like bones which combine into a cool new fishing rod
+there are emotes
+thingies called "fishing buddies" which catch fish for you (passive fish income) which can be upgraded to catch better fish and catch faster
+
+main minigame for fishing -> when you get a bite, you hold down mouseclick to reel in, and mash mouse at sections to get rid of a wall
+(stronger fish set higher and more walls, strength impacts how much you need to mash) and then you got the fish and hold it up and it gives a
+little bit of flavor text like animal crossing
+
+that's all i can think of rn

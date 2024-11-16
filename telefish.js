@@ -38,9 +38,11 @@ function show_image(filename, fx, delay)
 	var Graphic = load({}, "graphic.js");
 	var sauce_lib = load({}, "sauce_lib.js");
 	var sauce = sauce_lib.read(filename);
-	if (delay === undefined)
-		delay = options.image_delay;
-	if (sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
+	if (delay === undefined) {
+		//delay = options.image_delay;
+	    delay = 0;
+    }
+	if (sauce && sauce.datatype == saucelib.defs.datatype.bin) {
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
@@ -58,7 +60,6 @@ function show_image(filename, fx, delay)
 function getCharAtPos(x, y) {
 	// Move the cursor to position (x, y)
 	console.gotoxy(x, y);
-
 	// Calculate the index in the screen buffer
 	var index = (y - 1) * console.screen_columns + (x - 1);
 
@@ -180,6 +181,7 @@ function drawTypedMessage(user, message) {
 	for (var x = 1; x < chatWidth - 1; x++) {
 		console.print('-');
 	}
+	return lines.length;
 }
 
 function drawMessages(messages, messageAdjust) {
@@ -380,6 +382,7 @@ function gameLoop() {
 
 	var typedMessage = '';
 	var lastTypedMessage = '';
+	var lines = 0;
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -508,13 +511,13 @@ function gameLoop() {
 					}
 					if (typeToggled === true) {
 						if (lastTypedMessage != typedMessage) {
-							drawMessages(sampleMessages, 2);
+							drawMessages(sampleMessages, lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 						if (checkSingleCharacter(key)) {
 							typedMessage += key;
 						}
 						lastTypedMessage = typedMessage;
-						drawTypedMessage(currentUser.handle, typedMessage);
+						lines = drawTypedMessage(currentUser.handle, typedMessage);
 					}
 					
 					// TODO: Move cursor to where next character will be added
