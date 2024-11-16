@@ -184,6 +184,39 @@ function drawTypedMessage(user, message) {
 	return lines.length;
 }
 
+function calculateMessageLines(user, message) {
+	var maxWidth = chatWidth - 2;
+	var formattedMessage = user + ": " + message;
+	var words = formattedMessage.split(' ');
+	var lines = [];
+	var line = '';
+
+	for (var i = 0; i < words.length; i++) {
+		var word = words[i];
+
+		while (word.length > maxWidth) {
+			var part = word.substring(0, maxWidth);
+			word = word.substring(maxWidth);
+			if (line.length > 0) {
+				lines.push(line);
+				line = '';
+			}
+			lines.push(part);
+		}
+
+		if (line.length + word.length + (line.length > 0 ? 1 : 0) > maxWidth) {
+			lines.push(line);
+			line = word;
+		} else {
+			if (line.length > 0) line += ' ';
+			line += word;
+		}
+	}
+	if (line.length > 0) lines.push(line);
+
+	return lines.length;
+}
+
 function drawMessages(messages, messageAdjust) {
 	if (messageAdjust === undefined) {
 		messageAdjust = 0;
@@ -510,6 +543,7 @@ function gameLoop() {
 							break;
 					}
 					if (typeToggled === true) {
+						lines = calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage) {
 							drawMessages(sampleMessages, lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
@@ -517,7 +551,7 @@ function gameLoop() {
 							typedMessage += key;
 						}
 						lastTypedMessage = typedMessage;
-						lines = drawTypedMessage(currentUser.handle, typedMessage);
+						drawTypedMessage(currentUser.handle, typedMessage);
 					}
 					
 					// TODO: Move cursor to where next character will be added
