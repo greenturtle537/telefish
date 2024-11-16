@@ -46,7 +46,7 @@ function show_image(filename, fx, delay)
 		//delay = options.image_delay;
 	    delay = 0;
     }
-	if (sauce && sauce.datatype == sauce_lib.defs.datatype.ansi) {
+	if (sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
