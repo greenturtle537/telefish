@@ -225,10 +225,10 @@ function calculateMessageLines(user, message) {
 }
 
 function fish() {
-	console.clear();
-	show_image(telefish_title_xbin, /* fx: */false, /* delay: */0);
+	//console.clear();
+	show_image(telefish_title_xbin, false, 0);
 	console.pause();
-	console.clear();
+	//console.clear();
 }
 
 function drawMessages(messages, messageAdjust) {
