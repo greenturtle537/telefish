@@ -226,7 +226,7 @@ function calculateMessageLines(user, message) {
 
 function fish() {
 	//console.clear();
-	show_image(telefish_title_xbin, false, 0);
+	show_image(telefish_title, false, 0);
 	console.pause();
 	//console.clear();
 }
