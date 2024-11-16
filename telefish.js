@@ -221,9 +221,9 @@ function drawMessages(messages, messageAdjust) {
 	if (messageAdjust === undefined) {
 		messageAdjust = 0;
 	}
-	var maxMessageWidth = chatWidth - 4; // Adjust for borders and padding
+	var maxWidth = chatWidth - 2;
 	var maxMessages = chatHeight - 3; // Adjust for borders and title
-	var maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
+	maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
 
 	// Clear the chat area
 	for (var y = 2; y < chatHeight - 1; y++) {
@@ -233,39 +233,55 @@ function drawMessages(messages, messageAdjust) {
 		}
 	}
 
-	var messageLines = [];
+	var allLines = [];
 
 	// TODO: Sort messages by date in descending order
 
 	// Process messages into lines
-	for (var i = 0; i < messages.length; i++) {
-		var message = messages[i];
-		var formattedMessage = message.author + ": " + message.text;
+	for (var m = 0; m < messages.length; m++) {
+		var message = messages[m];
+		var user = message.author;
+		var text = message.text;
+		var formattedMessage = user + ": " + text;
 		var words = formattedMessage.split(' ');
+		var lines = [];
 		var line = '';
 
-		for (var j = 0; j < words.length; j++) {
-			if (line.length + words[j].length + 1 > maxMessageWidth) {
-				messageLines.push(line);
-				line = words[j];
-			} else {
+		for (var i = 0; i < words.length; i++) {
+			var word = words[i];
+
+			while (word.length > maxWidth) {
+				// Split the word if it's too long
+				var part = word.substring(0, maxWidth);
+				word = word.substring(maxWidth);
 				if (line.length > 0) {
-					line += ' ';
+					lines.push(line);
+					line = '';
 				}
-				line += words[j];
+				lines.push(part);
+			}
+
+			if (line.length + word.length + (line.length > 0 ? 1 : 0) > maxWidth) {
+				lines.push(line);
+				line = word;
+			} else {
+				if (line.length > 0) line += ' ';
+				line += word;
 			}
 		}
-		if (line.length > 0) {
-			messageLines.push(line);
-		}
+		if (line.length > 0) lines.push(line);
+
+		allLines = allLines.concat(lines);
 	}
 
 	// Display the most recent messages
-	var startLine = Math.max(0, messageLines.length - maxMessages);
-	for (var y = 2; y < chatHeight - 1 && startLine < messageLines.length; y++) {
-		console.gotoxy(startX + 1, startY + y);
-		console.print(messageLines[startLine]);
-		startLine++;
+	var startLine = Math.max(0, allLines.length - maxMessages);
+	var yPosition = 2;
+
+	for (var i = startLine; i < allLines.length && yPosition < chatHeight - 1; i++) {
+		console.gotoxy(startX + 1, startY + yPosition);
+		console.print(allLines[i]);
+		yPosition++;
 	}
 }
 
