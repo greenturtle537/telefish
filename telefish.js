@@ -36,7 +36,7 @@ var sauce_lib = load({}, "sauce_lib.js");
 require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
 
-function show_image(filename, fx, delay, width, height) {
+function show_image(filename, fx, delay) {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
 
@@ -44,7 +44,7 @@ function show_image(filename, fx, delay, width, height) {
 	    delay = 0;
     }
 
-	var graphic = new Graphic(width, height);
+	var graphic = new Graphic();
 	graphic.load(filename);
 	if (fx && graphic.revision >= 1.82)
 		graphic.drawfx('center', 'center');
@@ -215,7 +215,7 @@ function calculateMessageLines(user, message) {
 
 function fish() {
 	//console.clear();
-	show_image(telefish_title, false, 0, 80, 25);
+	show_image(telefish_title, false, 0);
 	console.pause();
 	//console.clear();
 }
