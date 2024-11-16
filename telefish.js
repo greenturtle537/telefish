@@ -43,6 +43,8 @@ function show_image(filename, fx, delay)
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
 	var sauce = sauce_lib.read(filename);
+	console.gotoxy(1, 1);
+	console.print(sauce.datatype);
 
 	if (delay === undefined) {
 	    delay = 0;
@@ -51,8 +53,6 @@ function show_image(filename, fx, delay)
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
-			console.gotoxy(1, 1);
-			console.print
 			if (fx && graphic.revision >= 1.82)
 				graphic.drawfx('center', 'center');
 			else
