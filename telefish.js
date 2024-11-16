@@ -589,6 +589,9 @@ function gameLoop() {
 
 				} else {
 					switch (key) {
+						case "f":
+							fish();
+							break;
 						case KEY_UP:
 						case 'w':
 							if (playerY > 0) {
