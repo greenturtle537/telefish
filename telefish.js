@@ -32,6 +32,9 @@ var sampleMessages = [];
 
 const test = js.exec_dir + "test.bin";
 
+var Graphic = load({}, "graphic.js");
+var sauce_lib = load({}, "sauce_lib.js");
+
 require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
 
@@ -39,17 +42,17 @@ function show_image(filename, fx, delay)
 {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
-	var Graphic = load({}, "graphic.js");
-	var sauce_lib = load({}, "sauce_lib.js");
 	var sauce = sauce_lib.read(filename);
+
 	if (delay === undefined) {
-		//delay = options.image_delay;
 	    delay = 0;
     }
-	if (sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
+	if (sauce && ((sauce.datatype == sauce_lib.defs.datatype.bin) || (sauce.datatype == sauce_lib.defs.datatype.xbin))) {
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
+			console.gotoxy(1, 1);
+			console.print
 			if (fx && graphic.revision >= 1.82)
 				graphic.drawfx('center', 'center');
 			else
