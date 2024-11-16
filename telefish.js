@@ -675,8 +675,9 @@ function gameLoop() {
 
 
 try {
-	console.print("Press any key to play the demo. It's 'Trouta be fire' ");
+	console.print("Press any key to play the Telefish. It's 'Trouta be fire'");
 	console.pause();
+	fish();
 	gameLoop();
 	exit(0);
 } catch (e) {
