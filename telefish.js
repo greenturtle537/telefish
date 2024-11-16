@@ -416,6 +416,7 @@ function gameLoop() {
 	var typedMessage = '';
 	var lastTypedMessage = '';
 	var lines = 0;
+	var lastLines = 0;
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -544,13 +545,14 @@ function gameLoop() {
 					}
 					if (typeToggled === true) {
 						lines = calculateMessageLines(currentUser.handle, typedMessage);
-						if (lastTypedMessage != typedMessage) {
+						if (lastTypedMessage != typedMessage || lastLines != lines) {
 							drawMessages(sampleMessages, lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 						if (checkSingleCharacter(key)) {
 							typedMessage += key;
 						}
 						lastTypedMessage = typedMessage;
+						lastLines = lines;
 						drawTypedMessage(currentUser.handle, typedMessage);
 					}
 					
