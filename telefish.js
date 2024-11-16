@@ -42,27 +42,17 @@ function show_image(filename, fx, delay, width, height) {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
 
-	var sauce = sauce_lib.read(filename);
-	console.gotoxy(1, 1);
-	console.print(filename);
-
 	if (delay === undefined) {
 	    delay = 0;
     }
 
-	if (sauce && ((sauce.datatype == sauce_lib.defs.datatype.bin) || (sauce.datatype == sauce_lib.defs.datatype.xbin))) {
-		try {
-			var graphic = new Graphic(sauce.cols, sauce.rows);
-			graphic.load(filename);
-			if (fx && graphic.revision >= 1.82)
-				graphic.drawfx('center', 'center');
-			else
-				graphic.draw('center', 'center');
-			sleep(delay);
-		} catch (e) {
-			log(LOG_DEBUG, e);
-		}
-	}
+	var graphic = new Graphic(width, height);
+	graphic.load(filename);
+	if (fx && graphic.revision >= 1.82)
+		graphic.drawfx('center', 'center');
+	else
+		graphic.draw('center', 'center');
+	sleep(delay);
 }
 
 function getCharAtPos(x, y) {
@@ -227,7 +217,7 @@ function calculateMessageLines(user, message) {
 
 function fish() {
 	//console.clear();
-	show_image(telefish_title, false, 0);
+	show_image(telefish_title, false, 0, 80, 24);
 	console.pause();
 	//console.clear();
 }
