@@ -4,6 +4,10 @@ const author = "greenturtle537";
 const REVISION = "$Revision: 0.1 $".split(' ')[1];
 const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 const ini_section = "telefish"; // ini file section
+const telefish_title = js.exec_dir + "telefish.ans";
+const telefish_title_xbin = js.exec_dir + "telefish.xbin";
+
+
 
 var debug = false; //Debug flag
 
@@ -215,6 +219,13 @@ function calculateMessageLines(user, message) {
 	if (line.length > 0) lines.push(line);
 
 	return lines.length;
+}
+
+function fish() {
+	console.clear();
+	show_image(welcome_image, /* fx: */false, /* delay: */0);
+	console.pause();
+	console.clear();
 }
 
 function drawMessages(messages, messageAdjust) {
