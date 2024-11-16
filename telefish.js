@@ -38,13 +38,14 @@ var sauce_lib = load({}, "sauce_lib.js");
 require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
 
-function show_image(filename, fx, delay)
+function show_image(filename, fx, delay, width=0, height=0)
 {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
+
 	var sauce = sauce_lib.read(filename);
 	console.gotoxy(1, 1);
-	console.print(sauce.datatype);
+	console.print(filename);
 
 	if (delay === undefined) {
 	    delay = 0;
