@@ -46,7 +46,7 @@ function show_image(filename, fx, delay)
 		//delay = options.image_delay;
 	    delay = 0;
     }
-	if (sauce && sauce.datatype == sauce_lib.defs.datatype.bin) {
+	if (sauce && sauce.datatype == sauce_lib.defs.datatype.ansi) {
 		try {
 			var graphic = new Graphic(sauce.cols, sauce.rows);
 			graphic.load(filename);
@@ -223,7 +223,7 @@ function calculateMessageLines(user, message) {
 
 function fish() {
 	console.clear();
-	show_image(telefish_title_xbin, /* fx: */false, /* delay: */0);
+	show_image(telefish_title, /* fx: */false, /* delay: */0);
 	console.pause();
 	console.clear();
 }
