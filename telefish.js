@@ -19,11 +19,21 @@ var chatHeight = 24;
 var startX = 1;
 var startY = 1;
 
+var fishWidth = 40;
+var fishHeight = 10;
+var screenWidth = 80;
+var screenHeight = 24;
+
 var userNode = bbs.node_num;
 var currentUser = new User(bbs.node_useron);
 var telefish = currentUser.curxtrn // For ref, this is currently telefish but may change
 
 var nodesOnline = [];
+
+var chatToggle = false;
+var fishToggle = false;
+var typeToggled = false;
+
 
 // Telefish global variables
 
@@ -109,13 +119,8 @@ function loadMapToGrid(filename, grid) {
 }
 
 function drawFishRegion() {
-	var boxWidth = 40;
-	var boxHeight = 10;
-	var screenWidth = 80;
-	var screenHeight = 24;
-
-	var startX = Math.floor((screenWidth - boxWidth) / 2);
-	var startY = Math.floor((screenHeight - boxHeight) / 2);
+	var startX = Math.floor((screenWidth - fishWidth) / 2);
+	var startY = Math.floor((screenHeight - fishHeight) / 2);
 
 	// Offset for avoiding the chat region
 	var startX = startX + 20;
@@ -124,25 +129,25 @@ function drawFishRegion() {
 	// Draw top border
 	console.gotoxy(startX, startY);
 	console.print('+');
-	for (var x = 1; x < boxWidth - 1; x++) {
+	for (var x = 1; x < fishWidth - 1; x++) {
 		console.print('-');
 	}
 	console.print('+');
 
 	// Draw sides and fill inside with spaces
-	for (var y = 1; y < boxHeight - 1; y++) {
+	for (var y = 1; y < fishHeight - 1; y++) {
 		console.gotoxy(startX, startY + y);
 		console.print('|');
-		for (var x = 1; x < boxWidth - 1; x++) {
+		for (var x = 1; x < fishWidth - 1; x++) {
 			console.print(' ');
 		}
 		console.print('|');
 	}
 
 	// Draw bottom border
-	console.gotoxy(startX, startY + boxHeight - 1);
+	console.gotoxy(startX, startY + fishHeight - 1);
 	console.print('+');
-	for (var x = 1; x < boxWidth - 1; x++) {
+	for (var x = 1; x < fishWidth - 1; x++) {
 		console.print('-');
 	}
 	console.print('+');
@@ -367,9 +372,9 @@ function checkSingleCharacter(key) {
 }
 
 function redrawGrid(staticGrid) {
-	for (var y = 0; y < 25; y++) {
+	for (var y = 0; y < screenHeight; y++) {
 		console.gotoxy(startX, startY + y);
-		for (var x = 0; x < 80; x++) {
+		for (var x = 0; x < screenWidth; x++) {
 			if (staticGrid[y] && staticGrid[y][x]) {
 				console.print(staticGrid[y][x]);
 			} else {
@@ -379,8 +384,8 @@ function redrawGrid(staticGrid) {
 	}
 }
 
-function redrawPlayer(playerX, playerY, chatToggle) {
-	if (chatConflict(playerX, playerY, chatToggle)) {
+function redrawPlayer(playerX, playerY) {
+	if (windowConflict(playerX, playerY)) {
 		offScreenCursor();
 	} else {
 		console.gotoxy(playerX + 1, playerY + 1);
@@ -389,13 +394,23 @@ function redrawPlayer(playerX, playerY, chatToggle) {
 	}
 }
 
-function chatConflict(prevX, prevY, chatToggle) {
+function windowConflict(prevX, prevY) {
 	if (chatToggle) {
 		if ((
 			prevX + 1 >= startX &&
 			prevX + 1 < startX + chatWidth &&
 			prevY + 1 >= startY &&
 			prevY + 1 < startY + chatHeight
+		)) {
+			return true;
+		}
+	}
+	if (fishToggle) {
+		if ((
+			prevX + 1 >= startX &&
+			prevX + 1 < startX + fishWidth &&
+			prevY + 1 >= startY &&
+			prevY + 1 < startY + fishHeight
 		)) {
 			return true;
 		}
@@ -485,10 +500,6 @@ function gameLoop() {
 	var prevX = playerX;
 	var prevY = playerY;
 
-	var chatToggle = false;
-	var typeToggled = false;
-	var fishToggle = false;
-
 	var messageLength = 0;
 	var message = '';
 	var messages = [];
@@ -516,7 +527,7 @@ function gameLoop() {
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
 		
-		if (!chatConflict(playerX, playerY, chatToggle)) {
+		if (!windowConflict(playerX, playerY)) {
 			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
 			offScreenCursor();
@@ -645,7 +656,7 @@ function gameLoop() {
 						case "f":
 							fishToggle = dispFish(fishToggle, staticGrid);
 							offScreenCursor();
-							redrawPlayer(playerX, playerY, fishToggle); // Will not draw if toggled
+							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
 							break;
 						case KEY_UP:
@@ -655,11 +666,11 @@ function gameLoop() {
 								prevX = playerX;
 								playerY--;
 								// Redraw previous position
-								if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+								if (!windowConflict(playerX, playerY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
-								redrawPlayer(playerX, playerY, chatToggle);
+								redrawPlayer(playerX, playerY);
 								sleep(100); // 100ms pause after move
 							}
 							break;
@@ -670,12 +681,12 @@ function gameLoop() {
 								prevX = playerX;
 								playerY++;
 								// Redraw previous position
-								if (!chatConflict(playerX, playerY - 1, chatToggle)) {
+								if (!windowConflict(playerX, playerY - 1)) {
 
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
-								redrawPlayer(playerX, playerY, chatToggle);
+								redrawPlayer(playerX, playerY);
 								sleep(100); // 100ms pause after move
 							}
 							break;
@@ -686,11 +697,11 @@ function gameLoop() {
 								prevY = playerY;
 								playerX -= 2;
 								// Redraw previous position
-								if (!chatConflict(prevX, prevY - 1, chatToggle)) {
+								if (!windowConflict(prevX, prevY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
-								redrawPlayer(playerX, playerY, chatToggle);
+								redrawPlayer(playerX, playerY);
 								sleep(100); // 100ms pause after move
 								
 							}
@@ -702,18 +713,18 @@ function gameLoop() {
 								prevY = playerY;
 								playerX += 2;
 								// Redraw previous position
-								if (!chatConflict(prevX, prevY - 1, chatToggle)) {
+								if (!windowConflict(prevX, prevY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
-								redrawPlayer(playerX, playerY, chatToggle);
+								redrawPlayer(playerX, playerY);
 								sleep(100); // 100ms pause after move
 							}
 							break;
 						case 'j':
 							chatToggle = dispChat(chatToggle, staticGrid);
 							offScreenCursor();
-							redrawPlayer(playerX, playerY, chatToggle); // Will not draw if toggled
+							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
 						case '\r':
 						case '\n':
