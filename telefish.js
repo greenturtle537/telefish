@@ -278,7 +278,6 @@ function logo() {
 
 function fish() {
 	dispFish();
-
 }
 
 function drawMessages(messages, messageAdjust) {
@@ -643,7 +642,10 @@ function gameLoop() {
 				} else {
 					switch (key) {
 						case "f":
-							fish();
+							fishToggle = dispFish(fishToggle, staticGrid);
+							offScreenCursor();
+							redrawPlayer(playerX, playerY, fishToggle); // Will not draw if toggled
+							break;
 							break;
 						case KEY_UP:
 						case 'w':
