@@ -74,18 +74,6 @@ function getCharAtPos(x, y) {
 	return charAtPosition;
 }
 
-function dispFish(fishToggle, staticGrid) {
-	if (!fishToggle) {
-		// Draw chat region
-		drawFishRegion();
-		return true;
-	} else {
-		// Redraw region
-		redrawGrid(staticGrid);
-		return false;
-	}
-}
-
 function loadMapToGrid(filename, grid) {
 	var file = new File(filename);
 	if (!file.open("r")) {
@@ -233,10 +221,6 @@ function logo() {
 	show_image(telefish_title, false, 0);
 	console.pause();
 	console.clear();
-}
-
-function fish() {
-	dispFish();
 }
 
 function drawMessages(messages, messageAdjust) {
@@ -608,7 +592,7 @@ function gameLoop() {
 				} else {
 					switch (key) {
 						case "f":
-							fishWindow.toggled = dispFish(fishWindow.toggled, staticGrid);
+							fishWindow.toggled = fishWindow.display(staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
