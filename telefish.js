@@ -30,7 +30,6 @@ var telefish = currentUser.curxtrn // For ref, this is currently telefish but ma
 
 var nodesOnline = [];
 
-var chatToggle = false;
 var fishToggle = false;
 var typeToggled = false;
 
@@ -375,7 +374,7 @@ function redrawPlayer(playerX, playerY) {
 }
 
 function windowConflict(prevX, prevY) {
-	if (chatToggle) {
+	if (chatWindow.toggled) {
 		if ((
 			prevX + 1 >= startX &&
 			prevX + 1 < startX + chatWindow.width &&
@@ -514,7 +513,7 @@ function gameLoop() {
 		}
 
 		if (messageLength != sampleMessages.length) {
-			if (chatToggle) {
+			if (chatWindow.toggled) {
 				drawMessages(sampleMessages);
 				messageLength = sampleMessages.length;
 				// Only redraw if new message is detected
@@ -702,7 +701,7 @@ function gameLoop() {
 							}
 							break;
 						case 'j':
-							chatToggle = dispChat(chatToggle, staticGrid);
+							chatWindow.toggled = dispChat(chatWindow.toggled, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
@@ -710,7 +709,7 @@ function gameLoop() {
 						case '\n':
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
-							if (chatToggle) {
+							if (chatWindow.toggled) {
 								typeToggled = true;
 								drawMessages(sampleMessages, 2);
 							}
