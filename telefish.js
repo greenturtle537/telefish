@@ -3,29 +3,34 @@ const title = "Telefish";
 const author = "greenturtle537";
 const REVISION = "$Revision: 0.1 $".split(' ')[1];
 const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
-const ini_section = "telefish";
+const ini_section = "telefish"; // ini file section
 const telefish_title = js.exec_dir + "telefish.ans";
 const telefish_title_xbin = js.exec_dir + "telefish.xbin";
 
-var debug = false;
+
+
+var debug = false; //Debug flag
 
 var options = load({}, "modopts.js", ini_section);
 
+// Telefish options
 var screenWidth = 80;
 var screenHeight = 24;
 
 var userNode = bbs.node_num;
 var currentUser = new User(bbs.node_useron);
-var telefish = currentUser.curxtrn;
+var telefish = currentUser.curxtrn // For ref, this is currently telefish but may change
 
 var nodesOnline = [];
 
 var typeToggled = false;
 
+// Telefish global variables
 var Window = load({}, "window.js");
 var chatWindow = new Window(30, 24, 1, 1);
-var fishWindow = new Window(40, 10, 20, 1);
+var fishWindow = new Window(40, 10, 1, 1);
 
+// TODO: Rename to messages
 var sampleMessages = [];
 
 var Graphic = load({}, "graphic.js");
@@ -39,8 +44,8 @@ function show_image(filename, fx, delay) {
 	filename = dir[random(dir.length)];
 
 	if (delay === undefined) {
-		delay = 0;
-	}
+	    delay = 0;
+    }
 
 	var graphic = new Graphic();
 	graphic.load(filename);
@@ -51,21 +56,38 @@ function show_image(filename, fx, delay) {
 	sleep(delay);
 }
 
-function dispChat(staticGrid) {
-	chatWindow.toggle();
-	chatWindow.dispWindow(staticGrid);
-	if (chatWindow.toggled) {
-		chatWindow.setTitle('====Telefish  Node  Chat====');
-		chatWindow.drawTitle(chatWindow.title);
+function getCharAtPos(x, y) {
+	// Move the cursor to position (x, y)
+	console.gotoxy(x, y);
+	// Calculate the index in the screen buffer
+	var index = (y - 1) * console.screen_columns + (x - 1);
+
+	// Get the character at that position
+	var charAtPosition = console.screen_buf[index];
+	return charAtPosition;
+}
+
+function dispChat(chatToggle, staticGrid) {
+	if (!chatToggle) {
+		// Draw chat region
+		drawChatRegion();
+		return true;
+	} else {
+		// Redraw region
+		redrawGrid(staticGrid);
+		return false;
 	}
 }
 
-function dispFish(staticGrid) {
-	fishWindow.toggle();
-	fishWindow.dispWindow(staticGrid);
-	if (fishWindow.toggled) {
-		fishWindow.setTitle('=Currently waiting for a fish to bite=');
-		fishWindow.drawTitle(fishWindow.title);
+function dispFish(fishToggle, staticGrid) {
+	if (!fishToggle) {
+		// Draw chat region
+		drawFishRegion();
+		return true;
+	} else {
+		// Redraw region
+		redrawGrid(staticGrid);
+		return false;
 	}
 }
 
@@ -89,8 +111,58 @@ function loadMapToGrid(filename, grid) {
 	return grid;
 }
 
+function drawFishRegion() {
+	var startX = Math.floor((screenWidth - fishWidth) / 2);
+	var startY = Math.floor((screenHeight - fishHeight) / 2);
+
+	// Offset for avoiding the chat region
+	var startX = startX + 20;
+	var startY = startY + 0;
+
+	// Draw top border
+	console.gotoxy(startX, startY);
+	console.print('+');
+	for (var x = 1; x < fishWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+
+	// Draw sides and fill inside with spaces
+	for (var y = 1; y < fishHeight - 1; y++) {
+		console.gotoxy(startX, startY + y);
+		console.print('|');
+		for (var x = 1; x < fishWidth - 1; x++) {
+			console.print(' ');
+		}
+		console.print('|');
+	}
+
+	// Draw bottom border
+	console.gotoxy(startX, startY + fishHeight - 1);
+	console.print('+');
+	for (var x = 1; x < fishWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+
+	// Draw title
+	console.gotoxy(startX + 1, startY + 1);
+	console.print("=Currently waiting for a fish to bite=");
+}
+
+function drawChatRegion() {
+	// Draw top border
+	chatWindow.draw();
+
+	// Draw title
+	console.gotoxy(startX + 1, startY + 1);
+	console.print('====Telefish  Node  Chat====');
+
+	drawMessages(sampleMessages);
+}
+
 function drawTypedMessage(user, message) {
-	var maxWidth = chatWindow.width - 2;
+	var maxWidth = chatWidth - 2;
 	var formattedMessage = user + ": " + message;
 	var words = formattedMessage.split(' ');
 	var lines = [];
@@ -100,6 +172,7 @@ function drawTypedMessage(user, message) {
 		var word = words[i];
 
 		while (word.length > maxWidth) {
+			// Split the word if it's too long
 			var part = word.substring(0, maxWidth);
 			word = word.substring(maxWidth);
 			if (line.length > 0) {
@@ -119,26 +192,27 @@ function drawTypedMessage(user, message) {
 	}
 	if (line.length > 0) lines.push(line);
 
-	var startLine = chatWindow.y + chatWindow.height - 1 - lines.length;
+	var startLine = startY + chatHeight - 1 - lines.length;
 	for (var i = 0; i < lines.length; i++) {
-		console.gotoxy(chatWindow.x + 1, startLine + i);
-		for (var x = 1; x < chatWindow.width - 1; x++) {
+		console.gotoxy(startX + 1, startLine + i);
+		for (var x = 1; x < chatWidth - 1; x++) {
 			console.print(' ');
 		}
-		console.gotoxy(chatWindow.x + 1, startLine + i);
+		console.gotoxy(startX + 1, startLine + i);
 		console.print(lines[i]);
 	}
 
-	var yPosition = chatWindow.y + chatWindow.height - lines.length - 2;
-	console.gotoxy(chatWindow.x + 1, yPosition);
-	for (var x = 1; x < chatWindow.width - 1; x++) {
+	// Separate from existing chat
+	var yPosition = startY + chatHeight - lines.length - 2;
+	console.gotoxy(startX + 1, yPosition);
+	for (var x = 1; x < chatWidth - 1; x++) {
 		console.print('-');
 	}
 	return lines.length;
 }
 
 function calculateMessageLines(user, message) {
-	var maxWidth = chatWindow.width - 2;
+	var maxWidth = chatWidth - 2;
 	var formattedMessage = user + ": " + message;
 	var words = formattedMessage.split(' ');
 	var lines = [];
@@ -177,23 +251,31 @@ function logo() {
 	console.clear();
 }
 
+function fish() {
+	dispFish();
+}
+
 function drawMessages(messages, messageAdjust) {
 	if (messageAdjust === undefined) {
 		messageAdjust = 0;
 	}
-	var maxWidth = chatWindow.width - 2;
-	var maxMessages = chatWindow.height - 3;
-	maxMessages = maxMessages - messageAdjust;
+	var maxWidth = chatWidth - 2;
+	var maxMessages = chatHeight - 3; // Adjust for borders and title
+	maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
 
-	for (var y = 2; y < chatWindow.height - 1; y++) {
-		console.gotoxy(chatWindow.x + 1, chatWindow.y + y);
-		for (var x = 1; x < chatWindow.width - 1; x++) {
+	// Clear the chat area
+	for (var y = 2; y < chatHeight - 1; y++) {
+		console.gotoxy(startX + 1, startY + y);
+		for (var x = 1; x < chatWidth - 1; x++) {
 			console.print(' ');
 		}
 	}
 
 	var allLines = [];
 
+	// TODO: Sort messages by date in descending order
+
+	// Process messages into lines
 	for (var m = 0; m < messages.length; m++) {
 		var message = messages[m];
 		var user = message.author;
@@ -207,6 +289,7 @@ function drawMessages(messages, messageAdjust) {
 			var word = words[i];
 
 			while (word.length > maxWidth) {
+				// Split the word if it's too long
 				var part = word.substring(0, maxWidth);
 				word = word.substring(maxWidth);
 				if (line.length > 0) {
@@ -229,11 +312,12 @@ function drawMessages(messages, messageAdjust) {
 		allLines = allLines.concat(lines);
 	}
 
+	// Display the most recent messages
 	var startLine = Math.max(0, allLines.length - maxMessages);
 	var yPosition = 2;
 
-	for (var i = startLine; i < allLines.length && yPosition < chatWindow.height - 1; i++) {
-		console.gotoxy(chatWindow.x + 1, chatWindow.y + yPosition);
+	for (var i = startLine; i < allLines.length && yPosition < chatHeight - 1; i++) {
+		console.gotoxy(startX + 1, startY + yPosition);
 		console.print(allLines[i]);
 		yPosition++;
 	}
@@ -242,14 +326,24 @@ function drawMessages(messages, messageAdjust) {
 function checkSingleCharacter(key) {
 	var commonKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 `~!@#$%^&*()-_=+[]{}|;:\'",.<>/?\\'.split('');
 	if (typeof key === 'string' && key.length === 1) {
-		return commonKeys.includes(key) ? key : false;
+		var isCommonKey = false;
+		for (var i = 0; i < commonKeys.length; i++) {
+			if (commonKeys[i] === key) {
+				isCommonKey = true;
+				break;
+			}
+		}
+		if (!isCommonKey) {
+			return false;
+		}
+		return key;
 	}
 	return false;
 }
 
 function redrawGrid(staticGrid) {
 	for (var y = 0; y < screenHeight; y++) {
-		console.gotoxy(1, y + 1);
+		console.gotoxy(startX, startY + y);
 		for (var x = 0; x < screenWidth; x++) {
 			if (staticGrid[y] && staticGrid[y][x]) {
 				console.print(staticGrid[y][x]);
@@ -271,23 +365,23 @@ function redrawPlayer(playerX, playerY) {
 }
 
 function windowConflict(prevX, prevY) {
-	if (chatWindow.toggled) {
-		if (
-			prevX + 1 >= chatWindow.x &&
-			prevX + 1 < chatWindow.x + chatWindow.width &&
-			prevY + 1 >= chatWindow.y &&
-			prevY + 1 < chatWindow.y + chatWindow.height
-		) {
+	if (chatToggle) {
+		if ((
+			prevX + 1 >= startX &&
+			prevX + 1 < startX + chatWidth &&
+			prevY + 1 >= startY &&
+			prevY + 1 < startY + chatHeight
+		)) {
 			return true;
 		}
 	}
-	if (fishWindow.toggled) {
-		if (
-			prevX + 1 >= fishWindow.x &&
-			prevX + 1 < fishWindow.x + fishWindow.width &&
-			prevY + 1 >= fishWindow.y &&
-			prevY + 1 < fishWindow.y + fishWindow.height
-		) {
+	if (fishToggle) {
+		if ((
+			prevX + 1 >= startX &&
+			prevX + 1 < startX + fishWidth &&
+			prevY + 1 >= startY &&
+			prevY + 1 < startY + fishHeight
+		)) {
 			return true;
 		}
 	}
@@ -295,13 +389,13 @@ function windowConflict(prevX, prevY) {
 }
 
 function offScreenCursor() {
-	console.gotoxy(200, 200);
+	console.gotoxy(200, 200); // Move cursor off screen
 }
 
 function runCommand(command) {
 	switch (command) {
 		case "/online":
-			break;
+
 	}
 }
 
@@ -310,14 +404,16 @@ function probeNode(node) {
 	if (targetNode.curxtrn === telefish) {
 		return true;
 	} else {
+		//nodesOnline.splice(nodesOnline.indexOf(node), 1);
 		return false;
 	}
 }
 
+// Ask all nodes to discover themselves, including self
 function broadcastDiscover() {
-	for (var i = 0; i < system.nodes; i++) {
+	for(var i = 0; i < system.nodes; i++) {
 		if (probeNode(i) && !checkDuplicateNode(i)) {
-			system.put_node_message(i, "\x1bTF\x1b" + userNode + "\x1b" + "\x7fDISCOVER\x7f");
+			system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 		}
 	}
 }
@@ -331,33 +427,37 @@ function checkDuplicateNode(node) {
 	return false;
 }
 
+// Acknowledge the node that sent the discover message, not including self or already acknowledged nodes
 function broadcastAcknowledge(node) {
 	if (checkDuplicateNode(node)) {
 		return;
 	}
-	system.put_node_message(node, "\x1bTF\x1b" + userNode + "\x1b" + "\x7fDISCOVER\x7f");
+	system.put_node_message(node, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 }
 
+
 function sendMessage(message, name) {
-	for (var i = 0; i < nodesOnline.length; i++) {
-		system.put_node_message(nodesOnline[i], "\x1bTF\x1b" + name + "\x1b" + message);
+	for(var i = 0; i < nodesOnline.length; i++) {
+		system.put_node_message(nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
 	}
 }
 
 function gameLoop() {
-	var gridWidth = screenWidth;
-	var gridHeight = screenHeight;
+	var gridchatWidth = 80;
+	var gridchatHeight = 24;
 	var grid = [];
-	var playerX = Math.floor(gridWidth / 2);
-	var playerY = Math.floor(gridHeight / 2);
+	var playerX = Math.floor(gridchatWidth / 2);
+	var playerY = Math.floor(gridchatHeight / 2);
 
-	for (var y = 0; y < gridHeight; y++) {
+	// Initialize grid with empty values
+	for (var y = 0; y < gridchatHeight; y++) {
 		grid[y] = [];
-		for (var x = 0; x < gridWidth; x++) {
+		for (var x = 0; x < gridchatWidth; x++) {
 			grid[y][x] = '.';
 		}
 	}
 
+	// Fill grid from text file
 	var staticGrid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
 	if (staticGrid) {
 		grid = staticGrid;
@@ -380,30 +480,34 @@ function gameLoop() {
 	var lastLines = 0;
 
 	console.gotoxy(1, 1);
-	for (var y = 0; y < gridHeight; y++) {
-		for (var x = 0; x < gridWidth; x++) {
+	for (var y = 0; y < gridchatHeight; y++) {
+		for (var x = 0; x < gridchatWidth; x++) {
 			console.print(grid[y][x]);
 		}
 		console.crlf();
 	}
 
-	nodesOnline.push(userNode);
-	broadcastDiscover();
+
+	nodesOnline.push(userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
+	broadcastDiscover(); //Will also discover self for echo now
 
 	while (running) {
+
+		// Get input
 		var mk = mouse_getkey(K_NONE, 100, true);
 		var key = mk.key;
-
+		
 		if (!windowConflict(playerX, playerY)) {
-			console.gotoxy(playerX + 1, playerY + 1);
+			console.gotoxy(playerX + 1, playerY + 1); // Move cursor to highlight player every frame
 		} else {
 			offScreenCursor();
 		}
 
 		if (messageLength != sampleMessages.length) {
-			if (chatWindow.toggled) {
+			if (chatToggle) {
 				drawMessages(sampleMessages);
 				messageLength = sampleMessages.length;
+				// Only redraw if new message is detected
 			}
 		}
 
@@ -418,38 +522,42 @@ function gameLoop() {
 			messages = [];
 		}
 
-		for (var i = 0; i < messages.length; i = i + 3) {
+
+
+		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
 				if (messages[i] === "\x7fDISCOVER\x7f") {
-					if (!checkDuplicateNode(messages[i - 1])) {
-						broadcastAcknowledge(messages[i - 1]);
-						nodesOnline.push(messages[i - 1]);
+					if (!(checkDuplicateNode(messages[i-1]))) {
+						broadcastAcknowledge(messages[i-1]);
+						nodesOnline.push(messages[i-1]);
 					}
 				} else {
 					unixTime = time();
-					sampleMessages.push({ text: messages[i], author: messages[i - 1], date: unixTime });
+					sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
 				}
 			}
 		}
 
+		// Debug TODO: Remove
 		if (debug) {
 			console.gotoxy(1, 27);
-			for (var i = 0; i < messages.length; i++) {
+			for(var i=0; i < messages.length; i++) {
 				console.print(messages[i] + " ");
 			}
 			console.gotoxy(1, 28);
 			console.gotoxy(1, 26);
-			for (var i = 0; i < nodesOnline.length; i++) {
+			for (var i=0; i < nodesOnline.length; i++) {
 				console.print(nodesOnline[i] + " ");
 			}
 		}
 
-		if (mk) {
+		if (mk) {	
 			if (typeof mk === 'object' && mk.mouse) {
-				if (mk.mouse.action === 1) {
+				// Handle mouse input
+				if (mk.mouse.action === 1) { // Left click
 					var mx = mk.mouse.column - 1;
 					var my = mk.mouse.row - 1;
-					if (mx >= 0 && mx < gridWidth && my >= 0 && my < gridHeight) {
+					if (mx >= 0 && mx < gridchatWidth && my >= 0 && my < gridchatHeight) {
 						prevX = playerX;
 						prevY = playerY;
 						playerX = mx;
@@ -457,7 +565,7 @@ function gameLoop() {
 					}
 				}
 			} else {
-				if (typeToggled) {
+				if (typeToggled) { // If typing is toggled, do not move player
 					switch (key) {
 						case '\r':
 						case '\n':
@@ -474,22 +582,23 @@ function gameLoop() {
 									} else {
 										sendMessage(typedMessage, currentUser.handle);
 									}
-								}
+								}	
 							}
-							typedMessage = '';
+							typedMessage = ''; // Clear message after sending
 							drawMessages(sampleMessages);
 							break;
-						case '\x1b':
+						case '\x1b': // Escape key
+						// Just exit typing mode without doing sending message
 							typeToggled = false;
 							break;
 						case '\b':
-						case '\x7f':
-							if (typedMessage.length > 0) {
+						case '\x7f':							
+						if (typedMessage.length > 0) {
 								typedMessage = typedMessage.slice(0, -1);
 							}
 							break;
 						case KEY_DEL:
-						case '\x1b[3~':
+						case '\x1b[3~': // Delete key variants
 							if (typedMessage.length > 0) {
 								typedMessage = typedMessage.slice(0, typedMessage.length - 1);
 							}
@@ -498,8 +607,8 @@ function gameLoop() {
 					if (typeToggled === true) {
 						lines = calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
-							drawMessages(sampleMessages, lines + 1);
-						}
+							drawMessages(sampleMessages, lines+1);
+						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 						if (checkSingleCharacter(key)) {
 							typedMessage += key;
 						}
@@ -507,15 +616,18 @@ function gameLoop() {
 						lastLines = lines;
 						drawTypedMessage(currentUser.handle, typedMessage);
 					}
-
+					
+					// TODO: Move cursor to where next character will be added
+					// For now:
 					offScreenCursor();
 
 				} else {
 					switch (key) {
 						case "f":
-							dispFish(staticGrid);
+							fishToggle = dispFish(fishToggle, staticGrid);
 							offScreenCursor();
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY); // Will not draw if toggled
+							break;
 							break;
 						case KEY_UP:
 						case 'w':
@@ -523,75 +635,81 @@ function gameLoop() {
 								prevY = playerY;
 								prevX = playerX;
 								playerY--;
+								// Redraw previous position
 								if (!windowConflict(playerX, playerY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
 								redrawPlayer(playerX, playerY);
-								sleep(100);
+								sleep(100); // 100ms pause after move
 							}
 							break;
 						case KEY_DOWN:
 						case 's':
-							if (playerY < gridHeight - 1) {
+							if (playerY < gridchatHeight - 1) {
 								prevY = playerY;
 								prevX = playerX;
 								playerY++;
+								// Redraw previous position
 								if (!windowConflict(playerX, playerY - 1)) {
+
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
 								redrawPlayer(playerX, playerY);
-								sleep(100);
+								sleep(100); // 100ms pause after move
 							}
 							break;
-						case KEY_LEFT:
+						case KEY_LEFT: 
 						case 'a':
 							if (playerX > 1) {
 								prevX = playerX;
 								prevY = playerY;
 								playerX -= 2;
+								// Redraw previous position
 								if (!windowConflict(prevX, prevY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
 								redrawPlayer(playerX, playerY);
-								sleep(100);
+								sleep(100); // 100ms pause after move
+								
 							}
 							break;
 						case KEY_RIGHT:
 						case 'd':
-							if (playerX < gridWidth - 2) {
+							if (playerX < gridchatWidth - 2) {
 								prevX = playerX;
 								prevY = playerY;
 								playerX += 2;
+								// Redraw previous position
 								if (!windowConflict(prevX, prevY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
 									console.print(grid[prevY][prevX]);
 								}
 								redrawPlayer(playerX, playerY);
-								sleep(100);
+								sleep(100); // 100ms pause after move
 							}
 							break;
 						case 'j':
-							dispChat(staticGrid);
+							chatToggle = chatWindow.dispWindow(staticGrid);
 							offScreenCursor();
-							redrawPlayer(playerX, playerY);
+							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
 						case '\r':
 						case '\n':
 						case '\x0D':
-						case '\x0A':
-							if (chatWindow.toggled) {
+						case '\x0A': // Enter key variants, TODO: update to sys standard
+							if (chatToggle) {
 								typeToggled = true;
 								drawMessages(sampleMessages, 2);
 							}
 							break;
-						case '\x1b':
+						case '\x1b': // Escape key
 							running = false;
 							break;
 					}
-					console.clearkeybuffer();
+					console.clearkeybuffer(); // Used to prevent key buffering!!
 				}
 			}
 		}
