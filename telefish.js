@@ -28,6 +28,7 @@ var nodesOnline = [];
 var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
+var nodetalk = new NodeTalk();
 
 load("utils.js");
 
