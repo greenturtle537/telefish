@@ -105,74 +105,6 @@ function logo() {
 	console.clear();
 }
 
-function drawMessages(messages, messageAdjust) {
-	if (messageAdjust === undefined) {
-		messageAdjust = 0;
-	}
-	var maxWidth = chatWindow.width - 2;
-	var maxMessages = chatWindow.height - 3; // Adjust for borders and title
-	maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
-
-	// Clear the chat area
-	for (var y = 2; y < chatWindow.height - 1; y++) {
-		console.gotoxy(startX + 1, startY + y);
-		for (var x = 1; x < chatWindow.width - 1; x++) {
-			console.print(' ');
-		}
-	}
-
-	var allLines = [];
-
-	// TODO: Sort messages by date in descending order
-
-	// Process messages into lines
-	for (var m = 0; m < messages.length; m++) {
-		var message = messages[m];
-		var user = message.author;
-		var text = message.text;
-		var formattedMessage = user + ": " + text;
-		var words = formattedMessage.split(' ');
-		var lines = [];
-		var line = '';
-
-		for (var i = 0; i < words.length; i++) {
-			var word = words[i];
-
-			while (word.length > maxWidth) {
-				// Split the word if it's too long
-				var part = word.substring(0, maxWidth);
-				word = word.substring(maxWidth);
-				if (line.length > 0) {
-					lines.push(line);
-					line = '';
-				}
-				lines.push(part);
-			}
-
-			if (line.length + word.length + (line.length > 0 ? 1 : 0) > maxWidth) {
-				lines.push(line);
-				line = word;
-			} else {
-				if (line.length > 0) line += ' ';
-				line += word;
-			}
-		}
-		if (line.length > 0) lines.push(line);
-
-		allLines = allLines.concat(lines);
-	}
-
-	// Display the most recent messages
-	var startLine = Math.max(0, allLines.length - maxMessages);
-	var yPosition = 2;
-
-	for (var i = startLine; i < allLines.length && yPosition < chatWindow.height - 1; i++) {
-		console.gotoxy(startX + 1, startY + yPosition);
-		console.print(allLines[i]);
-		yPosition++;
-	}
-}
-
 function checkSingleCharacter(key) {
 	var commonKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 `~!@#$%^&*()-_=+[]{}|;:\'",.<>/?\\'.split('');
 	if (typeof key === 'string' && key.length === 1) {
@@ -355,7 +287,7 @@ function gameLoop() {
 
 		if (messageLength != sampleMessages.length) {
 			if (chatWindow.toggled) {
-				drawMessages(sampleMessages);
+				chatWindow.drawMessages(sampleMessages);
 				messageLength = sampleMessages.length;
 				// Only redraw if new message is detected
 			}
@@ -435,7 +367,7 @@ function gameLoop() {
 								}	
 							}
 							typedMessage = ''; // Clear message after sending
-							drawMessages(sampleMessages);
+							chatWindow.drawMessages(sampleMessages);
 							break;
 						case '\x1b': // Escape key
 						// Just exit typing mode without doing sending message
@@ -457,7 +389,7 @@ function gameLoop() {
 					if (typeToggled === true) {
 						lines = chatWindow.calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
-							drawMessages(sampleMessages, lines+1);
+							chatWindow.drawMessages(sampleMessages, lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 						if (checkSingleCharacter(key)) {
 							typedMessage += key;
@@ -544,7 +476,7 @@ function gameLoop() {
 						case 'j':
 							chatWindow.toggled = chatWindow.display(staticGrid);
 							if (chatWindow.toggled) {
-								drawMessages(sampleMessages);
+								chatWindow.drawMessages(sampleMessages);
 							}
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
@@ -555,7 +487,7 @@ function gameLoop() {
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							if (chatWindow.toggled) {
 								typeToggled = true;
-								drawMessages(sampleMessages, 2);
+								chatWindow.drawMessages(sampleMessages, 2);
 							}
 							break;
 						case '\x1b': // Escape key
