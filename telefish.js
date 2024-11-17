@@ -33,11 +33,6 @@ chatWindow.setTitle("====Telefish  Node  Chat====");
 var fishWindow = new Window(40, 10, 35, 10);
 fishWindow.setTitle("=Currently waiting for a fish to bite=");
 
-
-
-// TODO: Rename to messages
-var sampleMessages = [];
-
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
 
@@ -266,10 +261,10 @@ function gameLoop() {
 			offScreenCursor();
 		}
 
-		if (messageLength != sampleMessages.length) {
+		if (messageLength != chatWindow.messages.length) {
 			if (chatWindow.toggled) {
-				chatWindow.drawMessages(sampleMessages);
-				messageLength = sampleMessages.length;
+				chatWindow.drawMessages();
+				messageLength = chatWindow.messages.length;
 				// Only redraw if new message is detected
 			}
 		}
@@ -295,8 +290,7 @@ function gameLoop() {
 						nodesOnline.push(messages[i-1]);
 					}
 				} else {
-					unixTime = time();
-					sampleMessages.push({ text: messages[i], author: messages[i-1], date: unixTime});
+					chatWindow.addMessage(messages[i-1], messages[i]);
 				}
 			}
 		}
@@ -348,7 +342,7 @@ function gameLoop() {
 								}	
 							}
 							typedMessage = ''; // Clear message after sending
-							chatWindow.drawMessages(sampleMessages);
+							chatWindow.drawMessages();
 							break;
 						case '\x1b': // Escape key
 						// Just exit typing mode without doing sending message
@@ -370,7 +364,7 @@ function gameLoop() {
 					if (chatWindow.typeToggled === true) {
 						lines = chatWindow.calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
-							chatWindow.drawMessages(sampleMessages, lines+1);
+							chatWindow.drawMessages(lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
 						if (checkSingleCharacter(key)) {
 							typedMessage += key;
@@ -457,7 +451,7 @@ function gameLoop() {
 						case 'j':
 							chatWindow.toggled = chatWindow.display(staticGrid);
 							if (chatWindow.toggled) {
-								chatWindow.drawMessages(sampleMessages);
+								chatWindow.drawMessages();
 							}
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
@@ -468,7 +462,7 @@ function gameLoop() {
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							if (chatWindow.toggled) {
 								chatWindow.setTypeToggled(true);
-								chatWindow.drawMessages(sampleMessages, 2);
+								chatWindow.drawMessages(2);
 							}
 							break;
 						case '\x1b': // Escape key

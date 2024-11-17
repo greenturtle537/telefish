@@ -9,15 +9,20 @@ function MessageWindow(width, height, x, y) {
 MessageWindow.prototype = Object.create(Window.prototype);
 MessageWindow.prototype.constructor = MessageWindow;
 
-Window.prototype.typeToggle = function() {
+MessageWindow.prototype.typeToggle = function() {
     this.typeToggled = !this.typeToggled;
 };
 
-Window.prototype.setTypeToggle = function(newToggle) {
+MessageWindow.prototype.setTypeToggle = function(newToggle) {
     this.typeToggled = newToggle;
 };
 
-MessageWindow.prototype.drawMessages = function(messages, messageAdjust) {
+MessageWindow.prototype.addMessage = function(user, message) {
+    unixTime = time();
+    this.messages.push({ text: message, author: user, date: unixTime});
+}
+
+MessageWindow.prototype.drawMessages = function(messageAdjust) {
     if (messageAdjust === undefined) {
         messageAdjust = 0;
     }
@@ -38,8 +43,8 @@ MessageWindow.prototype.drawMessages = function(messages, messageAdjust) {
     // TODO: Sort messages by date in descending order
 
     // Process messages into lines
-    for (var m = 0; m < messages.length; m++) {
-        var message = messages[m];
+    for (var m = 0; m < this.messages.length; m++) {
+        var message = this.messages[m];
         var user = message.author;
         var text = message.text;
         var formattedMessage = user + ": " + text;
