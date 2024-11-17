@@ -117,6 +117,10 @@ function drawFishRegion() {
 	var startX = Math.floor((screenWidth - boxWidth) / 2);
 	var startY = Math.floor((screenHeight - boxHeight) / 2);
 
+	// Offset for avoiding the chat region
+	var startX = startX + 20;
+	var startY = startY + 0;
+
 	// Draw top border
 	console.gotoxy(startX, startY);
 	console.print('+');
@@ -145,7 +149,7 @@ function drawFishRegion() {
 
 	// Draw title
 	console.gotoxy(startX + 1, startY + 1);
-	console.print('==================== Currently waiting for a fish to bite ====================');
+	console.print("=Currently waiting for a fish to bite=");
 }
 
 function drawChatRegion() {
