@@ -296,20 +296,20 @@ function redrawPlayer(playerX, playerY) {
 function windowConflict(prevX, prevY) {
 	if (chatWindow.toggled) {
 		if ((
-			prevX + 1 >= startX &&
-			prevX + 1 < startX + chatWindow.width &&
-			prevY + 1 >= startY &&
-			prevY + 1 < startY + chatWindow.height
+			prevX + 1 >= chatWindow.x &&
+			prevX + 1 < chatWindow.x + chatWindow.width &&
+			prevY + 1 >= chatWindow.y &&
+			prevY + 1 < chatWindow.y + chatWindow.height
 		)) {
 			return true;
 		}
 	}
 	if (fishWindow.toggled) {
 		if ((
-			prevX + 1 >= startX &&
-			prevX + 1 < startX + fishWindow.width &&
-			prevY + 1 >= startY &&
-			prevY + 1 < startY + fishWindow.height
+			prevX + 1 >= fishWindow.x &&
+			prevX + 1 < fishWindow.x + fishWindow.width &&
+			prevY + 1 >= fishWindow.y &&
+			prevY + 1 < fishWindow.y + fishWindow.height
 		)) {
 			return true;
 		}
