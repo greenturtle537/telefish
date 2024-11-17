@@ -76,6 +76,18 @@ function dispChat(chatToggle, staticGrid) {
 	}
 }
 
+function dispFish(fishToggle, staticGrid) {
+	if (!fishToggle) {
+		// Draw chat region
+		drawFishRegion();
+		return true;
+	} else {
+		// Redraw region
+		redrawRegion(staticGrid);
+		return false;
+	}
+}
+
 function loadMapToGrid(filename, grid) {
 	var file = new File(filename);
 	if (!file.open("r")) {
@@ -94,6 +106,46 @@ function loadMapToGrid(filename, grid) {
 
 	file.close();
 	return grid;
+}
+
+function drawFishRegion() {
+	var boxWidth = 40;
+	var boxHeight = 10;
+	var screenWidth = 80;
+	var screenHeight = 24;
+
+	var startX = Math.floor((screenWidth - boxWidth) / 2);
+	var startY = Math.floor((screenHeight - boxHeight) / 2);
+
+	// Draw top border
+	console.gotoxy(startX, startY);
+	console.print('+');
+	for (var x = 1; x < boxWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+
+	// Draw sides and fill inside with spaces
+	for (var y = 1; y < boxHeight - 1; y++) {
+		console.gotoxy(startX, startY + y);
+		console.print('|');
+		for (var x = 1; x < boxWidth - 1; x++) {
+			console.print(' ');
+		}
+		console.print('|');
+	}
+
+	// Draw bottom border
+	console.gotoxy(startX, startY + boxHeight - 1);
+	console.print('+');
+	for (var x = 1; x < boxWidth - 1; x++) {
+		console.print('-');
+	}
+	console.print('+');
+
+	// Draw title
+	console.gotoxy(startX + 1, startY + 1);
+	console.print('==================== Currently waiting for a fish to bite ====================');
 }
 
 function drawChatRegion() {
@@ -213,11 +265,16 @@ function calculateMessageLines(user, message) {
 	return lines.length;
 }
 
-function fish() {
+function logo() {
 	console.clear();
 	show_image(telefish_title, false, 0);
 	console.pause();
 	console.clear();
+}
+
+function fish() {
+	dispFish();
+
 }
 
 function drawMessages(messages, messageAdjust) {
@@ -677,7 +734,7 @@ function gameLoop() {
 try {
 	console.print("Press any key to play the Telefish. It's 'Trouta be fire'");
 	console.pause();
-	fish();
+	logo();
 	gameLoop();
 	exit(0);
 } catch (e) {
