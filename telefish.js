@@ -36,14 +36,14 @@ var typeToggled = false;
 
 
 // Telefish global variables
+var Window = load({}, "window.js");
+var chatWindow = new Window(30, 24, 1, 1);
 
 // TODO: Rename to messages
 var sampleMessages = [];
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
-
-var Window = load({}, "window.js");
 
 require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
@@ -748,78 +748,6 @@ function gameLoop() {
 	}
 	console.clear();
 }
-
-// class Window {
-// 	title = "";
-
-// 	constructor(width = 0, height = 0, x = 0, y = 0) {
-// 		this.width = width;
-// 		this.height = height;
-// 		this.x = x;
-// 		this.y = y;
-// 		this.toggled = false;
-// 	}
-
-//     toggle() {
-//         this.toggled = !this.toggled;
-//     }
-
-//     draw() {
-//         console.gotoxy(this.x, this.y);
-//         console.print('+');
-//         for (var x = 1; x < this.width - 1; x++) {
-//             console.print('-');
-//         }
-//         console.print('+');
-//         for (var y = 1; y < this.height - 1; y++) {
-//             console.gotoxy(this.x, this.y + y);
-//             console.print('|');
-//             for (var x = 1; x < this.width - 1; x++) {
-//                 console.print(' ');
-//             }
-//             console.print('|');
-//         }
-//         console.gotoxy(this.x, this.y + this.height - 1);
-//         console.print('+');
-//         for (var x = 1; x < this.width - 1; x++) {
-//             console.print('-');
-//         }
-//         console.print('+');
-//     }
-
-//     setTitle(title) {
-//         this.title = title;
-//     }
-
-//     drawTitle(title) {
-//         console.gotoxy(this.x + 1, this.y + 1);
-//         console.print(title);
-//     }
-
-//     dispWindow(staticGrid) {
-//         if (!this.toggled) {
-//             this.draw();
-//             this.drawTitle(this.title);
-//             return true;
-//         } else {
-//             this.redrawGrid(staticGrid);
-//             return false;
-//         }
-//     }
-
-//     redrawGrid(staticGrid) {
-//         for (var y = 0; y < this.height; y++) {
-//             console.gotoxy(this.x, this.y + y);
-//             for (var x = 0; x < this.width; x++) {
-//                 if (staticGrid[y] && staticGrid[y][x]) {
-//                     console.print(staticGrid[y][x]);
-//                 } else {
-//                     console.print(' ');
-//                 }
-//             }
-//         }
-//     }
-// }
 
 try {
 	console.print("Press any key to play the Telefish. It's 'Trouta be fire'");
