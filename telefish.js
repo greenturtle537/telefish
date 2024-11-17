@@ -547,7 +547,7 @@ function gameLoop() {
 						}
 						lastTypedMessage = typedMessage;
 						lastLines = lines;
-						drawTypedMessage(currentUser.handle, typedMessage);
+						chatWindow.drawTypedMessage(currentUser.handle, typedMessage);
 					}
 					
 					// TODO: Move cursor to where next character will be added
