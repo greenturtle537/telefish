@@ -14,6 +14,13 @@ var debug = false; //Debug flag
 var options = load({}, "modopts.js", ini_section);
 
 // Telefish options
+
+var startX = 1;
+var startY = 1;
+
+var fishWidth = 40;
+var fishHeight = 10;
+
 var screenWidth = 80;
 var screenHeight = 24;
 
@@ -23,7 +30,10 @@ var telefish = currentUser.curxtrn // For ref, this is currently telefish but ma
 
 var nodesOnline = [];
 
+var chatToggle = false;
+var fishToggle = false;
 var typeToggled = false;
+
 
 // Telefish global variables
 var Window = load({}, "window.js");
@@ -162,7 +172,7 @@ function drawChatRegion() {
 }
 
 function drawTypedMessage(user, message) {
-	var maxWidth = chatWidth - 2;
+	var maxWidth = chatWindow.width - 2;
 	var formattedMessage = user + ": " + message;
 	var words = formattedMessage.split(' ');
 	var lines = [];
@@ -192,10 +202,10 @@ function drawTypedMessage(user, message) {
 	}
 	if (line.length > 0) lines.push(line);
 
-	var startLine = startY + chatHeight - 1 - lines.length;
+	var startLine = startY + chatWindow.height - 1 - lines.length;
 	for (var i = 0; i < lines.length; i++) {
 		console.gotoxy(startX + 1, startLine + i);
-		for (var x = 1; x < chatWidth - 1; x++) {
+		for (var x = 1; x < chatWindow.width - 1; x++) {
 			console.print(' ');
 		}
 		console.gotoxy(startX + 1, startLine + i);
@@ -203,16 +213,16 @@ function drawTypedMessage(user, message) {
 	}
 
 	// Separate from existing chat
-	var yPosition = startY + chatHeight - lines.length - 2;
+	var yPosition = startY + chatWindow.height - lines.length - 2;
 	console.gotoxy(startX + 1, yPosition);
-	for (var x = 1; x < chatWidth - 1; x++) {
+	for (var x = 1; x < chatWindow.width - 1; x++) {
 		console.print('-');
 	}
 	return lines.length;
 }
 
 function calculateMessageLines(user, message) {
-	var maxWidth = chatWidth - 2;
+	var maxWidth = chatWindow.width - 2;
 	var formattedMessage = user + ": " + message;
 	var words = formattedMessage.split(' ');
 	var lines = [];
@@ -259,14 +269,14 @@ function drawMessages(messages, messageAdjust) {
 	if (messageAdjust === undefined) {
 		messageAdjust = 0;
 	}
-	var maxWidth = chatWidth - 2;
-	var maxMessages = chatHeight - 3; // Adjust for borders and title
+	var maxWidth = chatWindow.width - 2;
+	var maxMessages = chatWindow.height - 3; // Adjust for borders and title
 	maxMessages = maxMessages - messageAdjust; // Adjust for message entry section.
 
 	// Clear the chat area
-	for (var y = 2; y < chatHeight - 1; y++) {
+	for (var y = 2; y < chatWindow.height - 1; y++) {
 		console.gotoxy(startX + 1, startY + y);
-		for (var x = 1; x < chatWidth - 1; x++) {
+		for (var x = 1; x < chatWindow.width - 1; x++) {
 			console.print(' ');
 		}
 	}
@@ -316,7 +326,7 @@ function drawMessages(messages, messageAdjust) {
 	var startLine = Math.max(0, allLines.length - maxMessages);
 	var yPosition = 2;
 
-	for (var i = startLine; i < allLines.length && yPosition < chatHeight - 1; i++) {
+	for (var i = startLine; i < allLines.length && yPosition < chatWindow.height - 1; i++) {
 		console.gotoxy(startX + 1, startY + yPosition);
 		console.print(allLines[i]);
 		yPosition++;
@@ -368,9 +378,9 @@ function windowConflict(prevX, prevY) {
 	if (chatToggle) {
 		if ((
 			prevX + 1 >= startX &&
-			prevX + 1 < startX + chatWidth &&
+			prevX + 1 < startX + chatWindow.width &&
 			prevY + 1 >= startY &&
-			prevY + 1 < startY + chatHeight
+			prevY + 1 < startY + chatWindow.height
 		)) {
 			return true;
 		}
@@ -692,7 +702,7 @@ function gameLoop() {
 							}
 							break;
 						case 'j':
-							chatToggle = chatWindow.dispWindow(staticGrid);
+							chatToggle = dispChat(chatToggle, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
