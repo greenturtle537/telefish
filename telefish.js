@@ -323,7 +323,12 @@ function broadcastDiscover() {
 }
 
 function checkDuplicateNode(node) {
-	return nodesOnline.includes(parseInt(node));
+	for(var i = 0; i < nodesOnline.length; i++) {
+		if (parseInt(node) === parseInt(nodesOnline[i])) {
+			return true;
+		}
+	}
+	return false;
 }
 
 function broadcastAcknowledge(node) {
