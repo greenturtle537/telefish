@@ -18,7 +18,7 @@ NodeTalk.prototype.probeNode = function (node) {
 
 NodeTalk.prototype.addNode = function(node) {
     this.nodesOnline.push(node);
-}
+};
 
 // Ask all nodes to discover themselves, including self
 NodeTalk.prototype.broadcastDiscover = function () {
@@ -44,14 +44,14 @@ NodeTalk.prototype.broadcastAcknowledge = function(node) {
 		return;
 	}
 	system.put_node_message(node, "\x1bTF\x1b"+this.userNode+"\x1b"+"\x7fDISCOVER\x7f");
-}
+};
 
 
 NodeTalk.prototype.sendMessage = function(message, name) {
 	for(var i = 0; i < this.nodesOnline.length; i++) {
 		system.put_node_message(this.nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
 	}
-}
+};
 
 /* Leave as last line for convenient load() usage: */
 NodeTalk;
