@@ -3,4 +3,4 @@ function NodeTalk() {
 }
 
 /* Leave as last line for convenient load() usage: */
-Nodetalk;
+NodeTalk;
