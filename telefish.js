@@ -27,6 +27,8 @@ var nodesOnline = [];
 // Telefish global variables
 var Window = load({}, "window.js");
 var MessageWindow = load({}, "MessageWindow.js");
+var NodeTalk = load({}, "NodeTalk.js");
+require("utils.js");
 
 var chatWindow = new MessageWindow(30, 24, 1, 1);
 chatWindow.setTitle("====Telefish  Node  Chat====");
@@ -54,17 +56,6 @@ function show_image(filename, fx, delay) {
 	else
 		graphic.draw('center', 'center');
 	sleep(delay);
-}
-
-function getCharAtPos(x, y) {
-	// Move the cursor to position (x, y)
-	console.gotoxy(x, y);
-	// Calculate the index in the screen buffer
-	var index = (y - 1) * console.screen_columns + (x - 1);
-
-	// Get the character at that position
-	var charAtPosition = console.screen_buf[index];
-	return charAtPosition;
 }
 
 function loadMapToGrid(filename, grid) {
