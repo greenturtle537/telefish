@@ -47,7 +47,7 @@ Window.prototype.drawTitle = function(title) {
     console.print(title);
 };
 
-Window.prototype.dispWindow = function(staticGrid) {
+Window.prototype.display = function(staticGrid) {
     if (!this.toggled) {
         this.draw();
         this.drawTitle(this.title);

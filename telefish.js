@@ -697,8 +697,7 @@ function gameLoop() {
 							}
 							break;
 						case 'j':
-							//chatWindow.toggled = dispChat(chatWindow.toggled, staticGrid);
-							chatWindow.toggled = chatWindow.dispChat(staticGrid);
+							chatWindow.toggled = chatWindow.display(staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
