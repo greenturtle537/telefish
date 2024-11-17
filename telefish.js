@@ -455,7 +455,7 @@ function gameLoop() {
 							break;
 					}
 					if (typeToggled === true) {
-						lines = calculateMessageLines(currentUser.handle, typedMessage);
+						lines = chatWindow.calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
 							drawMessages(sampleMessages, lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
