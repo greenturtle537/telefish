@@ -8,6 +8,39 @@ function MessageWindow(width, height, x, y) {
 MessageWindow.prototype = Object.create(Window.prototype);
 MessageWindow.prototype.constructor = MessageWindow;
 
+function calculateMessageLines(user, message) {
+	var maxWidth = chatWindow.width - 2;
+	var formattedMessage = user + ": " + message;
+	var words = formattedMessage.split(' ');
+	var lines = [];
+	var line = '';
+
+	for (var i = 0; i < words.length; i++) {
+		var word = words[i];
+
+		while (word.length > maxWidth) {
+			var part = word.substring(0, maxWidth);
+			word = word.substring(maxWidth);
+			if (line.length > 0) {
+				lines.push(line);
+				line = '';
+			}
+			lines.push(part);
+		}
+
+		if (line.length + word.length + (line.length > 0 ? 1 : 0) > maxWidth) {
+			lines.push(line);
+			line = word;
+		} else {
+			if (line.length > 0) line += ' ';
+			line += word;
+		}
+	}
+	if (line.length > 0) lines.push(line);
+
+	return lines.length;
+}
+
 MessageWindow.prototype.drawTypedMessage = function(user, message) {
     var maxWidth = this.width - 2;
     var formattedMessage = user + ": " + message;
