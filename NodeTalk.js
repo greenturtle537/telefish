@@ -16,6 +16,10 @@ NodeTalk.prototype.probeNode = function (node) {
 	}
 };
 
+NodeTalk.prototype.addNode = function(node) {
+    this.nodesOnline.push(node);
+}
+
 // Ask all nodes to discover themselves, including self
 NodeTalk.prototype.broadcastDiscover = function () {
 	for(var i = 0; i < system.nodes; i++) {

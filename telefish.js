@@ -18,12 +18,6 @@ var options = load({}, "modopts.js", ini_section);
 var screenWidth = 80;
 var screenHeight = 24;
 
-var userNode = bbs.node_num;
-var currentUser = new User(bbs.node_useron);
-var telefish = currentUser.curxtrn // For ref, this is currently telefish but may change
-
-var nodesOnline = [];
-
 // Telefish global variables
 var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
@@ -112,14 +106,14 @@ function runCommand(command) {
 function broadcastDiscover() {
 	for(var i = 0; i < system.nodes; i++) {
 		if (nodeTalk.probeNode(i) && !checkDuplicateNode(i)) {
-			system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+			system.put_node_message(i, "\x1bTF\x1b"+nodeTalk.userNode+"\x1b"+"\x7fDISCOVER\x7f");
 		}
 	}
 }
 
 function checkDuplicateNode(node) {
-	for(var i = 0; i < nodesOnline.length; i++) {
-		if (parseInt(node) === parseInt(nodesOnline[i])) {
+	for(var i = 0; i < nodeTalk.nodesOnline.length; i++) {
+		if (parseInt(node) === parseInt(nodeTalk.nodesOnline[i])) {
 			return true;
 		}
 	}
@@ -131,13 +125,13 @@ function broadcastAcknowledge(node) {
 	if (checkDuplicateNode(node)) {
 		return;
 	}
-	system.put_node_message(node, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
+	system.put_node_message(node, "\x1bTF\x1b"+nodeTalk.userNode+"\x1b"+"\x7fDISCOVER\x7f");
 }
 
 
 function sendMessage(message, name) {
-	for(var i = 0; i < nodesOnline.length; i++) {
-		system.put_node_message(nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
+	for(var i = 0; i < nodeTalk.nodesOnline.length; i++) {
+		system.put_node_message(nodeTalk.nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
 	}
 }
 
@@ -187,7 +181,7 @@ function gameLoop() {
 	}
 
 
-	nodesOnline.push(userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
+	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	broadcastDiscover(); //Will also discover self for echo now
 
 	while (running) {
@@ -211,7 +205,7 @@ function gameLoop() {
 		}
 
 		try {
-			message = system.get_node_message(userNode);
+			message = system.get_node_message(nodeTalk.userNode);
 			if (message === null) {
 				messages = [];
 			} else {
@@ -228,7 +222,7 @@ function gameLoop() {
 				if (messages[i] === "\x7fDISCOVER\x7f") {
 					if (!(checkDuplicateNode(messages[i-1]))) {
 						broadcastAcknowledge(messages[i-1]);
-						nodesOnline.push(messages[i-1]);
+						nodeTalk.addNode(messages[i-1]);
 					}
 				} else {
 					chatWindow.addMessage(messages[i-1], messages[i]);
@@ -244,8 +238,8 @@ function gameLoop() {
 			}
 			console.gotoxy(1, 28);
 			console.gotoxy(1, 26);
-			for (var i=0; i < nodesOnline.length; i++) {
-				console.print(nodesOnline[i] + " ");
+			for (var i=0; i < nodeTalk.nodesOnline.length; i++) {
+				console.print(nodeTalk.nodesOnline[i] + " ");
 			}
 		}
 
@@ -275,10 +269,10 @@ function gameLoop() {
 								if (typedMessage.charAt(0) === '/') {
 									runCommand(typedMessage);
 								} else {
-									if (currentUser.handle === '') {
-										sendMessage(typedMessage, currentUser.alias);
+									if (nodeTalk.currentUser.handle === '') {
+										sendMessage(typedMessage, nodeTalk.currentUser.alias);
 									} else {
-										sendMessage(typedMessage, currentUser.handle);
+										sendMessage(typedMessage, nodeTalk.currentUser.handle);
 									}
 								}	
 							}
@@ -303,7 +297,7 @@ function gameLoop() {
 							break;
 					}
 					if (chatWindow.typeToggled === true) {
-						lines = chatWindow.calculateMessageLines(currentUser.handle, typedMessage);
+						lines = chatWindow.calculateMessageLines(nodeTalk.currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
 							chatWindow.drawMessages(lines+1);
 						} // Only redraw if the message is deleted. This is to prevent multiple seperation lines.
@@ -312,7 +306,7 @@ function gameLoop() {
 						}
 						lastTypedMessage = typedMessage;
 						lastLines = lines;
-						chatWindow.drawTypedMessage(currentUser.handle, typedMessage);
+						chatWindow.drawTypedMessage(nodeTalk.currentUser.handle, typedMessage);
 					}
 					
 					// TODO: Move cursor to where next character will be added
