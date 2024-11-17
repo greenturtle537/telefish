@@ -28,7 +28,8 @@ var nodesOnline = [];
 var Window = load({}, "window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
-require("utils.js");
+
+require("utils.js", "getCharAtPos");
 
 var chatWindow = new MessageWindow(30, 24, 1, 1);
 chatWindow.setTitle("====Telefish  Node  Chat====");
