@@ -13,7 +13,7 @@ MessageWindow.prototype.typeToggle = function() {
     this.typeToggled = !this.typeToggled;
 };
 
-MessageWindow.prototype.setTypeToggle = function(newToggle) {
+MessageWindow.prototype.setTypeToggled = function(newToggle) {
     this.typeToggled = newToggle;
 };
 
