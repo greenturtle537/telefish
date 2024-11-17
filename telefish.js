@@ -29,7 +29,7 @@ var Window = load({}, "window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
 
-require("utils.js", "getCharAtPos");
+load("utils.js");
 
 var chatWindow = new MessageWindow(30, 24, 1, 1);
 chatWindow.setTitle("====Telefish  Node  Chat====");
@@ -57,26 +57,6 @@ function show_image(filename, fx, delay) {
 	else
 		graphic.draw('center', 'center');
 	sleep(delay);
-}
-
-function loadMapToGrid(filename, grid) {
-	var file = new File(filename);
-	if (!file.open("r")) {
-		alert("Failed to open " + filename);
-		return;
-	}
-
-	var y = 0;
-	while (!file.eof && y < grid.length) {
-		var line = file.readln();
-		for (var x = 0; x < line.length && x < grid[y].length; x++) {
-			grid[y][x] = line.charAt(x);
-		}
-		y++;
-	}
-
-	file.close();
-	return grid;
 }
 
 function logo() {
