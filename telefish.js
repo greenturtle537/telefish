@@ -33,7 +33,9 @@ var typeToggled = false;
 // Telefish global variables
 var Window = load({}, "window.js");
 var chatWindow = new Window(30, 24, 1, 1);
+chatWindow.setTitle("====Telefish  Node  Chat====");
 var fishWindow = new Window(40, 10, 1, 1);
+fishWindow.setTitle("=Currently waiting for a fish to bite=");
 
 // TODO: Rename to messages
 var sampleMessages = [];
@@ -70,18 +72,6 @@ function getCharAtPos(x, y) {
 	// Get the character at that position
 	var charAtPosition = console.screen_buf[index];
 	return charAtPosition;
-}
-
-function dispChat(chatToggle, staticGrid) {
-	if (!chatToggle) {
-		// Draw chat region
-		drawChatRegion();
-		return true;
-	} else {
-		// Redraw region
-		redrawGrid(staticGrid);
-		return false;
-	}
 }
 
 function dispFish(fishToggle, staticGrid) {
@@ -153,17 +143,6 @@ function drawFishRegion() {
 	// Draw title
 	console.gotoxy(startX + 1, startY + 1);
 	console.print("=Currently waiting for a fish to bite=");
-}
-
-function drawChatRegion() {
-	// Draw top border
-	chatWindow.draw();
-
-	// Draw title
-	console.gotoxy(startX + 1, startY + 1);
-	console.print('====Telefish  Node  Chat====');
-
-	drawMessages(sampleMessages);
 }
 
 function drawTypedMessage(user, message) {
@@ -698,6 +677,9 @@ function gameLoop() {
 							break;
 						case 'j':
 							chatWindow.toggled = chatWindow.display(staticGrid);
+							if (chatWindow.toggled) {
+								drawMessages(sampleMessages);
+							}
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
