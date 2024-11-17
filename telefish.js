@@ -71,7 +71,7 @@ function dispChat(chatToggle, staticGrid) {
 		return true;
 	} else {
 		// Redraw region
-		redrawRegion(staticGrid);
+		redrawGrid(staticGrid);
 		return false;
 	}
 }
@@ -83,7 +83,7 @@ function dispFish(fishToggle, staticGrid) {
 		return true;
 	} else {
 		// Redraw region
-		redrawRegion(staticGrid);
+		redrawGrid(staticGrid);
 		return false;
 	}
 }
@@ -366,10 +366,10 @@ function checkSingleCharacter(key) {
 	return false;
 }
 
-function redrawRegion(staticGrid) {
-	for (var y = 0; y < chatHeight; y++) {
+function redrawGrid(staticGrid) {
+	for (var y = 0; y < 25; y++) {
 		console.gotoxy(startX, startY + y);
-		for (var x = 0; x < chatWidth; x++) {
+		for (var x = 0; x < 80; x++) {
 			if (staticGrid[y] && staticGrid[y][x]) {
 				console.print(staticGrid[y][x]);
 			} else {
