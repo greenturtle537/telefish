@@ -25,7 +25,7 @@ var telefish = currentUser.curxtrn // For ref, this is currently telefish but ma
 var nodesOnline = [];
 
 // Telefish global variables
-var Window = load({}, "window.js");
+var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
 
@@ -66,24 +66,6 @@ function logo() {
 	console.clear();
 }
 
-function checkSingleCharacter(key) {
-	var commonKeys = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 `~!@#$%^&*()-_=+[]{}|;:\'",.<>/?\\'.split('');
-	if (typeof key === 'string' && key.length === 1) {
-		var isCommonKey = false;
-		for (var i = 0; i < commonKeys.length; i++) {
-			if (commonKeys[i] === key) {
-				isCommonKey = true;
-				break;
-			}
-		}
-		if (!isCommonKey) {
-			return false;
-		}
-		return key;
-	}
-	return false;
-}
-
 function redrawPlayer(playerX, playerY) {
 	if (windowConflict(playerX, playerY)) {
 		offScreenCursor();
@@ -116,10 +98,6 @@ function windowConflict(prevX, prevY) {
 		}
 	}
 	return false;
-}
-
-function offScreenCursor() {
-	console.gotoxy(200, 200); // Move cursor off screen
 }
 
 function runCommand(command) {
