@@ -3,10 +3,19 @@ var Window = load({}, "window.js");
 function MessageWindow(width, height, x, y) {
     Window.call(this, width, height, x, y);
     this.messages = [];
+    this.typeToggled = false;
 }
 
 MessageWindow.prototype = Object.create(Window.prototype);
 MessageWindow.prototype.constructor = MessageWindow;
+
+Window.prototype.typeToggle = function() {
+    this.typeToggled = !this.typeToggled;
+};
+
+Window.prototype.setTypeToggle = function(newToggle) {
+    this.typeToggled = newToggle;
+};
 
 MessageWindow.prototype.drawMessages = function(messages, messageAdjust) {
     if (messageAdjust === undefined) {

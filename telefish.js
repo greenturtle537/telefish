@@ -15,9 +15,6 @@ var options = load({}, "modopts.js", ini_section);
 
 // Telefish options
 
-var startX = 1;
-var startY = 1;
-
 var screenWidth = 80;
 var screenHeight = 24;
 
@@ -26,9 +23,6 @@ var currentUser = new User(bbs.node_useron);
 var telefish = currentUser.curxtrn // For ref, this is currently telefish but may change
 
 var nodesOnline = [];
-
-var typeToggled = false;
-
 
 // Telefish global variables
 var Window = load({}, "window.js");
@@ -121,19 +115,6 @@ function checkSingleCharacter(key) {
 		return key;
 	}
 	return false;
-}
-
-function redrawGrid(staticGrid) {
-	for (var y = 0; y < screenHeight; y++) {
-		console.gotoxy(startX, startY + y);
-		for (var x = 0; x < screenWidth; x++) {
-			if (staticGrid[y] && staticGrid[y][x]) {
-				console.print(staticGrid[y][x]);
-			} else {
-				console.print(' ');
-			}
-		}
-	}
 }
 
 function redrawPlayer(playerX, playerY) {
@@ -347,13 +328,13 @@ function gameLoop() {
 					}
 				}
 			} else {
-				if (typeToggled) { // If typing is toggled, do not move player
+				if (chatWindow.typeToggled) { // If typing is toggled, do not move player
 					switch (key) {
 						case '\r':
 						case '\n':
 						case '\x0D':
 						case '\x0A':
-							typeToggled = false;
+							chatWindow.setTypeToggled(false);
 
 							if (typedMessage.length > 0) {
 								if (typedMessage.charAt(0) === '/') {
@@ -371,7 +352,7 @@ function gameLoop() {
 							break;
 						case '\x1b': // Escape key
 						// Just exit typing mode without doing sending message
-							typeToggled = false;
+							chatWindow.setTypeToggled(false);
 							break;
 						case '\b':
 						case '\x7f':							
@@ -386,7 +367,7 @@ function gameLoop() {
 							}
 							break;
 					}
-					if (typeToggled === true) {
+					if (chatWindow.typeToggled === true) {
 						lines = chatWindow.calculateMessageLines(currentUser.handle, typedMessage);
 						if (lastTypedMessage != typedMessage || lastLines != lines) {
 							chatWindow.drawMessages(sampleMessages, lines+1);
@@ -486,7 +467,7 @@ function gameLoop() {
 						case '\x0D':
 						case '\x0A': // Enter key variants, TODO: update to sys standard
 							if (chatWindow.toggled) {
-								typeToggled = true;
+								chatWindow.setTypeToggled(true);
 								chatWindow.drawMessages(sampleMessages, 2);
 							}
 							break;
