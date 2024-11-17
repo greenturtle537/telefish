@@ -18,9 +18,6 @@ var options = load({}, "modopts.js", ini_section);
 var startX = 1;
 var startY = 1;
 
-var fishWidth = 40;
-var fishHeight = 10;
-
 var screenWidth = 80;
 var screenHeight = 24;
 
@@ -30,7 +27,6 @@ var telefish = currentUser.curxtrn // For ref, this is currently telefish but ma
 
 var nodesOnline = [];
 
-var fishToggle = false;
 var typeToggled = false;
 
 
@@ -121,8 +117,8 @@ function loadMapToGrid(filename, grid) {
 }
 
 function drawFishRegion() {
-	var startX = Math.floor((screenWidth - fishWidth) / 2);
-	var startY = Math.floor((screenHeight - fishHeight) / 2);
+	var startX = Math.floor((screenWidth - fishWindow.width) / 2);
+	var startY = Math.floor((screenHeight - fishWindow.height) / 2);
 
 	// Offset for avoiding the chat region
 	var startX = startX + 20;
@@ -131,25 +127,25 @@ function drawFishRegion() {
 	// Draw top border
 	console.gotoxy(startX, startY);
 	console.print('+');
-	for (var x = 1; x < fishWidth - 1; x++) {
+	for (var x = 1; x < fishWindow.width - 1; x++) {
 		console.print('-');
 	}
 	console.print('+');
 
 	// Draw sides and fill inside with spaces
-	for (var y = 1; y < fishHeight - 1; y++) {
+	for (var y = 1; y < fishWindow.height - 1; y++) {
 		console.gotoxy(startX, startY + y);
 		console.print('|');
-		for (var x = 1; x < fishWidth - 1; x++) {
+		for (var x = 1; x < fishWindow.width - 1; x++) {
 			console.print(' ');
 		}
 		console.print('|');
 	}
 
 	// Draw bottom border
-	console.gotoxy(startX, startY + fishHeight - 1);
+	console.gotoxy(startX, startY + fishWindow.height - 1);
 	console.print('+');
-	for (var x = 1; x < fishWidth - 1; x++) {
+	for (var x = 1; x < fishWindow.width - 1; x++) {
 		console.print('-');
 	}
 	console.print('+');
@@ -384,12 +380,12 @@ function windowConflict(prevX, prevY) {
 			return true;
 		}
 	}
-	if (fishToggle) {
+	if (fishWindow.toggled) {
 		if ((
 			prevX + 1 >= startX &&
-			prevX + 1 < startX + fishWidth &&
+			prevX + 1 < startX + fishWindow.width &&
 			prevY + 1 >= startY &&
-			prevY + 1 < startY + fishHeight
+			prevY + 1 < startY + fishWindow.height
 		)) {
 			return true;
 		}
@@ -633,7 +629,7 @@ function gameLoop() {
 				} else {
 					switch (key) {
 						case "f":
-							fishToggle = dispFish(fishToggle, staticGrid);
+							fishWindow.toggled = dispFish(fishWindow.toggled, staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;
@@ -701,7 +697,8 @@ function gameLoop() {
 							}
 							break;
 						case 'j':
-							chatWindow.toggled = dispChat(chatWindow.toggled, staticGrid);
+							//chatWindow.toggled = dispChat(chatWindow.toggled, staticGrid);
+							chatWindow.toggled = chatWindow.dispChat(staticGrid);
 							offScreenCursor();
 							redrawPlayer(playerX, playerY); // Will not draw if toggled
 							break;

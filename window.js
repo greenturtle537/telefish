@@ -11,6 +11,10 @@ Window.prototype.toggle = function() {
     this.toggled = !this.toggled;
 };
 
+Window.prototype.setToggle = function(newToggle) {
+    this.toggled = newToggle;
+};
+
 Window.prototype.draw = function() {
     console.gotoxy(this.x, this.y);
     console.print('+');
