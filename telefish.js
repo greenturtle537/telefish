@@ -161,30 +161,7 @@ function drawFishRegion() {
 
 function drawChatRegion() {
 	// Draw top border
-	console.gotoxy(startX, startY);
-	console.print('+');
-	for (var x = 1; x < chatWidth - 1; x++) {
-		console.print('-');
-	}
-	console.print('+');
-
-	// Draw sides and fill inside with spaces
-	for (var y = 1; y < chatHeight - 1; y++) {
-		console.gotoxy(startX, startY + y);
-		console.print('|');
-		for (var x = 1; x < chatWidth - 1; x++) {
-			console.print(' ');
-		}
-		console.print('|');
-	}
-
-	// Draw bottom border
-	console.gotoxy(startX, startY + chatHeight - 1);
-	console.print('+');
-	for (var x = 1; x < chatWidth - 1; x++) {
-		console.print('-');
-	}
-	console.print('+');
+	chatWindow.draw();
 
 	// Draw title
 	console.gotoxy(startX + 1, startY + 1);
