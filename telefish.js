@@ -43,6 +43,8 @@ var sampleMessages = [];
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
 
+var Window = load({}, "window.js");
+
 require("sbbsdefs.js", "K_NONE");
 require("mouse_getkey.js", "mouse_getkey");
 
