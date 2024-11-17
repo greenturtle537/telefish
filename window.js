@@ -66,3 +66,6 @@ Window.prototype.redrawGrid = function(staticGrid) {
         }
     }
 };
+
+/* Leave as last line for convenient load() usage: */
+Window;
