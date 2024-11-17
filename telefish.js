@@ -32,12 +32,13 @@ var typeToggled = false;
 
 // Telefish global variables
 var Window = load({}, "window.js");
-var chatWindow = new Window(30, 24, 1, 1);
+var MessageWindow = load({}, "MessageWindow.js");
+
+var chatWindow = new MessageWindow(30, 24, 1, 1);
 chatWindow.setTitle("====Telefish  Node  Chat====");
 var fishWindow = new Window(40, 10, 35, 10);
 fishWindow.setTitle("=Currently waiting for a fish to bite=");
 
-var MessageWindow = load({}, "MessageWindow.js");
 
 
 // TODO: Rename to messages
