@@ -19,7 +19,7 @@ NodeTalk.prototype.probeNode = function (node) {
 // Ask all nodes to discover themselves, including self
 NodeTalk.prototype.broadcastDiscover = function () {
 	for(var i = 0; i < system.nodes; i++) {
-		if (probeNode(i) && !checkDuplicateNode(i)) {
+		if (nodeTalk.probeNode(i) && !checkDuplicateNode(i)) {
 			system.put_node_message(i, "\x1bTF\x1b"+userNode+"\x1b"+"\x7fDISCOVER\x7f");
 		}
 	}
