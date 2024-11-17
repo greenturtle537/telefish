@@ -94,45 +94,6 @@ function loadMapToGrid(filename, grid) {
 	return grid;
 }
 
-function drawFishRegion() {
-	var startX = Math.floor((screenWidth - fishWindow.width) / 2);
-	var startY = Math.floor((screenHeight - fishWindow.height) / 2);
-
-	// Offset for avoiding the chat region
-	var startX = startX + 20;
-	var startY = startY + 0;
-
-	// Draw top border
-	console.gotoxy(startX, startY);
-	console.print('+');
-	for (var x = 1; x < fishWindow.width - 1; x++) {
-		console.print('-');
-	}
-	console.print('+');
-
-	// Draw sides and fill inside with spaces
-	for (var y = 1; y < fishWindow.height - 1; y++) {
-		console.gotoxy(startX, startY + y);
-		console.print('|');
-		for (var x = 1; x < fishWindow.width - 1; x++) {
-			console.print(' ');
-		}
-		console.print('|');
-	}
-
-	// Draw bottom border
-	console.gotoxy(startX, startY + fishWindow.height - 1);
-	console.print('+');
-	for (var x = 1; x < fishWindow.width - 1; x++) {
-		console.print('-');
-	}
-	console.print('+');
-
-	// Draw title
-	console.gotoxy(startX + 1, startY + 1);
-	console.print("=Currently waiting for a fish to bite=");
-}
-
 function drawTypedMessage(user, message) {
 	var maxWidth = chatWindow.width - 2;
 	var formattedMessage = user + ": " + message;
