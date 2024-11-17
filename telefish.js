@@ -487,6 +487,7 @@ function gameLoop() {
 
 	var chatToggle = false;
 	var typeToggled = false;
+	var fishToggle = false;
 
 	var messageLength = 0;
 	var message = '';
