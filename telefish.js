@@ -38,7 +38,7 @@ var typeToggled = false;
 // Telefish global variables
 var Window = load({}, "window.js");
 var chatWindow = new Window(30, 24, 1, 1);
-console.print(chatWindow.toggled);
+console.print(chatWindow.title);
 
 // TODO: Rename to messages
 var sampleMessages = [];

@@ -1,5 +1,5 @@
 function Window(width, height, x, y) {
-    this.title = "";
+    this.title = "DEBUG";
     this.width = typeof width !== 'undefined' ? width : 0;
     this.height = typeof height !== 'undefined' ? height : 0;
     this.x = typeof x !== 'undefined' ? x : 0;
