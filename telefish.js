@@ -7,8 +7,6 @@ const ini_section = "telefish"; // ini file section
 const telefish_title = js.exec_dir + "telefish.ans";
 const telefish_title_xbin = js.exec_dir + "telefish.xbin";
 
-
-
 var debug = false; //Debug flag
 
 var options = load({}, "modopts.js", ini_section);
