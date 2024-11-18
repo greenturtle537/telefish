@@ -22,7 +22,7 @@ var screenHeight = 24;
 var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
-var nodetalk = new NodeTalk();
+
 
 load("utils.js");
 
@@ -30,6 +30,7 @@ var chatWindow = new MessageWindow(30, 24, 1, 1);
 chatWindow.setTitle("====Telefish  Node  Chat====");
 var fishWindow = new Window(40, 10, 35, 10);
 fishWindow.setTitle("=Currently waiting for a fish to bite=");
+var nodetalk = new NodeTalk();
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
