@@ -103,39 +103,6 @@ function runCommand(command) {
 	}
 }
 
-// Ask all nodes to discover themselves, including self
-function broadcastDiscover() {
-	for(var i = 0; i < system.nodes; i++) {
-		if (nodeTalk.probeNode(i) && !checkDuplicateNode(i)) {
-			system.put_node_message(i, "\x1bTF\x1b"+nodeTalk.userNode+"\x1b"+"\x7fDISCOVER\x7f");
-		}
-	}
-}
-
-function checkDuplicateNode(node) {
-	for(var i = 0; i < nodeTalk.nodesOnline.length; i++) {
-		if (parseInt(node) === parseInt(nodeTalk.nodesOnline[i])) {
-			return true;
-		}
-	}
-	return false;
-}
-
-// Acknowledge the node that sent the discover message, not including self or already acknowledged nodes
-function broadcastAcknowledge(node) {
-	if (checkDuplicateNode(node)) {
-		return;
-	}
-	system.put_node_message(node, "\x1bTF\x1b"+nodeTalk.userNode+"\x1b"+"\x7fDISCOVER\x7f");
-}
-
-
-function sendMessage(message, name) {
-	for(var i = 0; i < nodeTalk.nodesOnline.length; i++) {
-		system.put_node_message(nodeTalk.nodesOnline[i], "\x1bTF\x1b"+name+"\x1b"+message);
-	}
-}
-
 function gameLoop() {
 	var gridchatWidth = 80;
 	var gridchatHeight = 24;
@@ -183,7 +150,7 @@ function gameLoop() {
 
 
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
-	broadcastDiscover(); //Will also discover self for echo now
+	nodeTalk.broadcastDiscover(); //Will also discover self for echo now
 
 	while (running) {
 
@@ -221,8 +188,8 @@ function gameLoop() {
 		for(var i = 0; i < messages.length; i=i+3) {
 			if (!(messages[i] === '' || messages[i] === null)) {
 				if (messages[i] === "\x7fDISCOVER\x7f") {
-					if (!(checkDuplicateNode(messages[i-1]))) {
-						broadcastAcknowledge(messages[i-1]);
+					if (!(nodeTalk.checkDuplicateNode(messages[i-1]))) {
+						nodeTalk.broadcastAcknowledge(messages[i-1]);
 						nodeTalk.addNode(messages[i-1]);
 					}
 				} else {
@@ -271,9 +238,9 @@ function gameLoop() {
 									runCommand(typedMessage);
 								} else {
 									if (nodeTalk.currentUser.handle === '') {
-										sendMessage(typedMessage, nodeTalk.currentUser.alias);
+										nodeTalk.sendMessage(typedMessage, nodeTalk.currentUser.alias);
 									} else {
-										sendMessage(typedMessage, nodeTalk.currentUser.handle);
+										nodeTalk.sendMessage(typedMessage, nodeTalk.currentUser.handle);
 									}
 								}	
 							}
