@@ -2,7 +2,6 @@ function NodeTalk() {
     this.userNode = bbs.node_num;
     this.currentUser = new User(bbs.node_useron);
     this.telefish = this.currentUser.curxtrn; // For ref, this is currently telefish but may change
-
     this.nodesOnline = [];
 }
 
@@ -11,7 +10,6 @@ NodeTalk.prototype.probeNode = function(node) {
     if (targetNode.curxtrn === this.telefish) {
         return true;
     } else {
-        // this.nodesOnline.splice(this.nodesOnline.indexOf(node), 1);
         return false;
     }
 };
