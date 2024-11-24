@@ -32,11 +32,12 @@ ansi_colors = [
     {'code_fg': '33', 'code_bg': '43', 'r': 101, 'g': 39, 'b': 25},   # Yellow
 
     {'code_fg': '34', 'code_bg': '44', 'r': 0, 'g': 0, 'b': 128},      # Blue
-    {'code_fg': '35', 'code_bg': '45', 'r': 128, 'g': 0, 'b': 128},    # Magenta
+    {'code_fg': '35', 'code_bg': '45', 'r': 85, 'g': 54, 'b': 93},    # Magenta
     {'code_fg': '36', 'code_bg': '46', 'r': 54, 'g': 77, 'b': 247},    # Cyan
     {'code_fg': '37', 'code_bg': '47', 'r': 255, 'g': 255, 'b': 139},  # White
     {'code_fg': '37', 'code_bg': '47', 'r': 247, 'g': 247, 'b': 247},  # White
-    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 177, 'g': 134, 'b': 194}, # Bright Black
+
+    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 45, 'g': 17, 'b': 68}, # Bright Black
 
     {'code_fg': '1;31', 'code_bg': '1;41', 'r': 255, 'g': 0, 'b': 128},     # Bright Red
     {'code_fg': '1;32', 'code_bg': '1;42', 'r': 87, 'g': 177, 'b': 25},   # Bright Green
@@ -44,7 +45,7 @@ ansi_colors = [
     {'code_fg': '1;33', 'code_bg': '1;43', 'r': 205, 'g': 115, 'b': 32}, # Bright Yellow
 
     {'code_fg': '1;34', 'code_bg': '1;44', 'r': 0, 'g': 0, 'b': 255},     # Bright Blue
-    {'code_fg': '1;35', 'code_bg': '1;45', 'r': 255, 'g': 0, 'b': 255},   # Bright Magenta
+    {'code_fg': '1;35', 'code_bg': '1;45', 'r': 177, 'g': 134, 'b': 194},   # Bright Magenta
     {'code_fg': '1;36', 'code_bg': '1;46', 'r': 0, 'g': 255, 'b': 255},   # Bright Cyan
     {'code_fg': '1;37', 'code_bg': '1;47', 'r': 255, 'g': 255, 'b': 255}, # Bright White
 ]
