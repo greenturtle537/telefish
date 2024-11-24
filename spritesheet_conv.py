@@ -24,7 +24,7 @@ true_ansi_colors = [
 ansi_colors = [
     {'code_fg': '30', 'code_bg': '40', 'r': 11, 'g': 7, 'b': 12},      # Black
     {'code_fg': '30', 'code_bg': '40', 'r': 6, 'g': 62, 'b': 32},      # Black
-    {'code_fg': '30', 'code_bg': '400', 'r': 38, 'g': 92, 'b': 31},    # Black
+    {'code_fg': '30', 'code_bg': '40', 'r': 38, 'g': 92, 'b': 31},    # Black
 
     {'code_fg': '31', 'code_bg': '41', 'r': 205, 'g': 0, 'b': 41},     # Red
     {'code_fg': '31', 'code_bg': '41', 'r': 247, 'g': 54, 'b': 0},     # Red
@@ -36,7 +36,7 @@ ansi_colors = [
     {'code_fg': '36', 'code_bg': '46', 'r': 54, 'g': 77, 'b': 247},    # Cyan
     {'code_fg': '37', 'code_bg': '47', 'r': 255, 'g': 255, 'b': 139},  # White
     {'code_fg': '37', 'code_bg': '47', 'r': 247, 'g': 247, 'b': 247},  # White
-    {'code_fg': '90', 'code_bg': '100', 'r': 177, 'g': 134, 'b': 194}, # Bright Black
+    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 177, 'g': 134, 'b': 194}, # Bright Black
 
     {'code_fg': '91', 'code_bg': '101', 'r': 255, 'g': 0, 'b': 128},     # Bright Red
     {'code_fg': '92', 'code_bg': '102', 'r': 87, 'g': 177, 'b': 25},   # Bright Green
