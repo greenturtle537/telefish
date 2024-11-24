@@ -46,7 +46,7 @@ ansi_colors = [
     {'code_fg': '1;34', 'code_bg': '1;44', 'r': 0, 'g': 0, 'b': 255},     # Bright Blue
     {'code_fg': '1;35', 'code_bg': '1;45', 'r': 255, 'g': 0, 'b': 255},   # Bright Magenta
     {'code_fg': '1;36', 'code_bg': '1;46', 'r': 0, 'g': 255, 'b': 255},   # Bright Cyan
-    {'code_fg': '1;37', 'code_bg': '1;47', 'r': 247, 'g': 247, 'b': 247}, # Bright White
+    {'code_fg': '1;37', 'code_bg': '1;47', 'r': 255, 'g': 255, 'b': 255}, # Bright White
 ]
 
 # Open the image
