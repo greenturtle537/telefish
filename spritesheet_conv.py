@@ -110,29 +110,11 @@ for y in range(0, height, 2):
             char = '▀'
             fg_code = color_upper['code_fg']
             bg_code = color_lower['code_bg']
-            # Ensure bg is not bright
-            if is_bright(next((c for c in ansi_colors if c['code_bg'] == bg_code), {'code_fg': bg_code})):
-                # Switch to use '▄' instead
-                char = '▄'
-                fg_code = color_lower['code_fg']
-                bg_code = color_upper['code_bg']
-                if is_bright(next((c for c in ansi_colors if c['code_bg'] == bg_code), {'code_fg': bg_code})):
-                    print("Error: Background color cannot be bright.")
-                    exit(1)
         elif lower_bright:
             # Option2: '▄' with bright fg and bg not bright
             char = '▄'
             fg_code = color_lower['code_fg']
             bg_code = color_upper['code_bg']
-            # Ensure bg is not bright
-            if is_bright(next((c for c in ansi_colors if c['code_bg'] == bg_code), {'code_fg': bg_code})):
-                # Switch to use '▀' instead
-                char = '▀'
-                fg_code = color_upper['code_fg']
-                bg_code = color_lower['code_bg']
-                if is_bright(next((c for c in ansi_colors if c['code_bg'] == bg_code), {'code_fg': bg_code})):
-                    print("Error: Background color cannot be bright.")
-                    #exit(1)
         else:
             # Both colors are not bright
             # Option3: If colors are the same, use '█'
