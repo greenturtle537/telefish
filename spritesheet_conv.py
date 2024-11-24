@@ -23,20 +23,26 @@ true_ansi_colors = [
 
 ansi_colors = [
     {'code_fg': '30', 'code_bg': '40', 'r': 11, 'g': 7, 'b': 12},      # Black
-    {'code_fg': '31', 'code_bg': '41', 'r': 101, 'g': 39, 'b': 25},     # Red
+    {'code_fg': '30', 'code_bg': '40', 'r': 6, 'g': 62, 'b': 32},      # Black
+    {'code_fg': '30', 'code_bg': '400', 'r': 38, 'g': 92, 'b': 31},    # Black
+
+    {'code_fg': '31', 'code_bg': '41', 'r': 205, 'g': 0, 'b': 41},     # Red
+    {'code_fg': '31', 'code_bg': '41', 'r': 247, 'g': 54, 'b': 0},     # Red
     {'code_fg': '32', 'code_bg': '42', 'r': 87, 'g': 177, 'b': 25},    # Green
-    {'code_fg': '33', 'code_bg': '43', 'r': 205, 'g': 115, 'b': 32},   # Yellow
+    {'code_fg': '33', 'code_bg': '43', 'r': 101, 'g': 39, 'b': 25},   # Yellow
+
     {'code_fg': '34', 'code_bg': '44', 'r': 0, 'g': 0, 'b': 128},      # Blue
     {'code_fg': '35', 'code_bg': '45', 'r': 128, 'g': 0, 'b': 128},    # Magenta
     {'code_fg': '36', 'code_bg': '46', 'r': 54, 'g': 77, 'b': 247},    # Cyan
     {'code_fg': '37', 'code_bg': '47', 'r': 255, 'g': 255, 'b': 139},  # White
-    {'code_fg': '37', 'code_bg': '47', 'r': 247, 'g': 247, 'b': 247}, # Bright White
+    {'code_fg': '37', 'code_bg': '47', 'r': 247, 'g': 247, 'b': 247},  # White
     {'code_fg': '90', 'code_bg': '100', 'r': 177, 'g': 134, 'b': 194}, # Bright Black
-    {'code_fg': '90', 'code_bg': '100', 'r': 38, 'g': 92, 'b': 31},    # Bright Black
 
-    {'code_fg': '91', 'code_bg': '101', 'r': 255, 'g': 0, 'b': 0},     # Bright Red
+    {'code_fg': '91', 'code_bg': '101', 'r': 255, 'g': 0, 'b': 128},     # Bright Red
     {'code_fg': '92', 'code_bg': '102', 'r': 87, 'g': 177, 'b': 25},   # Bright Green
     {'code_fg': '93', 'code_bg': '103', 'r': 255, 'g': 255, 'b': 139}, # Bright Yellow
+    {'code_fg': '93', 'code_bg': '103', 'r': 205, 'g': 115, 'b': 32}, # Bright Yellow
+
     {'code_fg': '94', 'code_bg': '104', 'r': 0, 'g': 0, 'b': 255},     # Bright Blue
     {'code_fg': '95', 'code_bg': '105', 'r': 255, 'g': 0, 'b': 255},   # Bright Magenta
     {'code_fg': '96', 'code_bg': '106', 'r': 0, 'g': 255, 'b': 255},   # Bright Cyan
