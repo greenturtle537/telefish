@@ -73,7 +73,7 @@ def nearest_ansi_color(r, g, b):
 
 # Function to check if a color is bright
 def is_bright(color):
-    return color['code_fg'] in [str(i) for i in range(90, 98)]
+    return '1;' in color['code_fg']
 
 # Traverse the image in blocks of 1x2 pixels
 for y in range(0, height, 2):
