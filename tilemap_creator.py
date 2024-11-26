@@ -155,10 +155,10 @@ class TilemapCreator:
         x = sheet_width - self.tile_size
         box = (x, y, x + self.tile_size, y + self.tile_size)
         tile_image = self.spritesheet_image.crop(box)
-        tile_code = self.encode_base64(tile_count)  # Use Base64 encoding
+        base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
         tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
         photo_image = ImageTk.PhotoImage(tile_image_resized)
-        self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'hex': tile_code})
+        self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
         tile_count += 1
 
         for y in range(0, sheet_height, self.tile_size):
@@ -166,10 +166,10 @@ class TilemapCreator:
                 box = (x, y, x + self.tile_size, y + self.tile_size)
                 tile_image = self.spritesheet_image.crop(box)
                 if not (tile_image == self.tiles[0]['image']):                
-                    tile_code = self.encode_base64(tile_count)  # Use Base64 encoding
+                    base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
                     tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
                     photo_image = ImageTk.PhotoImage(tile_image_resized)
-                    self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'hex': tile_code})
+                    self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
                     tile_count += 1
                 
     def display_tiles(self):
@@ -188,7 +188,7 @@ class TilemapCreator:
             btn = tk.Button(
                 self.spritesheet_frame, 
                 image=tile['photo'], 
-                text=tile['hex'], 
+                text=tile['base64_code'], 
                 compound='top', 
                 command=lambda idx=start_idx+idx: self.select_tile(idx)
             )
@@ -205,8 +205,8 @@ class TilemapCreator:
             y = (self.canvas.canvasy(event.y) // self.display_tile_size) * self.display_tile_size
             image_id = self.canvas.create_image(x, y, image=self.selected_tile['photo'], anchor='nw')
             self.image_refs.append(self.selected_tile['photo'])
-            if self.selected_tile['hex'] != 'AA':
-                self.tilemap_data[(x, y)] = self.selected_tile['hex']
+            if self.selected_tile['base64_code'] != 'AA':
+                self.tilemap_data[(x, y)] = self.selected_tile['base64_code']
                 self.action_stack.append(('add', (x, y), image_id))
                 self.redo_stack.clear()
             
@@ -228,10 +228,10 @@ class TilemapCreator:
         action = self.redo_stack.pop()
         action_type, coords, _ = action
         if action_type == 'add':
-            hex_code = self.tilemap_data.get(coords, None)
-            if hex_code:
+            base64_code = self.tilemap_data.get(coords, None)
+            if base64_code:
                 for tile in self.tiles:
-                    if tile['hex'] == hex_code:
+                    if tile['base64_code'] == base64_code:
                         x, y = coords
                         image_id = self.canvas.create_image(x, y, image=tile['photo'], anchor='nw')
                         self.image_refs.append(tile['photo'])
@@ -242,25 +242,26 @@ class TilemapCreator:
     def save_tilemap(self):
         if not self.tilemap_data:
             return
-        file_path = filedialog.asksaveasfilename(title='Save Tilemap', defaultextension='.txt', filetypes=[('Text Files', '*.txt')])
+        file_path = filedialog.asksaveasfilename(
+            title='Save Tilemap', defaultextension='.txt', filetypes=[('Text Files', '*.txt')]
+        )
         if not file_path:
             return
-        # Determine grid size
         grid_width = self.screen_width // self.display_tile_size
         grid_height = self.screen_height // self.display_tile_size
-        tile_codes = []
-        for y in range(grid_height):
-            for x in range(grid_width):
-                coords = (x * self.display_tile_size, y * self.display_tile_size)
-                hex_code = self.tilemap_data.get(coords, 'AA')
-                tile_codes.append(hex_code)
-        # Append base64 codes
-        data = ''.join(tile_codes)
         with open(file_path, 'w') as f:
-            f.write(data)
-                
+            for y in range(grid_height):
+                tile_codes = []
+                for x in range(grid_width):
+                    coords = (x * self.display_tile_size, y * self.display_tile_size)
+                    base64_code = self.tilemap_data.get(coords, 'AA')
+                    tile_codes.append(base64_code)
+                f.write(''.join(tile_codes) + '\n')
+
     def load_tilemap(self):
-        file_path = filedialog.askopenfilename(title='Load Tilemap', filetypes=[('Text Files', '*.txt')])
+        file_path = filedialog.askopenfilename(
+            title='Load Tilemap', filetypes=[('Text Files', '*.txt')]
+        )
         if not file_path:
             return
         self.canvas.delete('all')
@@ -268,23 +269,25 @@ class TilemapCreator:
         self.action_stack.clear()
         self.redo_stack.clear()
         with open(file_path, 'r') as f:
-            data = f.read().strip()
+            lines = f.readlines()
         grid_width = self.screen_width // self.display_tile_size
-        grid_height = self.screen_height // self.display_tile_size
-        for index in range(grid_width * grid_height):
-            hex_code = data[index*2:(index+1)*2]
-            if hex_code == 'AA':
-                continue
-            x = (index % grid_width) * self.display_tile_size
-            y = (index // grid_width) * self.display_tile_size
-            for tile in self.tiles:
-                if tile['hex'] == hex_code and hex_code != 'AA':
-                    image_id = self.canvas.create_image(x, y, image=tile['photo'], anchor='nw')
-                    self.image_refs.append(tile['photo'])
-                    self.tilemap_data[(x, y)] = hex_code
-                    self.action_stack.append(('add', (x, y), image_id))
-                    break
-                
+        for y, line in enumerate(lines):
+            line = line.strip()
+            for x in range(0, len(line), 2):
+                base64_code = line[x:x+2]
+                if base64_code == 'AA':
+                    continue
+                coords = ((x // 2) * self.display_tile_size, y * self.display_tile_size)
+                for tile in self.tiles:
+                    if tile['base64_code'] == base64_code:
+                        image_id = self.canvas.create_image(
+                            coords[0], coords[1], image=tile['photo'], anchor='nw'
+                        )
+                        self.image_refs.append(tile['photo'])
+                        self.tilemap_data[coords] = base64_code
+                        self.action_stack.append(('add', coords, image_id))
+                        break
+
     def prev_page(self):
         if self.current_page > 1:
             self.current_page -= 1
