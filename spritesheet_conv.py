@@ -43,9 +43,8 @@ ansi_colors = [
     {'code_fg': '36', 'code_bg': '46', 'r': 54, 'g': 77, 'b': 247},    # Cyan
     {'code_fg': '37', 'code_bg': '47', 'r': 247, 'g': 247, 'b': 247},  # White
 
-    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 45, 'g': 17, 'b': 68}, # Bright Black
-    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 101, 'g': 39, 'b': 25},   # Black
-
+    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 101, 'g': 39, 'b': 25},   # Bright Black
+    {'code_fg': '1;30', 'code_bg': '1;40', 'r': 45, 'g': 17, 'b': 68},    # Bright Black
 
     {'code_fg': '1;31', 'code_bg': '1;41', 'r': 220, 'g': 0, 'b': 37},     # Bright Red
 
