@@ -41,7 +41,6 @@ class TilemapCreator:
         self.clear_log()
         
         self.current_theme = 'dark'  # Default to dark theme
-        self.load_icons()
         self.create_widgets()
         self.load_spritesheet()
         self.bind_shortcuts()
@@ -52,37 +51,6 @@ class TilemapCreator:
         self.stroke_coords = []      # Store coordinates for brush strokes
         
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
-
-    def load_icons(self):
-        # Load icon images for buttons
-        self.icons = {}
-        icon_files = {
-            'save': 'save.png',
-            'load': 'load.png',
-            'undo': 'undo.png',
-            'redo': 'redo.png',
-            'brush': 'brush.png',
-            'fill': 'fill.png',
-            'quit': 'quit.png',
-            'prev': 'prev.png',
-            'next': 'next.png',
-            'up': 'up.png',
-            'down': 'down.png',
-            'left': 'left.png',
-            'right': 'right.png'
-        }
-
-        script_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the script
-        icons_dir = os.path.join(script_dir, 'icons')  # Path to the 'icons' directory
-
-        for name, file in icon_files.items():
-            icon_path = os.path.join(icons_dir, file)
-            try:
-                image = Image.open(icon_path).resize((24, 24), Image.ANTIALIAS)
-                self.icons[name] = ImageTk.PhotoImage(image)
-            except Exception as e:
-                print(f"Error loading icon '{icon_path}': {e}")
-                self.icons[name] = None  # Assign None if icon fails to load
 
     def create_widgets(self):
         self.root.grid_rowconfigure(0, weight=1)
@@ -147,10 +115,6 @@ class TilemapCreator:
         self.right_button.pack(side=tk.LEFT)
         self.add_tooltip(self.right_button, 'Scroll Right (Right Arrow)')
         
-        # Debug label
-        self.debug_label = tk.Label(self.button_frame, text='Last key: None')
-        self.debug_label.pack(side=tk.LEFT, padx=10)
-        
         # Move fill and brush tool buttons next to each other
         self.brush_tool_button = tk.Button(self.button_frame, text='Brush Tool', command=self.activate_brush_tool)
         self.brush_tool_button.pack(side=tk.LEFT)
@@ -202,7 +166,6 @@ class TilemapCreator:
             button.configure(bg=btn_bg, activebackground=btn_bg, fg=btn_fg, activeforeground=btn_fg)
 
         # Update labels with theme colors
-        self.debug_label.configure(bg=bg_color, fg=fg_color)
         self.tool_label.configure(bg=bg_color, fg=fg_color)
 
         # Update the background of the imported tiles
@@ -230,24 +193,17 @@ class TilemapCreator:
         self.root.bind('s', self.scroll_down)
         self.root.bind('d', self.scroll_right)
         
-    def update_debug(self, key):
-        self.debug_label.config(text=f'Last key: {key}')
-        
     def scroll_up(self, event):
         self.canvas.yview_scroll(-1, "units")
-        self.update_debug('w')
         
     def scroll_down(self, event):
         self.canvas.yview_scroll(1, "units")
-        self.update_debug('s')
         
     def scroll_left(self, event):
         self.canvas.xview_scroll(-1, "units")
-        self.update_debug('a')
         
     def scroll_right(self, event):
         self.canvas.xview_scroll(1, "units")
-        self.update_debug('d')
         
     def load_spritesheet(self):
         file_path = filedialog.askopenfilename(title='Open Spritesheet', filetypes=[('PNG Images', '*.png')])
@@ -355,7 +311,7 @@ class TilemapCreator:
                 base64_code = self.selected_tile['base64_code']
                 self.action_stack.append(('brush', (self.stroke_coords.copy(), base64_code)))
                 self.redo_stack.clear()
-                self.log_action("action", f"brush,{self.stroke_coords},{base64_code}")
+                self.log_action("action", f"brush,{self.stroke_coords},{base64_code}", base64_code)
             self.stroke_coords = []
 
     def place_tile(self, event):
@@ -421,7 +377,6 @@ class TilemapCreator:
                 del self.tilemap_data[coords]
             self.redo_stack.append(action)
             self.log_action("undo", [coords], "add")
-        self.update_debug('undo')
 
     def redo(self, event=None):
         if not self.redo_stack:
@@ -445,7 +400,6 @@ class TilemapCreator:
             self.place_tile_at(coords[0], coords[1], base64_code, log_action=False)
             self.action_stack.append(action)
             self.log_action("redo", [coords], "add")
-        self.update_debug('redo')
 
     def replay_log(self):
         if not os.path.exists(self.log_file):
@@ -607,7 +561,7 @@ class TilemapCreator:
         if fill_action:
             self.action_stack.append(('fill', (fill_action, replacement_code)))
             self.redo_stack.clear()
-            self.log_action("action", f"fill,{fill_action},{replacement_code}")
+            self.log_action("action", f"fill,{fill_action},{replacement_code}", replacement_code)
 
     def is_in_view(self, x, y):
         canvas_x1 = self.canvas.canvasx(0)
@@ -693,7 +647,6 @@ class TilemapCreator:
                 del self.tilemap_data[coords]
             self.redo_stack.append(action)
             self.log_action("undo", f"add,{coords},{base64_code}")
-        self.update_debug('undo')
 
     def redo_action(self):
         if not self.redo_stack:
@@ -717,7 +670,6 @@ class TilemapCreator:
             self.place_tile_at(coords[0], coords[1], base64_code, log_action=False)
             self.action_stack.append(action)
             self.log_action("redo", f"add,{coords},{base64_code}")
-        self.update_debug('redo')
 
     def parse_log_entry(self, log_entry):
         parts = log_entry.strip().split(',')

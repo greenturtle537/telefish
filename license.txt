@@ -1,4 +1,9 @@
-Telefish (Created by greenturtle537) is released to the public domain
+Telefish (Created by greenturtle537) is licensed under the Gnu General Public License 3.0 (gpl-3.0.txt)
+
+tools/*
+Telefish Asset Creation Tools (Created by greenturtle537 and Zygaross) are licensed under the Gnu General Public License 3.0 (gpl-3.0.txt)
 
 assets/4x4/*
-Ultra Tiny Top Down Pixel Art Sprites was created by coldrice (@coldrice_dev) and is used with permission
+assets/sprite_sheet_safe.png (Modified from original)
+Ultra Tiny Top Down Pixel Art Sprites was created by coldrice (@coldrice_dev) (https://coldrice.itch.io/ultra-tiny-top-down-pixel-art-sprites-4x4)
+and is used/redistributed/modified with permission from the author for use with Telefish.
