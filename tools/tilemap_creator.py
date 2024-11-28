@@ -1,3 +1,21 @@
+import sys
+import subprocess
+
+try:
+    from PIL import Image
+except ImportError:
+    print("PIL module not found. Attempting to install Pillow...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
+        from PIL import Image
+    except subprocess.CalledProcessError:
+        print("Failed to install Pillow. Attempting to upgrade pip if found...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
+        except subprocess.CalledProcessError:
+            print("Failed to install Pillow even after upgrading pip. Please install/fix pip and try running the script again.")
+            sys.exit(1)
 
 import tkinter as tk
 from tkinter import filedialog
