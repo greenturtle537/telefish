@@ -20,7 +20,6 @@ except ImportError:
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import base64
 import os
 import ast  # Import ast for safe parsing
 
