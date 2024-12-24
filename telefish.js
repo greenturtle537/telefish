@@ -138,17 +138,12 @@ function runCommand(command) {
 	}
 }
 
-function gameLoop() {
+function gameLoop(tiles) {
 	var gridchatWidth = 80;
 	var gridchatHeight = 24;
 	var grid = [];
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
-
-	console.print("got here");
-	var tiles = loadGraphicsFromANSI("spritesheet.ans");
-	console.print("got here");
-
 
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -425,7 +420,8 @@ try {
 	console.print("Press any key to play the Telefish. It's 'Trouta be fire'");
 	console.pause();
 	logo();
-	gameLoop();
+	var tiles = loadGraphicsFromANSI("spritesheet.ans");
+	gameLoop(tiles);
 	exit(0);
 } catch (e) {
 	var msg = file_getname(e.fileName) +
