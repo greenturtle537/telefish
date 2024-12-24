@@ -74,9 +74,8 @@ function loadGraphicsFromANSI(filename) {
 				}
 			}
 		}
+		return tiles;
 	}
-
-	return tiles;
 }
 
 function drawGraphicAt(x, y, base64Code, graphicsDict) {
