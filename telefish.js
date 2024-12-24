@@ -53,6 +53,43 @@ function show_image(filename, fx, delay) {
 	sleep(delay);
 }
 
+function loadGraphicsFromANSI(filename) {
+	const graphic = new Graphic();
+	if (!graphic.load(filename)) {
+		throw new Error(`Failed to load ANSI file: ${filename}`);
+	}
+
+	const tiles = {};
+	const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+	let codeIndex = 0;
+
+	for (let y = 0; y < graphic.height; y += 2) {
+		for (let x = 0; x < graphic.width; x += 4) {
+			const tile = graphic.get(x, y, x + 3, y + 1);
+			const bin = tile.BIN;
+			const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
+			tiles[base64Code] = bin;
+			codeIndex++;
+			if (codeIndex >= 64 * 64) {
+				throw new Error('Exceeded base64 code limits.');
+			}
+		}
+	}
+
+	return tiles;
+}
+
+function drawGraphicAt(x, y, base64Code, graphicsDict) {
+	const bin = graphicsDict[base64Code];
+	if (!bin) {
+		throw new Error(`Graphic with code ${base64Code} not found.`);
+	}
+
+	const graphic = new Graphic();
+	graphic.BIN = bin;
+	graphic.draw(x, y);
+}
+
 function logo() {
 	console.clear();
 	show_image(telefish_title, false, 0);
@@ -107,6 +144,8 @@ function gameLoop() {
 	var grid = [];
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
+
+	tiles = loadGraphicsFromANSI("spritesheet.ans");
 
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
