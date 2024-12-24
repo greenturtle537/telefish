@@ -54,11 +54,11 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
+	var tiles = {};
 	var graphic = new Graphic();
 	if (!graphic.load(filename)) {
 		console.print("File not found");
 	} else {
-		const tiles = {};
 		const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 		var codeIndex = 0;
 
@@ -74,8 +74,8 @@ function loadGraphicsFromANSI(filename) {
 				}
 			}
 		}
-		return tiles;
 	}
+	return tiles;
 }
 
 function drawGraphicAt(x, y, base64Code, graphicsDict) {
