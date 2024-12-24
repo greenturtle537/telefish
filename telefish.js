@@ -60,10 +60,10 @@ function loadGraphicsFromANSI(filename) {
 	} else {
 		const tiles = {};
 		const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-		let codeIndex = 0;
+		var codeIndex = 0;
 
-		for (let y = 0; y < graphic.height; y += 2) {
-			for (let x = 0; x < graphic.width; x += 4) {
+		for (var y = 0; y < graphic.height; y += 2) {
+			for (var x = 0; x < graphic.width; x += 4) {
 				const tile = graphic.get(x, y, x + 3, y + 1);
 				const bin = tile.BIN;
 				const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
