@@ -54,9 +54,9 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
+	console.print("got here");
 	var tiles = {};
 	var tileGraphic = new Graphic();
-	console.print("got here");
 	if (!tileGraphic.load(filename)) {
 		console.print("File not found");
 	} else {
@@ -145,7 +145,10 @@ function gameLoop() {
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
 
+	console.print("got here");
 	var tiles = loadGraphicsFromANSI("spritesheet.ans");
+	console.print("got here");
+
 
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
