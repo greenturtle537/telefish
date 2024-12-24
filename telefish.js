@@ -76,6 +76,8 @@ function loadGraphicsFromANSI(filename) {
 			}
 		}
 	}
+	console.print(tiles);
+	console.pause();
 	return tiles;
 }
 
