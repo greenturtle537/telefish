@@ -75,7 +75,6 @@ function loadGraphicsFromANSI(filename) {
 			}
 		}
 	}
-	console.print(tiles);
 	return tiles;
 }
 
@@ -83,11 +82,11 @@ function drawGraphicAt(x, y, base64Code, graphicsDict) {
 	const bin = graphicsDict[base64Code];
 	if (!bin) {
 		console.print("Graphic with code"+base64Code+"not found.");
+	} else {
+		const graphic = new Graphic();
+		graphic.BIN = bin;
+		graphic.draw(x, y);
 	}
-
-	const graphic = new Graphic();
-	graphic.BIN = bin;
-	graphic.draw(x, y);
 }
 
 function logo() {
