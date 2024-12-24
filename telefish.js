@@ -145,7 +145,7 @@ function gameLoop() {
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
 
-	tiles = loadGraphicsFromANSI("spritesheet.ans");
+	var tiles = loadGraphicsFromANSI("spritesheet.ans");
 
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -186,7 +186,6 @@ function gameLoop() {
 	}
 
 	drawGraphicAt(0, 0, 'AA', tiles);
-
 
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	nodeTalk.broadcastDiscover(); //Will also discover self for echo now
