@@ -56,6 +56,7 @@ function show_image(filename, fx, delay) {
 function loadGraphicsFromANSI(filename) {
 	var tiles = {};
 	var graphic = new Graphic();
+	console.print("got here");
 	if (!graphic.load(filename)) {
 		console.print("File not found");
 	} else {
@@ -67,7 +68,6 @@ function loadGraphicsFromANSI(filename) {
 				const tile = graphic.get(x, y, x + 3, y + 1);
 				const bin = tile.BIN;
 				const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
-				console.print("code "+ base64Code);
 				tiles[base64Code] = bin;
 				codeIndex++;
 				if (codeIndex >= 64 * 64) {
