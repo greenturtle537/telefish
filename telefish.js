@@ -54,7 +54,7 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
-	const graphic = new Graphic();
+	var graphic = new Graphic();
 	if (!graphic.load(filename)) {
 		console.print("File not found");
 	} else {
