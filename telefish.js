@@ -55,17 +55,17 @@ function show_image(filename, fx, delay) {
 
 function loadGraphicsFromANSI(filename) {
 	var tiles = {};
-	var graphic = new Graphic();
+	var tileGraphic = new Graphic();
 	console.print("got here");
-	if (!graphic.load(filename)) {
+	if (!tileGraphic.load(filename)) {
 		console.print("File not found");
 	} else {
 		const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 		var codeIndex = 0;
 
-		for (var y = 0; y < graphic.height; y += 2) {
-			for (var x = 0; x < graphic.width; x += 4) {
-				const tile = graphic.get(x, y, x + 3, y + 1);
+		for (var y = 0; y < tileGraphic.height; y += 2) {
+			for (var x = 0; x < tileGraphic.width; x += 4) {
+				const tile = tileGraphic.get(x, y, x + 3, y + 1);
 				const bin = tile.BIN;
 				const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
 				tiles[base64Code] = bin;
