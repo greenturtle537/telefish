@@ -56,22 +56,22 @@ function show_image(filename, fx, delay) {
 function loadGraphicsFromANSI(filename) {
 	const graphic = new Graphic();
 	if (!graphic.load(filename)) {
-		throw new Error(`Failed to load ANSI file: ${filename}`);
-	}
+		console.print("File not found");
+	} else {
+		const tiles = {};
+		const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+		let codeIndex = 0;
 
-	const tiles = {};
-	const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-	let codeIndex = 0;
-
-	for (let y = 0; y < graphic.height; y += 2) {
-		for (let x = 0; x < graphic.width; x += 4) {
-			const tile = graphic.get(x, y, x + 3, y + 1);
-			const bin = tile.BIN;
-			const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
-			tiles[base64Code] = bin;
-			codeIndex++;
-			if (codeIndex >= 64 * 64) {
-				throw new Error('Exceeded base64 code limits.');
+		for (let y = 0; y < graphic.height; y += 2) {
+			for (let x = 0; x < graphic.width; x += 4) {
+				const tile = graphic.get(x, y, x + 3, y + 1);
+				const bin = tile.BIN;
+				const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
+				tiles[base64Code] = bin;
+				codeIndex++;
+				if (codeIndex >= 64 * 64) {
+					console.print("Overflowed base64 limits");
+				}
 			}
 		}
 	}
@@ -82,7 +82,7 @@ function loadGraphicsFromANSI(filename) {
 function drawGraphicAt(x, y, base64Code, graphicsDict) {
 	const bin = graphicsDict[base64Code];
 	if (!bin) {
-		throw new Error(`Graphic with code ${base64Code} not found.`);
+		console.print("Graphic with code"+base64Code+"not found.");
 	}
 
 	const graphic = new Graphic();
