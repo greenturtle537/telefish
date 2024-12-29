@@ -56,34 +56,6 @@ function show_image(filename, fx, delay) {
 	sleep(delay);
 }
 
-function loadGraphicsFromANSI(filename) {
-	var dir = directory(filename);
-	filename = dir[random(dir.length)];
-
-	var tileGraphic = new Graphic(80, 200);
-	tileGraphic.load(filename);
-
-	console.gotoxy(1, 25);
-	console.print("Graphic loaded: " + tileGraphic.width + "x" + tileGraphic.height);
-
-	return tileGraphic;
-}
-
-function drawGraphicAt(x, y, base64Code, graphic) {
-	var graphicAddress = base64ToInt(base64Code);
-	var graphicxoff = graphicAddress % graphic.width;
-	var graphicyoff = Math.floor(graphicAddress / graphic.width);
-
-	graphic.draw(
-		xpos = x,
-		ypos = y,
-		width = 4,   
-		height = 2,
-		xoff = graphicxoff,
-		yoff = graphicyoff
-	);
-}
-
 function logo() {
 	console.clear();
 	show_image(telefish_title, false, 0);
