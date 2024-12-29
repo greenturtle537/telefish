@@ -81,8 +81,7 @@ function drawGraphicAt(x, y, base64Code, graphic) {
 		yoff = graphicyoff
 	);
 
-	graphic.draw('center', 'center');
-
+	graphic.draw(0,0,80,25,0,0);
 }
 
 function logo() {
