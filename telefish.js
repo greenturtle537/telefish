@@ -80,8 +80,6 @@ function drawGraphicAt(x, y, base64Code, graphic) {
 		xoff = graphicxoff,
 		yoff = graphicyoff
 	);
-
-	graphic.draw(0,0,80,25,0,0);
 }
 
 function logo() {
