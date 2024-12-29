@@ -36,7 +36,7 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 		ypos = y,
 		width = 4,
 		height = 2,
-		xoff = graphicxoff,
+		xoff = 0,
 		yoff = graphicyoff
 	);
 }
