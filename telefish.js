@@ -61,8 +61,19 @@ function loadGraphicsFromANSI(filename) {
 	console.print("Graphic loaded: " + tileGraphic.width + "x" + tileGraphic.height);
 }
 
-function drawGraphicAt(x, y, base64Code, graphicsDict) {
+function drawGraphicAt(x, y, base64Code, graphic) {
+	var graphicAddress = base64ToInt(base64Code);
+	var graphicxoff = graphicAddress % graphic.width;
+	var graphicyoff = Math.floor(graphicAddress / graphic.width);
 
+	graphic.draw(
+		xpos = x,
+		ypos = y,
+		width = 4,   
+		height = 2,
+		xoff = graphicxoff,
+		yoff = graphicyoff
+	);
 }
 
 function logo() {

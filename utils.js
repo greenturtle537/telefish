@@ -50,3 +50,52 @@ function checkSingleCharacter(key) {
 function offScreenCursor() {
 	console.gotoxy(200, 200); // Move cursor off screen
 }
+
+function base64ToInt(str) {
+    // Base64 character set
+    const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+    // Validate input
+    if (!str || str.length === 0) {
+        return 0;
+    }
+    var result = 0;
+    // Process each character
+    for (var i = 0; i < str.length; i++) {
+        const char = str[i];
+        const value = indexOf(base64Chars, char);
+        if (value === -1) {
+            return "Invalid base64 character"
+		}
+        result = (result << 6) | value;
+    }
+    
+    return result;
+}
+
+function indexOf(array, searchElement, fromIndex = 0) {
+    const arr = Array.from(array);
+    var startIndex = fromIndex;
+    if (startIndex < 0) {
+        startIndex = arr.length + fromIndex;
+        if (startIndex < 0) {
+            startIndex = 0;
+        }
+    }
+    if (startIndex >= arr.length) {
+        return -1;
+    }
+    if (searchElement !== searchElement) {
+        for (var i = startIndex; i < arr.length; i++) {
+            if (arr[i] !== arr[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    for (var i = startIndex; i < arr.length; i++) {
+        if (arr[i] === searchElement) {
+            return i;
+        }
+    }
+    return -1;
+}
