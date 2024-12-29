@@ -166,7 +166,7 @@ for y in range(0, height, 2):
         ansi_sequence = f'\x1b[{fg_code};{bg_code}m{char}\x1b[0m'
         line += ansi_sequence
     print(line)
-    ansi_lines.append(line + '\r\n')  # Use IBM/Windows line separators
+    ansi_lines.append(line)  # Use IBM/Windows line separators
 
 # Write ANSI lines to the selected file
 with open(save_path, 'w', encoding='cp437', newline='\r\n') as ansi_file:
