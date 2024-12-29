@@ -154,8 +154,6 @@ function gameLoop() {
 		console.crlf();
 	}
 
-	mainTileSheet.draw(0, 0, 'AA');
-
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	nodeTalk.broadcastDiscover(); //Will also discover self for echo now
 
