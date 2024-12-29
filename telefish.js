@@ -58,7 +58,7 @@ function loadGraphicsFromANSI(filename) {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)];
 
-	var tileGraphic = new Graphic(80, 68);
+	var tileGraphic = new Graphic(80, 72);
 	tileGraphic.load(filename);
 
 	console.gotoxy(1, 25);
