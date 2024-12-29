@@ -33,7 +33,7 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 	this.tileGraphic.draw(
 		xpos = x,
 		ypos = y,
-		width = 4,   
+		width = 4,
 		height = 2,
 		xoff = graphicxoff,
 		yoff = graphicyoff
