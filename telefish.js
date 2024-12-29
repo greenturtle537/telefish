@@ -120,8 +120,6 @@ function gameLoop() {
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
 
-	var tiles = loadGraphicsFromANSI("spritesheet.ans");
-
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
 		grid[y] = [];
@@ -138,6 +136,8 @@ function gameLoop() {
 
 	console.clear();
 	console.autowrap = false;
+
+	var tiles = loadGraphicsFromANSI("spritesheet.ans");
 
 	var running = true;
 	var prevX = playerX;
