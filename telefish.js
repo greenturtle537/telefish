@@ -59,6 +59,8 @@ function loadGraphicsFromANSI(filename) {
 
 	console.gotoxy(1, 25);
 	console.print("Graphic loaded: " + tileGraphic.width + "x" + tileGraphic.height);
+
+	return tileGraphic;
 }
 
 function drawGraphicAt(x, y, base64Code, graphic) {
