@@ -125,7 +125,7 @@ function gameLoop() {
 	var staticGrid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
 
 	if (staticGrid) {
-		grid = emptyIsland.grid;
+		grid = staticGrid;
 	}
 
 	console.clear();
