@@ -9,10 +9,10 @@ function Tilemap(width, height, filename, tilesheet) {
     this.grid = this.loadGrid(filename);
 }
 
-Tilemap.prototype.draw = function(x, y) {
-    for (var y = 0; y < this.height; y++) {
-        for (var x = 0; x < this.width; x++) {
-            this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
+Tilemap.prototype.draw = function(startx, starty, endx, endy) {
+    for (var y = startx; y < endy; y++) {
+        for (var x = starty; x < endx; x++) {
+            this.tilesheet.draw(x*2, y*4, this.grid[y][x]);
         }
     }
 }
