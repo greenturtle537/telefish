@@ -5,14 +5,14 @@ function Tilemap(width, height, filename, tilesheet) {
     this.width = width;
     this.height = height;
     this.filename = filename;
-    //this.tilesheet = new Tilesheet(tilesheet["w"], tilesheet["h"], tilesheet["f"]);
+    this.tilesheet = new Tilesheet(tilesheet["w"], tilesheet["h"], tilesheet["f"]);
     this.grid = this.loadGrid(filename);
 }
 
 Tilemap.prototype.draw = function(x, y) {
     for (var y = 0; y < this.height; y++) {
         for (var x = 0; x < this.width; x++) {
-            //this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
+            this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
         }
     }
 }

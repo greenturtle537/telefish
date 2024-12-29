@@ -32,7 +32,7 @@ var fishWindow = new Window(40, 10, 35, 10);
 fishWindow.setTitle("=Currently waiting for a fish to bite=");
 var nodeTalk = new NodeTalk();
 
-var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main);
+var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main["f"]);
 var emptyIsland = new Tilemap(56, 24, "main_islands/empty.txt", telefish_tilemap_main);
 
 var Graphic = load({}, "graphic.js");
@@ -144,7 +144,7 @@ function gameLoop() {
 	var lines = 0;
 	var lastLines = 0;
 
-	//emptyIsland.draw(0, 0);
+	emptyIsland.draw(0, 0);
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
