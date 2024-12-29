@@ -5,8 +5,16 @@ function Tilemap(width, height, filename, tilesheet) {
     this.width = width;
     this.height = height;
     this.filename = filename;
-    this.tilesheet = new Tilesheet(80, 200, tilesheet);
+    this.tilesheet = new Tilesheet(tilesheet["w"], tilesheet["h"], tilesheet["f"]);
     this.grid = this.loadGrid(filename);
+}
+
+Tilemap.prototype.draw = function(x, y) {
+    for (var y = 0; y < this.height; y++) {
+        for (var x = 0; x < this.width; x++) {
+            this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
+        }
+    }
 }
 
 Tilemap.prototype.loadGrid = function(filename) {
@@ -29,8 +37,7 @@ Tilemap.prototype.loadGrid = function(filename) {
 	while (!file.eof && y < grid.length) {
 		var line = file.readln();
 		for (var x = 0; x < line.length && x < grid[y].length; x+=2) {
-			// grid[y][x] = line.charAt(x)+line.charAt(x+1);
-            grid[y][x] = line.charAt(x+1);
+			grid[y][x] = line.charAt(x)+line.charAt(x+1);
 		}
 		y++;
 	}

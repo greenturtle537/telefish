@@ -6,7 +6,7 @@ const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 const ini_section = "telefish"; // ini file section
 const telefish_title = js.exec_dir + "telefish.ans";
 const telefish_title_xbin = js.exec_dir + "telefish.xbin";
-const telefish_tilemap_main = js.exec_dir + "assets/tilesheets/main.ans";
+const telefish_tilemap_main = {"h": 200, "w": 80, "f": js.exec_dir + "assets/tilesheets/main.ans"};
 
 var debug = false; //Debug flag
 
@@ -33,7 +33,7 @@ fishWindow.setTitle("=Currently waiting for a fish to bite=");
 var nodeTalk = new NodeTalk();
 
 var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main);
-var emptyIsland = new Tilemap(80, 24, "main_islands/empty.txt", telefish_tilemap_main);
+var emptyIsland = new Tilemap(56, 24, "main_islands/empty.txt", telefish_tilemap_main);
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
@@ -123,7 +123,7 @@ function gameLoop() {
 
 	// Fill grid from text file
 	var staticGrid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
-	
+
 	if (staticGrid) {
 		grid = emptyIsland.grid;
 	}
@@ -143,6 +143,8 @@ function gameLoop() {
 	var lastTypedMessage = '';
 	var lines = 0;
 	var lastLines = 0;
+
+	emptyIsland.draw(0, 0);
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
