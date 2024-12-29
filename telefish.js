@@ -54,11 +54,11 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
-	var graphic = new Graphic();
-	graphic.load(filename);
+	var tileGraphic = new Graphic();
+	tileGraphic.load(filename);
 
-	console.gotoxy(1, 27);
-	console.print("Graphic loaded: " + graphic.width + "x" + graphic.height);
+	console.gotoxy(1, 25);
+	console.print("Graphic loaded: " + tileGraphic.width + "x" + tileGraphic.height);
 }
 
 function drawGraphicAt(x, y, base64Code, graphicsDict) {
