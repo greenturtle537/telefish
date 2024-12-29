@@ -54,42 +54,15 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
-	console.print("got here");
-	var tiles = {};
-	var tileGraphic = new Graphic();
-	if (!tileGraphic.load(filename)) {
-		console.print("File not found");
-	} else {
-		const base64Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-		var codeIndex = 0;
+	var graphic = new Graphic();
+	graphic.load(filename);
 
-		for (var y = 0; y < tileGraphic.height; y += 2) {
-			for (var x = 0; x < tileGraphic.width; x += 4) {
-				const tile = tileGraphic.get(x, y, x + 3, y + 1);
-				const bin = tile.BIN;
-				const base64Code = base64Chars[Math.floor(codeIndex / 64)] + base64Chars[codeIndex % 64];
-				tiles[base64Code] = bin;
-				codeIndex++;
-				if (codeIndex >= 64 * 64) {
-					console.print("Overflowed base64 limits");
-				}
-			}
-		}
-	}
-	console.print(tiles);
-	console.pause();
-	return tiles;
+	console.gotoxy(1, 27);
+	console.print("Graphic loaded: " + graphic.width + "x" + graphic.height);
 }
 
 function drawGraphicAt(x, y, base64Code, graphicsDict) {
-	const bin = graphicsDict[base64Code];
-	if (!bin) {
-		console.print("Graphic with code "+base64Code+" not found.");
-	} else {
-		const graphic = new Graphic();
-		graphic.BIN = bin;
-		graphic.draw(x, y);
-	}
+
 }
 
 function logo() {
@@ -140,12 +113,14 @@ function runCommand(command) {
 	}
 }
 
-function gameLoop(tiles) {
+function gameLoop() {
 	var gridchatWidth = 80;
 	var gridchatHeight = 24;
 	var grid = [];
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
+
+	var tiles = loadGraphicsFromANSI("spritesheet.ans");
 
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
@@ -422,8 +397,7 @@ try {
 	console.print("Press any key to play the Telefish. It's 'Trouta be fire'");
 	console.pause();
 	logo();
-	var tiles = loadGraphicsFromANSI("spritesheet.ans");
-	gameLoop(tiles);
+	gameLoop();
 	exit(0);
 } catch (e) {
 	var msg = file_getname(e.fileName) +
