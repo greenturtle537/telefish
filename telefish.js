@@ -54,6 +54,9 @@ function show_image(filename, fx, delay) {
 }
 
 function loadGraphicsFromANSI(filename) {
+	var dir = directory(filename);
+	filename = dir[random(dir.length)];
+
 	var tileGraphic = new Graphic();
 	tileGraphic.load(filename);
 
