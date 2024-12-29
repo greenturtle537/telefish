@@ -1,4 +1,5 @@
 load("utils.js"); // depends base64ToInt()
+var Graphic = load({}, "graphic.js"); // depends Graphic
 
 function Tilesheet(width, height, filename) {
     this.width = width;
