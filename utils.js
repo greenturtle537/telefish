@@ -72,28 +72,21 @@ function base64ToInt(str) {
     return result;
 }
 
-function indexOf(array, searchElement, fromIndex = 0) {
-    const arr = Array.from(array);
-    var startIndex = fromIndex;
-    if (startIndex < 0) {
-        startIndex = arr.length + fromIndex;
-        if (startIndex < 0) {
-            startIndex = 0;
-        }
-    }
-    if (startIndex >= arr.length) {
+function indexOf(array, searchElement) {
+	startIndex = 0;
+    if (startIndex >= array.length) {
         return -1;
     }
     if (searchElement !== searchElement) {
-        for (var i = startIndex; i < arr.length; i++) {
-            if (arr[i] !== arr[i]) {
+        for (var i = startIndex; i < array.length; i++) {
+            if (array[i] !== array[i]) {
                 return i;
             }
         }
         return -1;
     }
-    for (var i = startIndex; i < arr.length; i++) {
-        if (arr[i] === searchElement) {
+    for (var i = startIndex; i < array.length; i++) {
+        if (array[i] === searchElement) {
             return i;
         }
     }
