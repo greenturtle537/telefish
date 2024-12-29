@@ -1,3 +1,5 @@
+load("utils.js"); // depends base64ToInt()
+
 function Tilesheet(width, height, filename) {
     this.width = width;
     this.height = height;
