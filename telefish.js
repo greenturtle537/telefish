@@ -144,7 +144,7 @@ function gameLoop() {
 	var lines = 0;
 	var lastLines = 0;
 
-	emptyIsland.draw(0, 0, 80, 24);
+	emptyIsland.draw(0, 0, 20, 12);
 
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {

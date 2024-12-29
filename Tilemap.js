@@ -12,7 +12,7 @@ function Tilemap(width, height, filename, tilesheet) {
 Tilemap.prototype.draw = function(startx, starty, endx, endy) {
     for (var y = startx; y < endy; y++) {
         for (var x = starty; x < endx; x++) {
-            this.tilesheet.draw(x*2, y*4, this.grid[y][x]);
+            this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
         }
     }
 }
