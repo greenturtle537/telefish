@@ -6,6 +6,7 @@ const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 const ini_section = "telefish"; // ini file section
 const telefish_title = js.exec_dir + "telefish.ans";
 const telefish_title_xbin = js.exec_dir + "telefish.xbin";
+const telefish_tilemap = js.exec_dir + "telefish.ans";
 
 var debug = false; //Debug flag
 
@@ -156,7 +157,7 @@ function gameLoop() {
 	console.clear();
 	console.autowrap = false;
 
-	var tiles = loadGraphicsFromANSI("spritesheet.ans");
+	var tiles = loadGraphicsFromANSI(telefish_tilemap);
 
 	var running = true;
 	var prevX = playerX;
