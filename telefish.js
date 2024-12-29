@@ -6,7 +6,7 @@ const tear_line = "\r\n--- " + js.exec_file + " " + REVISION + "\r\n";
 const ini_section = "telefish"; // ini file section
 const telefish_title = js.exec_dir + "telefish.ans";
 const telefish_title_xbin = js.exec_dir + "telefish.xbin";
-const telefish_tilemap = js.exec_dir + "tilesheet.ans";
+const telefish_tilemap_main = js.exec_dir + "assets/tilesheets/main.ans";
 
 var debug = false; //Debug flag
 
@@ -21,7 +21,7 @@ var screenHeight = 24;
 var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
-
+var Tilesheet = load({}, "Tilesheet.js");
 
 load("utils.js");
 
@@ -30,6 +30,8 @@ chatWindow.setTitle("====Telefish  Node  Chat====");
 var fishWindow = new Window(40, 10, 35, 10);
 fishWindow.setTitle("=Currently waiting for a fish to bite=");
 var nodeTalk = new NodeTalk();
+
+var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main);
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
@@ -154,8 +156,6 @@ function gameLoop() {
 	console.clear();
 	console.autowrap = false;
 
-	var tiles = loadGraphicsFromANSI(telefish_tilemap);
-
 	var running = true;
 	var prevX = playerX;
 	var prevY = playerY;
@@ -177,7 +177,7 @@ function gameLoop() {
 		console.crlf();
 	}
 
-	drawGraphicAt(0, 0, 'AA', tiles);
+	mainTileSheet.draw(0, 0, 'AA');
 
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	nodeTalk.broadcastDiscover(); //Will also discover self for echo now
