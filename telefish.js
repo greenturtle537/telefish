@@ -22,6 +22,7 @@ var Window = load({}, "Window.js");
 var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
 var Tilesheet = load({}, "Tilesheet.js");
+var Tilemap = load({}, "Tilemap.js");
 
 load("utils.js");
 
@@ -32,6 +33,7 @@ fishWindow.setTitle("=Currently waiting for a fish to bite=");
 var nodeTalk = new NodeTalk();
 
 var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main);
+var emptyIsland = new Tilemap(80, 24, "main_islands/empty.txt", telefish_tilemap_main);
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
@@ -121,8 +123,9 @@ function gameLoop() {
 
 	// Fill grid from text file
 	var staticGrid = loadMapToGrid(js.exec_dir + "simplemap.txt", grid);
+	
 	if (staticGrid) {
-		grid = staticGrid;
+		grid = emptyIsland.grid;
 	}
 
 	console.clear();
