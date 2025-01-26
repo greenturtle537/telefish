@@ -38,7 +38,8 @@ Tilemap.prototype.loadGrid = function(filename) {
 	while (!file.eof && y < grid.length) {
 		var line = file.readln();
 		for (var x = 0; x < line.length && x < grid[y].length; x++) {
-			grid[y][x] = line.charAt(x);
+			grid[y][x] = line.charAt(x)+line.charAt(x+1);
+			x++;
 		}
 		y++;
 	}
