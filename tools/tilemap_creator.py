@@ -257,24 +257,26 @@ class TilemapCreator:
         tile_count = 0
         y = sheet_height - self.tile_size
         x = sheet_width - self.tile_size
-        box = (x, y, x + self.tile_size, y + self.tile_size)
-        tile_image = self.spritesheet_image.crop(box)
-        base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
-        tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
-        photo_image = ImageTk.PhotoImage(tile_image_resized)
-        self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
-        tile_count += 1
+
+        # This creates a blank AA tile. It's now obselete, so will be remove in the future.
+
+        # box = (x, y, x + self.tile_size, y + self.tile_size)
+        # tile_image = self.spritesheet_image.crop(box)
+        # base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
+        # tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
+        # photo_image = ImageTk.PhotoImage(tile_image_resized)
+        # self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
+        # tile_count += 1
 
         for y in range(0, sheet_height, self.tile_size):
             for x in range(0, sheet_width, self.tile_size):
                 box = (x, y, x + self.tile_size, y + self.tile_size)
                 tile_image = self.spritesheet_image.crop(box)
-                if not (tile_image == self.tiles[0]['image']):                
-                    base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
-                    tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
-                    photo_image = ImageTk.PhotoImage(tile_image_resized)
-                    self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
-                    tile_count += 1
+                base64_code = self.encode_base64(tile_count)  # Use Base64 encoding
+                tile_image_resized = tile_image.resize((self.display_tile_size, self.display_tile_size), Image.NEAREST)
+                photo_image = ImageTk.PhotoImage(tile_image_resized)
+                self.tiles.append({'image': tile_image_resized, 'photo': photo_image, 'base64_code': base64_code})
+                tile_count += 1
                 
     def display_tiles(self):
         for widget in self.spritesheet_frame.winfo_children():
@@ -514,8 +516,6 @@ class TilemapCreator:
             line = line.strip()
             for x in range(0, len(line), 2):
                 base64_code = line[x:x+2]
-                if base64_code == 'AA':
-                    continue
                 coords = ((x // 2) * self.display_tile_size, y * self.display_tile_size)
                 for tile in self.tiles:
                     if tile['base64_code'] == base64_code:
