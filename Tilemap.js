@@ -35,11 +35,12 @@ Tilemap.prototype.loadGrid = function(filename) {
 	}
 
 	var y = 0;
+	var charx = 0;
 	while (!file.eof && y < grid.length) {
 		var line = file.readln();
 		for (var x = 0; x < line.length && x < grid[y].length; x++) {
-			grid[y][x] = line.charAt(x)+line.charAt(x+1);
-			x++;
+			grid[y][x] = line.charAt(charx)+line.charAt(charx+1);
+			charx+=2;
 		}
 		y++;
 	}

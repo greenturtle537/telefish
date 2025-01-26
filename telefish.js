@@ -33,8 +33,7 @@ fishWindow.setTitle("=Currently waiting for a fish to bite=");
 var nodeTalk = new NodeTalk();
 
 var mainTileSheet = new Tilesheet(80, 200, telefish_tilemap_main["f"]);
-var emptyIsland = new Tilemap(40, 24, "main_islands/empty.txt", telefish_tilemap_main);
-// 24x1 vertically, 40x2 horizontally
+var emptyIsland = new Tilemap(56, 24, "main_islands/empty.txt", telefish_tilemap_main);
 
 var Graphic = load({}, "graphic.js");
 var sauce_lib = load({}, "sauce_lib.js");
