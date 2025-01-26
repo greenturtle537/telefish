@@ -27,18 +27,20 @@ Tilesheet.prototype.loadGraphicsFromANSI = function(filename, width, height) {
 
 Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var graphicAddress = base64ToInt(base64Code);
-    //alert("Drawing tile: " + graphicAddress + "?: " + Math.floor(graphicAddress / this.width));
+    
 	var graphicxoff = Math.floor(graphicAddress % this.tileGraphic.width);
 	var graphicyoff = Math.floor(graphicAddress / this.tileGraphic.width);
 
-	this.tileGraphic.draw(
-		xpos = x,
-		ypos = 0,
-		width = 4,
-		height = 2,
-		xoff = graphicxoff,
-		yoff = graphicyoff
-	);
+	alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
+
+	// this.tileGraphic.draw(
+	// 	xpos = x,
+	// 	ypos = 0,
+	// 	width = 4,
+	// 	height = 2,
+	// 	xoff = graphicxoff,
+	// 	yoff = graphicyoff
+	// );
 }
 
 /* Leave as last line for convenient load() usage: */
