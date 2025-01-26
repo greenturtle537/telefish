@@ -149,7 +149,7 @@ function gameLoop() {
 	console.gotoxy(1, 1);
 	for (var y = 0; y < gridchatHeight; y++) {
 		for (var x = 0; x < gridchatWidth; x++) {
-			console.print(grid[y][x]);
+			//console.print(grid[y][x]);
 		}
 		console.crlf();
 	}
