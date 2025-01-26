@@ -28,7 +28,7 @@ Tilesheet.prototype.loadGraphicsFromANSI = function(filename, width, height) {
 Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var graphicAddress = base64ToInt(base64Code);
     //alert("Drawing tile: " + graphicAddress + "?: " + Math.floor(graphicAddress / this.width));
-	var graphicxoff = graphicAddress % this.width;
+	var graphicxoff = Math.floor(graphicAddress % this.width);
 	var graphicyoff = Math.floor(graphicAddress / this.width);
 
 	this.tileGraphic.draw(
