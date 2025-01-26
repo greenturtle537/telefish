@@ -31,11 +31,11 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var graphicxoff = Math.floor(graphicAddress % this.tileGraphic.width);
 	var graphicyoff = Math.floor(graphicAddress / this.tileGraphic.width);
 
-	alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
+	//alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
 
 	this.tileGraphic.draw(
 		xpos = x,
-		ypos = 0,
+		ypos = y,
 		width = 4,
 		height = 2,
 		xoff = graphicxoff,
