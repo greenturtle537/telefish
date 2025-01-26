@@ -31,7 +31,7 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var spriteWidth = Math.floor(this.tileGraphic.width /* This is usually 80 */ / 4); // This should be 20
 
 	var graphicxoff = Math.floor(graphicAddress % spriteWidth);
-	var graphicyoff = Math.floor(graphicAddress / spriteWidth);
+	var graphicyoff = Math.floor(graphicAddress / spriteWidth) + 1;
 
 	//alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
 
