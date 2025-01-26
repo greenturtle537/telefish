@@ -43,6 +43,7 @@ Tilemap.prototype.loadGrid = function(filename) {
 			charx+=2;
 		}
 		y++;
+		charx=0;
 	}
 
 	file.close();
