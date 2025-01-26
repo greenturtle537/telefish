@@ -40,8 +40,8 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 		ypos = y+2, // Handle another offset
 		width = 4,
 		height = 2,
-		xoff = graphicyoff,
-		yoff = graphicxoff
+		xoff = graphicxoff,
+		yoff = graphicyoff
 	);
 }
 
