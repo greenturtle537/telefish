@@ -33,14 +33,14 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 
 	alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
 
-	// this.tileGraphic.draw(
-	// 	xpos = x,
-	// 	ypos = 0,
-	// 	width = 4,
-	// 	height = 2,
-	// 	xoff = graphicxoff,
-	// 	yoff = graphicyoff
-	// );
+	this.tileGraphic.draw(
+		xpos = x,
+		ypos = 0,
+		width = 4,
+		height = 2,
+		xoff = graphicxoff,
+		yoff = graphicyoff
+	);
 }
 
 /* Leave as last line for convenient load() usage: */
