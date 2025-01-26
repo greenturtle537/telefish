@@ -35,7 +35,7 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 
 	this.tileGraphic.draw(
 		xpos = x-3, // Handle an offset
-		ypos = y+3, // Handle another offset
+		ypos = y, // Handle another offset
 		width = 4,
 		height = 2,
 		xoff = graphicyoff,
