@@ -32,8 +32,8 @@ Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var graphicyoff = Math.floor(graphicAddress / this.width);
 
 	this.tileGraphic.draw(
-		xpos = x,
-		ypos = y,
+		xpos = 0,
+		ypos = 0,
 		width = 4,
 		height = 2,
 		xoff = 0,
