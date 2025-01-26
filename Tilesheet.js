@@ -28,10 +28,11 @@ Tilesheet.prototype.loadGraphicsFromANSI = function(filename, width, height) {
 Tilesheet.prototype.draw = function(x, y, base64Code) {
 	var graphicAddress = base64ToInt(base64Code);
     
-	var spriteWidth = Math.floor(this.tileGraphic.width /* This is usually 80 */ / 4); // This should be 20
+	var spriteWidth = 4;
+	var spriteHeight = 2;
 
-	var graphicxoff = Math.floor(graphicAddress % spriteWidth);
-	var graphicyoff = Math.floor(graphicAddress / spriteWidth) + 1;
+	var graphicxoff = Math.floor(graphicAddress % (this.tileGraphic.width / spriteWidth));
+	var graphicyoff = Math.floor((graphicAddress / (this.tileGraphic.width / spriteWidth)) * spriteHeight);
 
 	//alert("Drawing tile: " + graphicAddress + "?: " + graphicxoff + ", " + graphicyoff);
 
