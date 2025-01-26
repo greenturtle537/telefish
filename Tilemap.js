@@ -12,8 +12,8 @@ function Tilemap(width, height, filename, tilesheet) {
 Tilemap.prototype.draw = function(startx, starty, endx, endy) {
     for (var y = startx; y < endy; y++) {
         for (var x = starty; x < endx; x++) {
-			//alert("Drawing tile: " + x + ", " + y + "?: " + this.grid[y][x]);
-            this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
+			alert("Drawing tile: " + x + ", " + y + "?: " + this.grid[y][x]);
+            //this.tilesheet.draw(x*4, y*2, this.grid[y][x]);
         }
     }
 }
