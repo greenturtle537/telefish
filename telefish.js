@@ -23,6 +23,8 @@ var MessageWindow = load({}, "MessageWindow.js");
 var NodeTalk = load({}, "NodeTalk.js");
 var Tilesheet = load({}, "Tilesheet.js");
 var Tilemap = load({}, "Tilemap.js");
+var Player = load({}, "Player.js");
+
 
 load("utils.js");
 
@@ -113,6 +115,8 @@ function gameLoop() {
 	var playerX = Math.floor(gridchatWidth / 2);
 	var playerY = Math.floor(gridchatHeight / 2);
 
+	var userPlayer = new Player(true, playerX, playerY);
+
 	// Initialize grid with empty values
 	for (var y = 0; y < gridchatHeight; y++) {
 		grid[y] = [];
@@ -145,14 +149,6 @@ function gameLoop() {
 	var lastLines = 0;
 
 	emptyIsland.draw(0, 0, 20, 10);
-
-	console.gotoxy(1, 1);
-	for (var y = 0; y < gridchatHeight; y++) {
-		for (var x = 0; x < gridchatWidth; x++) {
-			//console.print(grid[y][x]);
-		}
-		console.crlf();
-	}
 
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	nodeTalk.broadcastDiscover(); //Will also discover self for echo now

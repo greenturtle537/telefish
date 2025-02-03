@@ -8,15 +8,6 @@ function Tilesheet(width, height, filename) {
     this.tileGraphic = this.loadGraphicsFromANSI(filename, width, height);
 }
 
-// Tilesheet.prototype.init = function() {
-//     const default_width = 80;
-//     const default_height = 200;
-//     var tilesheet_locations = directory("/assets/tilesheets/*.ans");
-//     for (var i = 0; i < tilesheet_locations.length; i++) {
-//         tileGraphic = this.loadGraphicsFromANSI(tilesheet_locations[i], default_width, default_height);     
-//     }
-// }
-
 Tilesheet.prototype.loadGraphicsFromANSI = function(filename, width, height) {
 	var dir = directory(filename);
 	filename = dir[random(dir.length)]; // No one knows what this does

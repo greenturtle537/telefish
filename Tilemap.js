@@ -54,5 +54,13 @@ Tilemap.prototype.loadGrid = function(filename) {
 	return grid;
 }
 
+
+Tilemap.prototype.getTile = function(x, y) {
+	if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+		return null;
+	}
+	return this.grid[y][x];
+}
+
 /* Leave as last line for convenient load() usage: */
 Tilemap;
