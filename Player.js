@@ -28,7 +28,7 @@ Player.prototype.draw = function(facing, tilemap) {
     
     // Draw the player at the new position ontop of the tilemap
     tilemap.draw(this.x, this.y);
-    console.gotoxy(this.x, this.y);
+    console.gotoxy(this.x*2, this.y); //Account for x-scaling
     console.print(playerGraphic);
     console.gotoxy(0, 20);
     console.print("Player position: " + this.x + ", " + this.y + "; Previous position: " + this.prevx + ", " + this.prevy); 
@@ -51,11 +51,11 @@ Player.prototype.down = function(tilemap) {
 }
 
 Player.prototype.left = function(tilemap) {
-    this.move(-2, 0, tilemap);
+    this.move(-1, 0, tilemap);
 }
 
 Player.prototype.right = function(tilemap) {
-    this.move(2, 0, tilemap);
+    this.move(1, 0, tilemap);
 }
 
 /* Leave as last line for convenient load() usage: */
