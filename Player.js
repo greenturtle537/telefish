@@ -25,7 +25,7 @@ Player.prototype.draw = function(facing, tilemap) {
     
     // Draw the player at the new position ontop of the tilemap
     tilemap.draw(this.x, this.y);
-    //console.print(playerGraphic);
+    console.print(playerGraphic);
 }
 
 Player.prototype.move = function(x, y, tilemap) {

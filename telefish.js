@@ -331,7 +331,7 @@ function gameLoop() {
 								// Redraw previous position
 								if (!windowConflict(prevX, prevY - 1)) {
 									console.gotoxy(prevX + 1, prevY + 1);
-									//console.print(grid[prevY][prevX]);
+									console.print(grid[prevY][prevX]);
 								}
 								redrawPlayer(playerX, playerY);
 								sleep(100); // 100ms pause after move
