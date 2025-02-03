@@ -36,10 +36,8 @@ Player.prototype.move = function(x, y, tilemap) {
     var newX = this.x + x;
     var newY = this.y + y;
     
-    this.x = newX;
-    this.y = newY;
-    this.draw("left", tilemap); // Assuming default facing is "left"
     this.setPosition(newX, newY);
+    this.draw("left", tilemap); // Assuming default facing is "left"
 }
 
 Player.prototype.up = function(tilemap) {
