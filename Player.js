@@ -3,7 +3,8 @@ var Graphic = load({}, "graphic.js"); // depends Graphic
 function Player(activeUser, x, y) {
     this.isActiveUser = activeUser;
     //Ref: ascii(1) = "☺︎" (To play nicely with localities)
-    this.playerGraphic = {"left": ascii(2)+"☻"+"/", "right": "\\"+ascii(1)};
+    //TODO: ascii(1) is broken, but ascii(2) works. WHY?
+    this.playerGraphic = {"left": ascii(2)+"/", "right": "\\"+ascii(1)};
     this.x = x;
     this.y = y;
     this.prevx = x;
