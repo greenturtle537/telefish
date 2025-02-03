@@ -2,7 +2,7 @@ var Graphic = load({}, "graphic.js"); // depends Graphic
 
 function Player(activeUser, x, y) {
     this.isActiveUser = activeUser;
-    this.playerGraphic = {"left": base64_decode("263A")+"/", "right": "\\☺︎"}; // To play nicely with localities
+    this.playerGraphic = {"left": base64_decode("AB")+"/", "right": "\\☺︎"}; // To play nicely with localities
     this.x = x;
     this.y = y;
     this.prevx = x;
@@ -49,11 +49,11 @@ Player.prototype.down = function(tilemap) {
 }
 
 Player.prototype.left = function(tilemap) {
-    this.move(-1, 0, tilemap);
+    this.move(-2, 0, tilemap);
 }
 
 Player.prototype.right = function(tilemap) {
-    this.move(1, 0, tilemap);
+    this.move(2, 0, tilemap);
 }
 
 /* Leave as last line for convenient load() usage: */
