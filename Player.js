@@ -24,8 +24,8 @@ Player.prototype.draw = function(facing, tilemap) {
     //var playerGraphic = ":)";
 
     // Erase the player at the previous position
-    //tilemap.draw(this.prevx, this.prevy);
-    tilemap.draw(0,0,20,10); //nuclear option
+    tilemap.draw(this.prevx, this.prevy, 20,10);
+    //tilemap.draw(0,0,20,10); //nuclear option
     
     // Draw the player at the new position ontop of the tilemap
     tilemap.draw(this.x, this.y);
@@ -52,11 +52,11 @@ Player.prototype.down = function(tilemap) {
 }
 
 Player.prototype.left = function(tilemap) {
-    this.move(-1, 0, tilemap);
+    this.move(-2, 0, tilemap);
 }
 
 Player.prototype.right = function(tilemap) {
-    this.move(1, 0, tilemap);
+    this.move(2, 0, tilemap);
 }
 
 /* Leave as last line for convenient load() usage: */
