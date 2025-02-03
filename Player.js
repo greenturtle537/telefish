@@ -30,6 +30,8 @@ Player.prototype.draw = function(facing, tilemap) {
     tilemap.draw(this.x, this.y);
     console.gotoxy(this.x, this.y);
     console.print(playerGraphic);
+    console.gotoxy(0, 20);
+    console.print("Player position: " + this.x + ", " + this.y + "; Previous position: " + this.prevx + ", " + this.prevy); 
 }
 
 Player.prototype.move = function(x, y, tilemap) {
