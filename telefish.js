@@ -290,6 +290,7 @@ function gameLoop() {
 							break;
 						case KEY_UP:
 						case 'w':
+							userPlayer.up(emptyIsland);
 							if (playerY > 0) {
 								prevY = playerY;
 								prevX = playerX;
@@ -305,6 +306,7 @@ function gameLoop() {
 							break;
 						case KEY_DOWN:
 						case 's':
+							userPlayer.down(emptyIsland);
 							if (playerY < gridchatHeight - 1) {
 								prevY = playerY;
 								prevX = playerX;
@@ -321,6 +323,7 @@ function gameLoop() {
 							break;
 						case KEY_LEFT: 
 						case 'a':
+							userPlayer.left(emptyIsland);
 							if (playerX > 1) {
 								prevX = playerX;
 								prevY = playerY;
@@ -337,6 +340,7 @@ function gameLoop() {
 							break;
 						case KEY_RIGHT:
 						case 'd':
+							userPlayer.right(emptyIsland);
 							if (playerX < gridchatWidth - 2) {
 								prevX = playerX;
 								prevY = playerY;
