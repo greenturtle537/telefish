@@ -2,7 +2,7 @@ var Graphic = load({}, "graphic.js"); // depends Graphic
 
 function Player(activeUser, x, y) {
     this.isActiveUser = activeUser;
-    this.playerGraphic = {"left": ascii(1)+"/", "right": "\\☺︎"}; // To play nicely with localities
+    this.playerGraphic = {"left": ascii(17)+"/", "right": "\\☺︎"}; // To play nicely with localities
     this.x = x;
     this.y = y;
     this.prevx = x;
