@@ -11,8 +11,8 @@ function Tilemap(width, height, filename, tilesheet) {
 
 // Either call this to redraw a given tile range, or just a single tile
 Tilemap.prototype.draw = function(startx, starty, endx, endy) {
-	if (endx === undefined) endx = startx;
-	if (endy === undefined) endy = starty;
+	if (endx === undefined) endx = startx+1;
+	if (endy === undefined) endy = starty+1;
 
 	for (var y = startx; y < endy; y++) {
 		for (var x = starty; x < endx; x++) {
