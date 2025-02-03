@@ -26,6 +26,7 @@ Player.prototype.draw = function(facing, tilemap) {
     
     // Draw the player at the new position ontop of the tilemap
     tilemap.draw(this.x, this.y);
+    console.gotoxy(this.x, this.y);
     console.print(playerGraphic);
 }
 
