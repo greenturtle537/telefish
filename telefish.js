@@ -291,68 +291,18 @@ function gameLoop() {
 						case KEY_UP:
 						case 'w':
 							userPlayer.up(emptyIsland);
-							if (playerY > 0) {
-								prevY = playerY;
-								prevX = playerX;
-								playerY--;
-								// Redraw previous position
-								if (!windowConflict(playerX, playerY - 1)) {
-									console.gotoxy(prevX + 1, prevY + 1);
-									console.print(grid[prevY][prevX]);
-								}
-								redrawPlayer(playerX, playerY);
-								sleep(100); // 100ms pause after move
-							}
 							break;
 						case KEY_DOWN:
 						case 's':
 							userPlayer.down(emptyIsland);
-							if (playerY < gridchatHeight - 1) {
-								prevY = playerY;
-								prevX = playerX;
-								playerY++;
-								// Redraw previous position
-								if (!windowConflict(playerX, playerY - 1)) {
-
-									console.gotoxy(prevX + 1, prevY + 1);
-									console.print(grid[prevY][prevX]);
-								}
-								redrawPlayer(playerX, playerY);
-								sleep(100); // 100ms pause after move
-							}
 							break;
 						case KEY_LEFT: 
 						case 'a':
 							userPlayer.left(emptyIsland);
-							if (playerX > 1) {
-								prevX = playerX;
-								prevY = playerY;
-								playerX -= 2;
-								// Redraw previous position
-								if (!windowConflict(prevX, prevY - 1)) {
-									console.gotoxy(prevX + 1, prevY + 1);
-									console.print(grid[prevY][prevX]);
-								}
-								redrawPlayer(playerX, playerY);
-								sleep(100); // 100ms pause after move
-								
-							}
 							break;
 						case KEY_RIGHT:
 						case 'd':
 							userPlayer.right(emptyIsland);
-							if (playerX < gridchatWidth - 2) {
-								prevX = playerX;
-								prevY = playerY;
-								playerX += 2;
-								// Redraw previous position
-								if (!windowConflict(prevX, prevY - 1)) {
-									console.gotoxy(prevX + 1, prevY + 1);
-									console.print(grid[prevY][prevX]);
-								}
-								redrawPlayer(playerX, playerY);
-								sleep(100); // 100ms pause after move
-							}
 							break;
 						case 'j':
 							chatWindow.toggled = chatWindow.display(staticGrid);
