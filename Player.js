@@ -28,7 +28,7 @@ Player.prototype.draw = function(facing, tilemap) {
     
     // Draw the player at the new position ontop of the tilemap
     tilemap.draw(this.x, this.y);
-    console.gotoxy(this.x*2, this.y); //Account for x-scaling
+    console.gotoxy(this.x, this.y);
     console.print(playerGraphic);
     console.gotoxy(0, 20);
     console.print("Player position: " + this.x + ", " + this.y + "; Previous position: " + this.prevx + ", " + this.prevy); 
