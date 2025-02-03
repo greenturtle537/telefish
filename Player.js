@@ -49,5 +49,5 @@ Player.prototype.left = function(tilemap) {
 }
 
 Player.prototype.right = function(tilemap) {
-    //this.move(1, 0, tilemap);
+    this.move(-1, 0, tilemap);
 }
