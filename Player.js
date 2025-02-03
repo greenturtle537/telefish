@@ -18,8 +18,8 @@ Player.prototype.setPosition = function(x, y) {
 
 Player.prototype.draw = function(facing, tilemap) {   
     var playerFacing = facing/* || "left" */;
-    //var playerGraphic = this.playerGraphic[playerFacing];
-    var playerGraphic = ":)";
+    var playerGraphic = this.playerGraphic[playerFacing];
+    //var playerGraphic = ":)";
 
     // Erase the player at the previous position
     tilemap.draw(this.prevx, this.prevy);
