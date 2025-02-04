@@ -148,7 +148,7 @@ function gameLoop() {
 	var lines = 0;
 	var lastLines = 0;
 
-	emptyIsland.draw(0, 0, 20, 10);
+	emptyIsland.draw(3, 3, 20, 10);
 
 	nodeTalk.addNode(nodeTalk.userNode); // Add self to online nodes. Don't know why this fixes a bug for some users
 	nodeTalk.broadcastDiscover(); //Will also discover self for echo now

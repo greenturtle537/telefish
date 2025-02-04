@@ -24,7 +24,7 @@ Player.prototype.draw = function(facing, tilemap) {
     //var playerGraphic = ":)";
 
     // Erase the player at the previous position
-    tilemap.draw(this.prevx, this.prevy, 20,10);
+    tilemap.draw(this.prevx, this.prevy);
     //tilemap.draw(0,0,20,10); //nuclear option
     
     // Draw the player at the new position ontop of the tilemap
